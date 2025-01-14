@@ -11,17 +11,22 @@ In other words, group the users by the number of tweets they posted in 2022 and 
 WITH user_tweet_counts AS (
   SELECT 
     user_id, 
-    COUNT(tweet_id) AS tweet_count
-  FROM tweets 
-  WHERE tweet_date BETWEEN '2022-01-01' AND '2022-12-31'
-  GROUP BY user_id)
-
-SELECT
-  tweet_count,
-  COUNT(user_id) as number_of_users
-FROM user_tweet_counts
-GROUP BY 1
-;
+    COUNT(tweet_id) AS tweet_count 
+  FROM 
+    tweets 
+  WHERE 
+    tweet_date BETWEEN '2022-01-01' 
+    AND '2022-12-31' 
+  GROUP BY 
+    user_id
+) 
+SELECT 
+  tweet_count, 
+  COUNT(user_id) as number_of_users 
+FROM 
+  user_tweet_counts 
+GROUP BY 
+  1;
 ```
 
 
@@ -33,25 +38,40 @@ Write a query to list the candidates who possess all of the required skills for 
 Method 1 (CTE):
 ``` sql
 WITH candidate_skills AS (
-  SELECT
-    candidate_id,
-    string_agg(skill, ', ') as all_skills
-  FROM candidates
-  GROUP BY candidate_id)
-  
-SELECT candidate_id
-FROM candidate_skills
-WHERE all_skills LIKE '%Python%' AND all_skills LIKE '%Tableau%' AND all_skills LIKE '%PostgreSQL%'
-ORDER BY candidate_id ASC
-;
+  SELECT 
+    candidate_id, 
+    string_agg(skill, ', ') as all_skills 
+  FROM 
+    candidates 
+  GROUP BY 
+    candidate_id
+) 
+SELECT 
+  candidate_id 
+FROM 
+  candidate_skills 
+WHERE 
+  all_skills LIKE '%Python%' 
+  AND all_skills LIKE '%Tableau%' 
+  AND all_skills LIKE '%PostgreSQL%' 
+ORDER BY 
+  candidate_id ASC;
 ```
 
 Method 2:
 ``` sql
-SELECT candidate_id
-FROM candidates
-WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
-GROUP BY candidate_id
-HAVING COUNT(skill) = 3
-ORDER BY candidate_id;
+SELECT 
+  candidate_id 
+FROM 
+  candidates 
+WHERE 
+  skill IN (
+    'Python', 'Tableau', 'PostgreSQL'
+  ) 
+GROUP BY 
+  candidate_id 
+HAVING 
+  COUNT(skill) = 3 
+ORDER BY 
+  candidate_id;
 ```
