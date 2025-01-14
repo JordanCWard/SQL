@@ -7,6 +7,7 @@ https://datalemur.com/questions?category=SQL
 Assume you're given a table Twitter tweet data, write a query to obtain a histogram of tweets posted per user in 2022. Output the tweet count per user as the bucket and the number of Twitter users who fall into that bucket.
 In other words, group the users by the number of tweets they posted in 2022 and count the number of users in each group.
 
+``` sql
 WITH user_tweet_counts AS (
   SELECT 
     user_id, 
@@ -21,7 +22,7 @@ SELECT
 FROM user_tweet_counts
 GROUP BY 1
 ;
-
+```
 
 
 2. LinkedIn
@@ -30,6 +31,7 @@ Given a table of candidates and their skills, you're tasked with finding the can
 Write a query to list the candidates who possess all of the required skills for the job. Sort the output by candidate ID in ascending order.
 
 Method 1 (CTE):
+``` sql
 WITH candidate_skills AS (
   SELECT
     candidate_id,
@@ -42,11 +44,14 @@ FROM candidate_skills
 WHERE all_skills LIKE '%Python%' AND all_skills LIKE '%Tableau%' AND all_skills LIKE '%PostgreSQL%'
 ORDER BY candidate_id ASC
 ;
+```
 
 Method 2:
+``` sql
 SELECT candidate_id
 FROM candidates
 WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
 GROUP BY candidate_id
 HAVING COUNT(skill) = 3
 ORDER BY candidate_id;
+```
