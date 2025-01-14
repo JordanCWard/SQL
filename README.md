@@ -21,3 +21,4 @@ SELECT
   COUNT(user_id) AS users_num 
 FROM total_tweets 
 GROUP BY tweet_count_per_user;
+
