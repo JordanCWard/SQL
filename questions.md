@@ -151,7 +151,7 @@ Given a table of Facebook posts, for each user who posted at least twice in 2021
 ``` sql
 SELECT 
   user_id, 
-  Extract(days from max(post_date) - min(post_date)) as days_between 
+  EXTRACT(days FROM max(post_date) - min(post_date)) AS days_between 
 FROM 
   posts 
 WHERE 
