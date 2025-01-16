@@ -142,3 +142,22 @@ FROM
   viewership;
 ```
 
+
+
+6. Facebook
+
+Given a table of Facebook posts, for each user who posted at least twice in 2021, write a query to find the number of days between each user’s first post of the year and last post of the year in the year 2021. Output the user and number of the days between each user's first and last post.
+
+``` sql
+SELECT 
+  user_id, 
+  Extract(days from max(post_date) - min(post_date)) as days_between 
+FROM 
+  posts 
+WHERE 
+  post_date BETWEEN '01/01/2021' and '12/31/2021' 
+GROUP BY 
+  user_id 
+HAVING 
+  COUNT(post_id) > 1;
+```
