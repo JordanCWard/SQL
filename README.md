@@ -216,14 +216,20 @@ Assume you're given the tables containing completed trade orders and user detail
 Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. Output the city name and the corresponding number of completed trade orders.
 
 ``` sql
-SELECT city, count(status) AS total_orders
-FROM trades
-JOIN users ON trades.user_id = users.user_id
-WHERE status = 'Completed'
-GROUP BY city
-ORDER BY total_orders DESC
-LIMIT 3
-;
+SELECT 
+  city, 
+  count(status) AS total_orders 
+FROM 
+  trades 
+  JOIN users ON trades.user_id = users.user_id 
+WHERE 
+  status = 'Completed' 
+GROUP BY 
+  city 
+ORDER BY 
+  total_orders DESC 
+LIMIT 
+  3;
 ```
 
 
