@@ -15,11 +15,11 @@ WITH user_tweet_counts AS (
   FROM 
     tweets 
   WHERE 
-    tweet_date BETWEEN '2022-01-01' 
-    AND '2022-12-31' 
+    tweet_date BETWEEN '2022-01-01' AND '2022-12-31' 
   GROUP BY 
     user_id
-) 
+)
+
 SELECT 
   tweet_count, 
   COUNT(user_id) as number_of_users 
@@ -45,7 +45,8 @@ WITH candidate_skills AS (
     candidates 
   GROUP BY 
     candidate_id
-) 
+)
+
 SELECT 
   candidate_id 
 FROM 
@@ -65,9 +66,7 @@ SELECT
 FROM 
   candidates 
 WHERE 
-  skill IN (
-    'Python', 'Tableau', 'PostgreSQL'
-  ) 
+  skill IN ('Python', 'Tableau', 'PostgreSQL') 
 GROUP BY 
   candidate_id 
 HAVING 
@@ -90,10 +89,10 @@ SELECT
 FROM 
   pages 
 EXCEPT 
-SELECT 
-  page_id 
-FROM 
-  page_likes 
+  SELECT 
+    page_id 
+  FROM 
+    page_likes 
 ORDER BY 
   page_id ASC;
 ```
@@ -104,7 +103,8 @@ SELECT
   pages.page_id 
 FROM 
   pages 
-  LEFT OUTER JOIN page_likes AS likes ON pages.page_id = likes.page_id 
+LEFT OUTER JOIN
+  page_likes AS likes ON pages.page_id = likes.page_id 
 WHERE 
   likes.page_id IS NULL;
 ```
@@ -200,7 +200,8 @@ WITH duplicates AS (
     company_id, 
     title, 
     description
-) 
+)
+
 SELECT 
   count(same_job) AS duplicate_companies 
 FROM 
@@ -221,7 +222,8 @@ SELECT
   count(status) AS total_orders 
 FROM 
   trades 
-  JOIN users ON trades.user_id = users.user_id 
+JOIN
+  users ON trades.user_id = users.user_id 
 WHERE 
   status = 'Completed' 
 GROUP BY 
@@ -263,7 +265,8 @@ SELECT
   emp.name AS employee_name 
 FROM 
   employee AS mgr 
-  INNER JOIN employee AS emp ON mgr.employee_id = emp.manager_id 
+INNER JOIN
+  employee AS emp ON mgr.employee_id = emp.manager_id 
 WHERE 
   emp.salary > mgr.salary;
 ```
@@ -285,4 +288,23 @@ WHERE
   EXTRACT(year FROM timestamp) = 2022
 GROUP BY
   app_id;
+```
+
+13. TikTok
+
+Assume you're given tables with information about TikTok user sign-ups and confirmations through email and text. New users on TikTok sign up using their email addresses, and upon sign-up, each user receives a text message confirmation to activate their account.
+
+Write a query to display the user IDs of those who did not confirm their sign-up on the first day, but confirmed on the second day.
+
+``` sql
+SELECT
+  user_id
+FROM
+  emails
+INNER JOIN
+  texts ON emails.email_id = texts.email_id
+WHERE
+  DATE_PART('day', action_date - signup_date) = 1
+  AND texts.signup_action = 'Confirmed'
+;
 ```
