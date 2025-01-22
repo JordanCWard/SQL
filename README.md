@@ -2,6 +2,115 @@
 
 https://datalemur.com/questions?category=SQL
 
+15. JPMorgan
+
+Your team at JPMorgan Chase is preparing to launch a new credit card, and to gain some insights, you're analyzing how many credit cards were issued each month.
+Write a query that outputs the name of each credit card and the difference in the number of issued cards between the month with the highest issuance cards and the lowest issuance. Arrange the results based on the largest disparity.
+
+``` sql
+SELECT
+  card_name,
+  MAX(issued_amount) - MIN(issued_amount) AS difference
+FROM
+  monthly_cards_issued
+GROUP BY
+  card_name
+ORDER BY
+  difference DESC
+;
+```
+
+14. IBM
+
+IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). Additionally, it should count the number of employees who did not run any queries during this period.
+
+Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
+
+``` sql
+WITH query_count AS (
+SELECT
+  employee_id,
+  COUNT(DISTINCT query_id) AS total_queries
+FROM
+  queries
+WHERE
+  query_starttime >= '2023-07-01T00:00:00Z'
+  AND query_starttime < '2023-10-01T00:00:00Z'
+GROUP BY
+  employee_id
+ORDER BY
+  total_queries DESC
+)
+
+SELECT
+  COALESCE(total_queries, '0') AS unique_queries,
+  COUNT(COALESCE(total_queries, '0')) AS employee_count
+FROM
+  employees
+LEFT JOIN
+  query_count ON employees.employee_id = query_count.employee_id
+GROUP BY
+  unique_queries
+ORDER BY
+  unique_queries
+;
+```
+
+13. TikTok
+
+Assume you're given tables with information about TikTok user sign-ups and confirmations through email and text. New users on TikTok sign up using their email addresses, and upon sign-up, each user receives a text message confirmation to activate their account.
+
+Write a query to display the user IDs of those who did not confirm their sign-up on the first day, but confirmed on the second day.
+
+``` sql
+SELECT
+  user_id
+FROM
+  emails
+INNER JOIN
+  texts ON emails.email_id = texts.email_id
+WHERE
+  DATE_PART('day', action_date - signup_date) = 1
+  AND texts.signup_action = 'Confirmed'
+;
+```
+
+12. Facebook
+
+Assume you have an events table on Facebook app analytics. Write a query to calculate the click-through rate (CTR) for the app in 2022 and round the results to 2 decimal places.
+
+Definition and note: Percentage of click-through rate (CTR) = 100.0 * Number of clicks / Number of impressions. To avoid integer division, multiply the CTR by 100.0, not 100.
+
+``` sql
+SELECT
+  app_id,
+  ROUND((100.0*SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END)) /
+  (SUM(CASE WHEN event_type = 'impression' THEN 1 ELSE 0 END)), 2) AS ctr
+FROM
+  events
+WHERE
+  EXTRACT(year FROM timestamp) = 2022
+GROUP BY
+  app_id;
+```
+
+11. FAANG
+
+Companies often perform salary analyses to ensure fair compensation practices. One useful analysis is to check if there are any employees earning more than their direct managers.
+As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. The result should include the employee's ID and name.
+
+``` sql
+SELECT 
+  emp.employee_id AS employee_id, 
+  emp.name AS employee_name 
+FROM 
+  employee AS mgr 
+INNER JOIN
+  employee AS emp ON mgr.employee_id = emp.manager_id 
+WHERE 
+  emp.salary > mgr.salary;
+```
+
 10. Amazon
 
 Given the reviews table, write a query to retrieve the average star rating for each product, grouped by month. The output should display the month as a numerical value, product ID, and average star rating rounded to two decimal places. Sort the output first by month and then by product ID.
