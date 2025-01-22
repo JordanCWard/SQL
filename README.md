@@ -3,6 +3,22 @@
 https://datalemur.com/questions?category=SQL
 
 
+16. Alibaba
+
+You're trying to find the mean number of items per order on Alibaba, rounded to 1 decimal place using tables which includes information on the count of items in each order (item_count table) and the corresponding number of orders for each item count (order_occurrences table).
+
+``` sql
+SELECT
+  ROUND(
+    SUM(item_count::DECIMAL * order_occurrences)
+    /SUM(order_occurrences)
+    , 1) AS mean
+FROM
+  items_per_order
+;
+```
+
+
 15. JPMorgan
 
 Your team at JPMorgan Chase is preparing to launch a new credit card, and to gain some insights, you're analyzing how many credit cards were issued each month.
