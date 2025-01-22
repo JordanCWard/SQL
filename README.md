@@ -3,6 +3,25 @@
 https://datalemur.com/questions?category=SQL
 
 
+17. CVS Health
+
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer.
+Write a query to find the top 3 most profitable drugs sold, and how much profit they made. Assume that there are no ties in the profits. Display the result from the highest to the lowest total profit.
+
+``` sql
+SELECT
+  drug,
+  (total_sales - cogs) AS total_profit
+FROM
+  pharmacy_sales
+ORDER BY
+  total_profit DESC
+LIMIT
+  3
+;
+```
+
+
 16. Alibaba
 
 You're trying to find the mean number of items per order on Alibaba, rounded to 1 decimal place using tables which includes information on the count of items in each order (item_count table) and the corresponding number of orders for each item count (order_occurrences table).
