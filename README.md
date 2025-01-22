@@ -6,7 +6,9 @@ https://datalemur.com/questions?category=SQL
 19. CVS Health
 
 CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. <br>
-Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name. <br>
+Write a query to calculate the total drug sales for each manufacturer. <br>
+Round the answer to the nearest million and report your results in descending order of total sales. <br>
+In case of any duplicates, sort them alphabetically by the manufacturer name. <br>
 Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
 
 ``` sql
@@ -33,7 +35,8 @@ FROM
 
 18. CVS Health
 
-CVS Health is analyzing its pharmacy sales data, and how well different products are selling in the market. Each drug is exclusively manufactured by a single manufacturer. <br>
+CVS Health is analyzing its pharmacy sales data, and how well different products are selling in the market. <br>
+Each drug is exclusively manufactured by a single manufacturer. <br>
 Write a query to identify the manufacturers associated with the drugs that resulted in losses for CVS Health and calculate the total amount of losses incurred. <br>
 Output the manufacturer's name, the number of drugs associated with losses, and the total losses in absolute value. Display the results sorted in descending order with the highest losses displayed at the top.
 
@@ -57,7 +60,9 @@ ORDER BY
 17. CVS Health
 
 CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer. <br>
-Write a query to find the top 3 most profitable drugs sold, and how much profit they made. Assume that there are no ties in the profits. Display the result from the highest to the lowest total profit.
+Write a query to find the top 3 most profitable drugs sold, and how much profit they made. <br>
+Assume that there are no ties in the profits. <br>
+Display the result from the highest to the lowest total profit.
 
 ``` sql
 SELECT
@@ -92,7 +97,8 @@ FROM
 15. JPMorgan
 
 Your team at JPMorgan Chase is preparing to launch a new credit card, and to gain some insights, you're analyzing how many credit cards were issued each month. <br>
-Write a query that outputs the name of each credit card and the difference in the number of issued cards between the month with the highest issuance cards and the lowest issuance. Arrange the results based on the largest disparity.
+Write a query that outputs the name of each credit card and the difference in the number of issued cards between the month with the highest issuance cards and the lowest issuance. <br>
+Arrange the results based on the largest disparity.
 
 ``` sql
 SELECT
@@ -110,7 +116,8 @@ ORDER BY
 
 14. IBM
 
-IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September).  <br>
+IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. <br>
+The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). <br>
 Additionally, it should count the number of employees who did not run any queries during this period. <br>
 Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
 
@@ -147,7 +154,8 @@ ORDER BY
 
 13. TikTok
 
-Assume you're given tables with information about TikTok user sign-ups and confirmations through email and text. New users on TikTok sign up using their email addresses, and upon sign-up, each user receives a text message confirmation to activate their account. <br>
+Assume you're given tables with information about TikTok user sign-ups and confirmations through email and text. <br>
+New users on TikTok sign up using their email addresses, and upon sign-up, each user receives a text message confirmation to activate their account. <br>
 Write a query to display the user IDs of those who did not confirm their sign-up on the first day, but confirmed on the second day.
 
 ``` sql
@@ -166,8 +174,10 @@ WHERE
 
 12. Facebook
 
-Assume you have an events table on Facebook app analytics. Write a query to calculate the click-through rate (CTR) for the app in 2022 and round the results to 2 decimal places. <br>
-Definition and note: Percentage of click-through rate (CTR) = 100.0 * Number of clicks / Number of impressions. To avoid integer division, multiply the CTR by 100.0, not 100.
+Assume you have an events table on Facebook app analytics. <br>
+Write a query to calculate the click-through rate (CTR) for the app in 2022 and round the results to 2 decimal places. <br>
+Definition and note: Percentage of click-through rate (CTR) = 100.0 * Number of clicks / Number of impressions. <br>
+To avoid integer division, multiply the CTR by 100.0, not 100.
 
 ``` sql
 SELECT
@@ -185,8 +195,10 @@ GROUP BY
 
 11. FAANG
 
-Companies often perform salary analyses to ensure fair compensation practices. One useful analysis is to check if there are any employees earning more than their direct managers. <br>
-As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. The result should include the employee's ID and name.
+Companies often perform salary analyses to ensure fair compensation practices. <br>
+One useful analysis is to check if there are any employees earning more than their direct managers. <br>
+As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. <br>
+The result should include the employee's ID and name.
 
 ``` sql
 SELECT 
@@ -204,7 +216,8 @@ WHERE
 10. Amazon
 
 Given the reviews table, write a query to retrieve the average star rating for each product, grouped by month. <br>
-The output should display the month as a numerical value, product ID, and average star rating rounded to two decimal places. Sort the output first by month and then by product ID.
+The output should display the month as a numerical value, product ID, and average star rating rounded to two decimal places. <br>
+Sort the output first by month and then by product ID.
 
 ``` sql
 SELECT 
@@ -225,7 +238,8 @@ ORDER BY
 9. Robinhood
 
 Assume you're given the tables containing completed trade orders and user details in a Robinhood trading system. <br>
-Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. Output the city name and the corresponding number of completed trade orders.
+Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. <br>
+Output the city name and the corresponding number of completed trade orders.
 
 ``` sql
 SELECT 
@@ -248,7 +262,8 @@ LIMIT
 
 8. LinkedIn
 
-Assume you're given a table containing job postings from various companies on the LinkedIn platform. Write a query to retrieve the count of companies that have posted duplicate job listings. <br>
+Assume you're given a table containing job postings from various companies on the LinkedIn platform. <br>
+Write a query to retrieve the count of companies that have posted duplicate job listings. <br>
 Definition: Duplicate job listings are defined as two job listings within the same company that share identical titles and descriptions.
 
 ``` sql
@@ -334,9 +349,10 @@ FROM
 4.  Tesla
 
 Tesla is investigating production bottlenecks and they need your help to extract the relevant data. <br>
-Write a query to determine which parts have begun the assembly process but are not yet finished.
+Write a query to determine which parts have begun the assembly process but are not yet finished. <br>
 
-Assumptions: parts_assembly table contains all parts currently in production, each at varying stages of the assembly process. <br>
+Assumptions <br>
+parts_assembly table contains all parts currently in production, each at varying stages of the assembly process. <br>
 An unfinished part is one that lacks a finish_date.
 
 ``` sql
