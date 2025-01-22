@@ -38,7 +38,8 @@ FROM
 CVS Health is analyzing its pharmacy sales data, and how well different products are selling in the market. <br>
 Each drug is exclusively manufactured by a single manufacturer. <br>
 Write a query to identify the manufacturers associated with the drugs that resulted in losses for CVS Health and calculate the total amount of losses incurred. <br>
-Output the manufacturer's name, the number of drugs associated with losses, and the total losses in absolute value. Display the results sorted in descending order with the highest losses displayed at the top.
+Output the manufacturer's name, the number of drugs associated with losses, and the total losses in absolute value. <br>
+Display the results sorted in descending order with the highest losses displayed at the top.
 
 ``` sql
 SELECT
