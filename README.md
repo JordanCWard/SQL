@@ -3,6 +3,37 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+
+21. Uber
+
+Assume you are given the table below on Uber transactions made by users. <br>
+Write a query to obtain the third transaction of every user. <br>
+Output the user id, spend and transaction date.
+
+``` sql
+WITH ranked_transactions AS (
+  SELECT
+    row_number() OVER (PARTITION BY user_id ORDER BY transaction_date ASC) AS row_rank,
+    user_id,
+    spend,
+    transaction_date
+  FROM
+    transactions
+)
+
+SELECT
+  user_id,
+  spend,
+  transaction_date
+FROM
+  ranked_transactions
+WHERE
+  row_rank = 3
+;
+```
+<br>
+
+
 20. UnitedHealth
 
 UnitedHealth Group (UHG) has a program called Advocate4Me, which allows policy holders (or, members) to call an advocate and receive support for their health care needs – whether that's claims and benefits support, drug coverage, pre- and post-authorisation, medical records, emergency assistance, or member portal services. <br>
@@ -27,6 +58,7 @@ WHERE
   total_calls > 2
 ;
 ```
+<br>
 
 
 19. CVS Health
@@ -57,6 +89,7 @@ FROM
   manufacturer_sales
 ;
 ```
+<br>
 
 
 18. CVS Health
@@ -82,6 +115,7 @@ ORDER BY
   total_loss DESC
 ;
 ```
+<br>
 
 
 17. CVS Health
@@ -104,6 +138,7 @@ LIMIT
   3
 ;
 ```
+<br>
 
 
 16. Alibaba
@@ -120,6 +155,7 @@ FROM
   items_per_order
 ;
 ```
+<br>
 
 
 15. JPMorgan
@@ -140,6 +176,7 @@ ORDER BY
   difference DESC
 ;
 ```
+<br>
 
 
 14. IBM
@@ -178,6 +215,7 @@ ORDER BY
   unique_queries
 ;
 ```
+<br>
 
 
 13. TikTok
@@ -198,6 +236,7 @@ WHERE
   AND texts.signup_action = 'Confirmed'
 ;
 ```
+<br>
 
 
 12. Facebook
@@ -219,6 +258,7 @@ WHERE
 GROUP BY
   app_id;
 ```
+<br>
 
 
 11. FAANG
@@ -239,6 +279,7 @@ INNER JOIN
 WHERE 
   emp.salary > mgr.salary;
 ```
+<br>
 
 
 10. Amazon
@@ -261,6 +302,7 @@ ORDER BY
   submit_month ASC, 
   product_id ASC;
 ```
+<br>
 
 
 9. Robinhood
@@ -286,6 +328,7 @@ ORDER BY
 LIMIT 
   3;
 ```
+<br>
 
 
 8. LinkedIn
@@ -313,6 +356,7 @@ FROM
 WHERE 
   same_job > 1;
 ```
+<br>
 
 
 7. Microsoft
@@ -337,6 +381,7 @@ ORDER BY
 LIMIT 
   2;
 ```
+<br>
 
 
 6. Facebook
@@ -357,6 +402,7 @@ GROUP BY
 HAVING 
   COUNT(post_id) > 1;
 ```
+<br>
 
 
 5. NY Times
@@ -372,6 +418,7 @@ SELECT
 FROM 
   viewership;
 ```
+<br>
 
 
 4.  Tesla
@@ -392,6 +439,7 @@ FROM
 WHERE 
   finish_date IS NULL;
 ```
+<br>
 
 
 3. Facebook
@@ -425,6 +473,7 @@ LEFT OUTER JOIN
 WHERE 
   likes.page_id IS NULL;
 ```
+<br>
 
 
 2. LinkedIn
@@ -472,6 +521,7 @@ HAVING
 ORDER BY 
   candidate_id;
 ```
+<br>
 
 
 1. Histogram of Tweets
