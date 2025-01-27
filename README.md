@@ -3,6 +3,31 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+
+23. Snapchat
+
+Assume you're given tables with information on Snapchat users, including their ages and time spent sending and opening snaps. <br>
+Write a query to obtain a breakdown of the time spent sending vs. opening snaps as a percentage of total time spent on these activities grouped by age group. <br>
+Round the percentage to 2 decimal places in the output.
+
+``` sql
+SELECT 
+  age_bucket, 
+  ROUND(100.0*
+    SUM(CASE WHEN activity_type = 'send' THEN time_spent ELSE 0 END)/
+    SUM(CASE WHEN activity_type = 'send' OR activity_type = 'open' THEN time_spent ELSE 0 END), 2) AS send_perc, 
+  ROUND(100.0*
+    SUM(CASE WHEN activity_type = 'open' THEN time_spent ELSE 0 END)/
+    SUM(CASE WHEN activity_type = 'send' OR activity_type = 'open' THEN time_spent ELSE 0 END), 2) AS open_perc
+FROM 
+  activities 
+  LEFT JOIN age_breakdown ON activities.user_id = age_breakdown.user_id 
+GROUP BY 
+  age_bucket;
+```
+<br>
+
+
 22. FAANG
 
 Imagine you're an HR analyst at a tech company tasked with analyzing employee salaries. <br>
