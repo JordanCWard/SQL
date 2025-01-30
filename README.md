@@ -4,6 +4,27 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+24. Twitter
+
+Given a table of tweet data over a specified time period, calculate the 3-day rolling average of tweets for each user. Output the user ID, tweet date, and rolling averages rounded to 2 decimal places. <br>
+
+``` sql
+SELECT
+  user_id,
+  tweet_date,
+  ROUND(AVG(tweet_count) OVER
+    (PARTITION BY user_id
+    ORDER BY tweet_date ASC
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS rolling_avg_3d
+FROM
+  tweets
+ORDER BY
+  user_id ASC,
+  tweet_date ASC
+;
+```
+<br>
+
 
 23. Snapchat
 
