@@ -4,6 +4,7 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+
 23. Snapchat
 
 Assume you're given tables with information on Snapchat users, including their ages and time spent sending and opening snaps. <br>
