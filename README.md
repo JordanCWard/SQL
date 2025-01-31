@@ -3,6 +3,48 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+25. Amazon
+
+Assume you're given a table containing data on Amazon customers and their spending on products in different category, write a query to identify the top two highest-grossing products within each category in the year 2022. <br>
+The output should include the category, product, and total spend.
+
+``` sql
+ WITH product_gross AS (
+  SELECT
+    category,
+    product,
+    sum(spend) as total_spent
+  FROM
+    product_spend
+  WHERE
+    transaction_date BETWEEN '01/01/2022' AND '12/31/2022'
+  GROUP BY
+    category,
+    product
+),
+
+ranked_products AS (
+  SELECT
+    row_number() OVER (PARTITION BY category ORDER BY total_spent DESC) AS ranked,
+    category,
+    product,
+    total_spent
+  FROM
+    product_gross
+)
+
+SELECT
+  category,
+  product,
+  total_spent
+FROM
+  ranked_products
+WHERE
+  ranked < 3
+;
+```
+<br>
+
 
 24. Twitter
 
