@@ -9,11 +9,14 @@ Assume you're given a table containing data on Amazon customers and their spendi
 The output should include the category, product, and total spend.
 
 ``` sql
- WITH product_gross AS (
+WITH ranked_products AS (
   SELECT
     category,
     product,
-    sum(spend) as total_spent
+    sum(spend) as total_spent,
+    row_number() OVER (
+      PARTITION BY category
+      ORDER BY sum(spend) DESC) AS ranking
   FROM
     product_spend
   WHERE
@@ -21,16 +24,6 @@ The output should include the category, product, and total spend.
   GROUP BY
     category,
     product
-),
-
-ranked_products AS (
-  SELECT
-    row_number() OVER (PARTITION BY category ORDER BY total_spent DESC) AS ranked,
-    category,
-    product,
-    total_spent
-  FROM
-    product_gross
 )
 
 SELECT
@@ -40,7 +33,7 @@ SELECT
 FROM
   ranked_products
 WHERE
-  ranked < 3
+  ranking < 3
 ;
 ```
 <br>
