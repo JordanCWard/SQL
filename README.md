@@ -4,6 +4,42 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+27. Spotify
+
+Assume there are three Spotify tables: artists, songs, and global_song_rank, which contain information about the artists, songs, and music charts, respectively. <br>
+Write a query to find the top 5 artists whose songs appear most frequently in the Top 10 of the global_song_rank table. <br>
+Display the top 5 artist names in ascending order, along with their song appearance ranking. <br>
+If two or more artists have the same number of song appearances, they should be assigned the same ranking, and the rank numbers should be continuous (i.e. 1, 2, 2, 3, 4, 5).
+
+``` sql
+WITH top_ten_artists AS (
+  SELECT
+    artist_name,
+    dense_rank() OVER (ORDER BY COUNT(rank) DESC) as artist_rank
+  FROM
+    global_song_rank
+  LEFT JOIN
+    songs ON songs.song_id = global_song_rank.song_id
+  LEFT JOIN
+    artists ON artists.artist_id = songs.artist_id
+  WHERE
+    rank <= 10
+  GROUP BY
+    artist_name
+)
+
+SELECT
+  artist_name,
+  artist_rank
+FROM
+  top_ten_artists
+WHERE
+  artist_rank <= 5
+;
+```
+<br>
+
+
 26. FAANG
 
 As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. <br>
