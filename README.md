@@ -4,6 +4,45 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+26. FAANG
+
+As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. <br>
+A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department. <br>
+You're tasked with identifying these high earners across all departments. <br>
+Write a query to display the employee's name along with their department name and salary. <br>
+In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. <br>
+If multiple employees have the same salary, then order them alphabetically.
+
+``` sql
+WITH ranked_departments AS (
+  SELECT
+    dense_rank() OVER (PARTITION BY e.department_id ORDER BY salary DESC) AS ranking,
+    name,
+    salary,
+    department_name
+  FROM
+    employee AS e
+  LEFT JOIN
+    department AS d ON e.department_id = d.department_id
+)
+
+SELECT
+  department_name,
+  name,
+  salary
+FROM
+  ranked_departments
+WHERE
+  ranking < 4
+ORDER BY
+  department_name,
+  salary DESC,
+  name
+;
+```
+<br>
+
+
 25. Amazon
 
 Assume you're given a table containing data on Amazon customers and their spending on products in different category, write a query to identify the top two highest-grossing products within each category in the year 2022. <br>
