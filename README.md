@@ -4,6 +4,30 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+28. TikTok
+
+New TikTok users sign up with their emails. They confirmed their signup by replying to the text confirmation to activate their accounts. <br>
+Users may receive multiple text messages for account confirmation until they have confirmed their new account. <br>
+A senior analyst is interested to know the activation rate of specified users in the emails table. <br>
+Write a query to find the activation rate. Round the percentage to 2 decimal places.
+
+Assumptions: <br>
+The analyst is interested in the activation rate of specific users in the emails table, which may not include all users that could potentially be found in the texts table. <br>
+For example, user 123 in the emails table may not be in the texts table and vice versa.
+
+``` sql
+SELECT 
+  ROUND(COUNT(texts.email_id)::DECIMAL
+    /COUNT(DISTINCT emails.email_id),2) AS activation_rate
+FROM emails
+LEFT JOIN texts
+  ON emails.email_id = texts.email_id
+  AND texts.signup_action = 'Confirmed';
+;
+```
+<br>
+
+
 27. Spotify
 
 Assume there are three Spotify tables: artists, songs, and global_song_rank, which contain information about the artists, songs, and music charts, respectively. <br>
