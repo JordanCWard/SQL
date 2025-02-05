@@ -4,6 +4,37 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+29. Microsoft
+
+A Microsoft Azure Supercloud customer is defined as a customer who has purchased at least one product from every product category listed in the products table. <br>
+Write a query that identifies the customer IDs of these Supercloud customers.
+
+``` sql
+WITH customer_categories AS (
+  SELECT
+    customer_contracts.customer_id,
+    COUNT(DISTINCT products.product_category) AS product_count
+  FROM
+    customer_contracts
+  LEFT JOIN
+    products ON customer_contracts.product_id = products.product_id
+  GROUP BY
+    customer_contracts.customer_id
+)
+
+SELECT
+  customer_id
+FROM
+  customer_categories
+WHERE
+  product_count = (
+  SELECT COUNT(DISTINCT product_category) FROM products
+  )
+;
+```
+<br>
+
+
 28. TikTok
 
 New TikTok users sign up with their emails. They confirmed their signup by replying to the text confirmation to activate their accounts. <br>
