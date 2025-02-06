@@ -4,6 +4,41 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+31. Zomato
+
+Zomato is a leading online food delivery service that connects users with various restaurants and cuisines, allowing them to browse menus, place orders, and get meals delivered to their doorsteps. <br>
+Recently, Zomato encountered an issue with their delivery system. Due to an error in the delivery driver instructions, each item's order was swapped with the item in the subsequent row. <br>
+As a data analyst, you're asked to correct this swapping error and return the proper pairing of order ID and item. <br>
+If the last item has an odd order ID, it should remain as the last item in the corrected data. For example, if the last item is Order ID 7 Tandoori Chicken, then it should remain as Order ID 7 in the corrected data. <br>
+In the results, return the correct pairs of order IDs and items.
+
+``` sql
+WITH modified_orders AS (
+SELECT
+  ROW_NUMBER() OVER () AS row_num,
+  COUNT(*) OVER () AS total_rows,
+  order_id,
+  item,
+  LEAD(item) OVER (ORDER BY order_id) AS new_item,
+  LAG(item) OVER (ORDER BY order_id) AS prev_item
+FROM
+  orders
+)
+
+SELECT
+  order_id AS corrected_order_id,
+    CASE
+      WHEN row_num = total_rows AND row_num % 2 != 0 THEN item
+      WHEN row_num % 2 = 1 THEN new_item
+      ELSE prev_item
+    END AS item
+FROM modified_orders
+ORDER BY row_num;
+;
+```
+<br>
+
+
 30. Google
 
 Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day. <br>
