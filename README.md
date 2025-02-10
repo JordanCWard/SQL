@@ -6,9 +6,6 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
-
-
 31. Zomato
 
 Zomato is a leading online food delivery service that connects users with various restaurants and cuisines, allowing them to browse menus, place orders, and get meals delivered to their doorsteps. <br>
