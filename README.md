@@ -3,6 +3,40 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+
+33. Amazon
+
+In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. <br>
+A shopping spree occurs when a user makes purchases on 3 or more consecutive days. <br>
+List the user IDs who have gone on at least 1 shopping spree in ascending order.
+
+``` sql
+WITH consecutive_days AS (
+    SELECT 
+        user_id,
+        transaction_date,
+        LEAD(transaction_date, 1) OVER (PARTITION BY user_id ORDER BY transaction_date) AS next_day1,
+        LEAD(transaction_date, 2) OVER (PARTITION BY user_id ORDER BY transaction_date) AS next_day2
+    FROM transactions
+)
+
+SELECT
+  user_id,
+  transaction_date,
+  next_day1,
+  next_day2
+FROM
+  consecutive_days
+WHERE
+  next_day1 = transaction_date + INTERVAL '1 day' AND
+  next_day2 = transaction_date + INTERVAL '2 days'
+ORDER BY
+  user_id
+;
+```
+<br>
+
+
 32. Bloomberg
 
 The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. <br>
