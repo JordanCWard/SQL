@@ -3,7 +3,42 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+32. Bloomberg
 
+The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. <br>
+As a Data Analyst at Bloomberg, you have access to historical data on stock performance. <br>
+Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. <br>
+For each FAANG stock, display the ticker symbol, the month and year ('Mon-YYYY') with the corresponding highest and lowest open prices (refer to the Example Output format). <br>
+Ensure that the results are sorted by ticker symbol.
+
+``` sql
+SELECT 
+  ticker, 
+  TO_CHAR(MAX(date) FILTER (WHERE open = (
+          SELECT 
+            MAX(open) 
+          FROM 
+            stock_prices t2 
+          WHERE 
+            t2.ticker = t1.ticker)), 'Mon-YYYY') AS highest_mth, 
+  MAX(open) AS highest_open, 
+  TO_CHAR(MIN(date) FILTER (WHERE open = (
+          SELECT 
+            MIN(open) 
+          FROM 
+            stock_prices t2 
+          WHERE 
+            t2.ticker = t1.ticker)), 'Mon-YYYY') AS lowest_mtn, 
+  MIN(open) AS lowest_open 
+FROM 
+  stock_prices t1 
+GROUP BY 
+  ticker
+ORDER BY
+  ticker
+;
+```
+<br>
 
 
 31. Zomato
