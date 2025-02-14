@@ -5,7 +5,6 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
 33. Amazon
 
 In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. <br>
