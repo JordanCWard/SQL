@@ -8,7 +8,50 @@ https://datalemur.com/questions?category=SQL
 
 
 
+34. Walmart
 
+Assume you're given a table on Walmart user transactions. <br>
+Based on their most recent transaction date, write a query that retrieve the users along with the number of products they bought. <br>
+Output the user's most recent transaction date, user ID, and the number of products, sorted in chronological order by the transaction date.
+
+``` sql
+/*
+output
+  last transaction date for each user
+  user id
+  purchase count
+
+find the last purchase date for each user (CTE)
+inner join with original table to remove extra rows 
+count all purchases
+group by user_id and transaction_date
+order by transaction_date asc
+*/
+
+WITH max_dates AS (
+  SELECT
+    user_id,
+    MAX(transaction_date) AS last_transaction
+  FROM
+    user_transactions
+  GROUP BY
+    user_id
+)
+
+SELECT
+  transaction_date,
+  u.user_id,
+  count(product_id) AS purchase_count
+FROM
+  user_transactions u
+INNER JOIN
+  max_dates m ON u.user_id = m.user_id AND u.transaction_date = m.last_transaction
+GROUP BY
+  u.user_id, transaction_date
+ORDER BY
+  transaction_date ASC
+```
+<br>
 
 
 33. Amazon
