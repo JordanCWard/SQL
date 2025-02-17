@@ -3,12 +3,44 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+36. JPMorgan
+
+Your team at JPMorgan Chase is soon launching a new credit card. You are asked to estimate how many cards you'll issue in the first month. Before you can answer this question, you want to first get some perspective on how well new credit card launches typically do in their first month. Write a query that outputs the name of the credit card, and how many cards were issued in its launch month. The launch month is the earliest record in the monthly_cards_issued table for a given card. Order the results starting from the biggest issued amount.
+
+``` sql
+/*
+Use a CTE to find which month is the first month for each card.
+Partition by card name, order by issue year and issue month.
+
+Then return cards that have a rank of 1 and order by issued amount.
+*/
+
+WITH card_rank AS (
+SELECT
+  row_number() OVER (PARTITION BY card_name ORDER BY issue_year ASC, issue_month ASC) AS date_order,
+  card_name,
+  issued_amount
+FROM
+  monthly_cards_issued
+)
+
+SELECT
+  card_name,
+  issued_amount
+FROM
+  card_rank
+WHERE
+  date_order = 1
+ORDER BY
+  issued_amount DESC
+;
+```
+<br>
+
 
 35. Alibaba
 
-You're given a table containing the item count for each order on Alibaba, along with the frequency of orders that have the same item count. <br>
-Write a query to retrieve the mode of the order occurrences. <br>
-Additionally, if there are multiple item counts with the same mode, the results should be sorted in ascending order.
+You're given a table containing the item count for each order on Alibaba, along with the frequency of orders that have the same item count. Write a query to retrieve the mode of the order occurrences. Additionally, if there are multiple item counts with the same mode, the results should be sorted in ascending order.
 
 ``` sql
 /*
@@ -47,9 +79,7 @@ WHERE
 
 34. Walmart
 
-Assume you're given a table on Walmart user transactions. <br>
-Based on their most recent transaction date, write a query that retrieve the users along with the number of products they bought. <br>
-Output the user's most recent transaction date, user ID, and the number of products, sorted in chronological order by the transaction date.
+Assume you're given a table on Walmart user transactions. Based on their most recent transaction date, write a query that retrieve the users along with the number of products they bought. Output the user's most recent transaction date, user ID, and the number of products, sorted in chronological order by the transaction date.
 
 ``` sql
 /*
@@ -93,9 +123,7 @@ ORDER BY
 
 33. Amazon
 
-In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. <br>
-A shopping spree occurs when a user makes purchases on 3 or more consecutive days. <br>
-List the user IDs who have gone on at least 1 shopping spree in ascending order.
+In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. A shopping spree occurs when a user makes purchases on 3 or more consecutive days. List the user IDs who have gone on at least 1 shopping spree in ascending order.
 
 ``` sql
 WITH consecutive_days AS (
@@ -126,11 +154,7 @@ ORDER BY
 
 32. Bloomberg
 
-The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. <br>
-As a Data Analyst at Bloomberg, you have access to historical data on stock performance. <br>
-Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. <br>
-For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. <br>
-Ensure that the results are sorted by ticker symbol.
+The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
 
 ``` sql
 SELECT 
@@ -164,11 +188,7 @@ ORDER BY
 
 31. Zomato
 
-Zomato is a leading online food delivery service that connects users with various restaurants and cuisines, allowing them to browse menus, place orders, and get meals delivered to their doorsteps. <br>
-Recently, Zomato encountered an issue with their delivery system. Due to an error in the delivery driver instructions, each item's order was swapped with the item in the subsequent row. <br>
-As a data analyst, you're asked to correct this swapping error and return the proper pairing of order ID and item. <br>
-If the last item has an odd order ID, it should remain as the last item in the corrected data. For example, if the last item is Order ID 7 Tandoori Chicken, then it should remain as Order ID 7 in the corrected data. <br>
-In the results, return the correct pairs of order IDs and items.
+Zomato is a leading online food delivery service that connects users with various restaurants and cuisines, allowing them to browse menus, place orders, and get meals delivered to their doorsteps. Recently, Zomato encountered an issue with their delivery system. Due to an error in the delivery driver instructions, each item's order was swapped with the item in the subsequent row. As a data analyst, you're asked to correct this swapping error and return the proper pairing of order ID and item. If the last item has an odd order ID, it should remain as the last item in the corrected data. For example, if the last item is Order ID 7 Tandoori Chicken, then it should remain as Order ID 7 in the corrected data. In the results, return the correct pairs of order IDs and items.
 
 ``` sql
 WITH modified_orders AS (
@@ -199,8 +219,7 @@ ORDER BY row_num;
 
 30. Google
 
-Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day. <br>
-Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns. <br>
+Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day. Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns. <br>
 
 Definition: Within a day, measurements taken at 1st, 3rd, and 5th times are considered odd-numbered measurements, and measurements taken at 2nd, 4th, and 6th times are considered even-numbered measurements.
 
