@@ -3,37 +3,39 @@
 https://datalemur.com/questions?category=SQL
  <br> <br>
 
+<!-- Hidden text for templates
+
+/*
+ 
+*/
+``` sql
+
+```
+
+-->
+
+
 36. JPMorgan
 
 Your team at JPMorgan Chase is soon launching a new credit card. You are asked to estimate how many cards you'll issue in the first month. Before you can answer this question, you want to first get some perspective on how well new credit card launches typically do in their first month. Write a query that outputs the name of the credit card, and how many cards were issued in its launch month. The launch month is the earliest record in the monthly_cards_issued table for a given card. Order the results starting from the biggest issued amount.
 
 ``` sql
 /*
-Use a CTE to find which month is the first month for each card.
+Rank the dates to find which month is the first month for each card.
+Use first value to return the issued amount for the first month.
 Partition by card name, order by issue year and issue month.
-
-Then return cards that have a rank of 1 and order by issued amount.
 */
 
-WITH card_rank AS (
-SELECT
-  row_number() OVER (PARTITION BY card_name ORDER BY issue_year ASC, issue_month ASC) AS date_order,
-  card_name,
-  issued_amount
-FROM
-  monthly_cards_issued
-)
-
-SELECT
-  card_name,
-  issued_amount
-FROM
-  card_rank
-WHERE
-  date_order = 1
-ORDER BY
-  issued_amount DESC
-;
+SELECT DISTINCT
+  card_name, 
+  FIRST_VALUE(issued_amount) OVER (
+    PARTITION BY card_name 
+    ORDER BY issue_year, issue_month
+  ) AS issued_amount 
+FROM 
+  monthly_cards_issued 
+ORDER BY 
+  issued_amount DESC;
 ```
 <br>
 
