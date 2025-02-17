@@ -4,8 +4,45 @@ https://datalemur.com/questions?category=SQL
  <br> <br>
 
 
+35. Alibaba
 
+You're given a table containing the item count for each order on Alibaba, along with the frequency of orders that have the same item count. <br>
+Write a query to retrieve the mode of the order occurrences. <br>
+Additionally, if there are multiple item counts with the same mode, the results should be sorted in ascending order.
 
+``` sql
+/*
+to find the mode 
+
+CTE
+count the number of times each order occurrence appears
+group by order occurrences
+
+join new table with original table 
+only want rows with max occurrence value 
+*/
+
+WITH all_orders AS (
+SELECT
+  order_occurrences,
+  count(*) AS occurrences
+FROM
+  items_per_order
+GROUP BY
+  order_occurrences
+) 
+  
+SELECT
+  item_count
+FROM
+  all_orders
+FULL OUTER JOIN
+  items_per_order ON all_orders.order_occurrences = items_per_order.order_occurrences
+WHERE
+  occurrences = (SELECT MAX(occurrences) FROM all_orders)
+;
+```
+<br>
 
 
 34. Walmart
