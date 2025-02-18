@@ -1,4 +1,4 @@
-# SQL_practice
+# SQL Practice
 
 <!-- Hidden text for templates
 
