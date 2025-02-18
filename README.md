@@ -1,8 +1,5 @@
 # SQL_practice
 
-
- <br> <br>
-
 <!-- Hidden text for templates
 
 https://datalemur.com/questions?category=SQL
