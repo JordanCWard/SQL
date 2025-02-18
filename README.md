@@ -6,7 +6,7 @@ https://datalemur.com/questions?category=SQL
 <!-- Hidden text for templates
 
 /*
- 
+
 */
 ``` sql
 
