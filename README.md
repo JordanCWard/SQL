@@ -15,6 +15,8 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+39.
+
 
 
 
