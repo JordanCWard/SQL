@@ -16,6 +16,38 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+40. Wayfair
+
+Assume you're given a table containing information about Wayfair user transactions for different products. Write a query to calculate the year-on-year growth rate for the total spend of each product, grouping the results by product ID.
+
+``` sql
+WITH product_spending AS (
+  SELECT
+    EXTRACT (YEAR FROM transaction_date) AS year,
+    product_id,
+    SUM(spend) AS total_spent
+  FROM
+    user_transactions
+  GROUP BY
+    year, product_id
+  ORDER BY
+    product_id ASC, year ASC
+)
+  
+SELECT
+  a.year,
+  a.product_id,
+  a.total_spent AS current_year_spend,
+  b.total_spent AS prev_year_spend,
+  ROUND(100.0*((a.total_spent-b.total_spent)/b.total_spent), 2) AS yoy_rate
+FROM
+  product_spending a
+LEFT JOIN
+  product_spending b ON a.year = b.year + 1 AND a.product_id = b.product_id
+;
+```
+<br>
+
 
 39. Facebook
 Assume you're given a table containing information on Facebook user actions. Write a query to obtain number of monthly active users (MAUs) in July 2022, including the month in numerical format "1, 2, 3". An active user is defined as a user who has performed actions such as 'sign-in', 'like', or 'comment' in both the current month and the previous month.
