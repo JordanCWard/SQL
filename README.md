@@ -588,9 +588,7 @@ GROUP BY
 
 22. FAANG
 
-Imagine you're an HR analyst at a tech company tasked with analyzing employee salaries. <br>
-Your manager is keen on understanding the pay distribution and asks you to determine the second highest salary among all employees. <br>
-It's possible that multiple employees may share the same second highest salary. In case of duplicate, display the salary only once.
+Imagine you're an HR analyst at a tech company tasked with analyzing employee salaries. Your manager is keen on understanding the pay distribution and asks you to determine the second highest salary among all employees. It's possible that multiple employees may share the same second highest salary. In case of duplicate, display the salary only once.
 
 ``` sql
 WITH salary_ranking AS (
