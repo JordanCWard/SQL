@@ -612,9 +612,7 @@ WHERE
 
 21. Uber
 
-Assume you are given the table below on Uber transactions made by users. <br>
-Write a query to obtain the third transaction of every user. <br>
-Output the user id, spend and transaction date.
+Assume you are given the table below on Uber transactions made by users. Write a query to obtain the third transaction of every user. Output the user id, spend and transaction date.
 
 ``` sql
 WITH ranked_transactions AS (
