@@ -13,7 +13,6 @@ https://datalemur.com/questions?category=SQL
 ```
 
 
-
 -->
 
 40. Wayfair
