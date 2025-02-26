@@ -666,11 +666,7 @@ WHERE
 
 19. CVS Health
 
-CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. <br>
-Write a query to calculate the total drug sales for each manufacturer. <br>
-Round the answer to the nearest million and report your results in descending order of total sales. <br>
-In case of any duplicates, sort them alphabetically by the manufacturer name. <br>
-Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
+CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name. Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
 
 ``` sql
 WITH manufacturer_sales AS (
