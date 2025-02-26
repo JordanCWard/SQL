@@ -715,11 +715,7 @@ ORDER BY
 
 17. CVS Health
 
-CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. <br>
-Each drug can only be produced by one manufacturer. <br>
-Write a query to find the top 3 most profitable drugs sold, and how much profit they made. <br>
-Assume that there are no ties in the profits. <br>
-Display the result from the highest to the lowest total profit.
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer. Write a query to find the top 3 most profitable drugs sold, and how much profit they made. Assume that there are no ties in the profits. Display the result from the highest to the lowest total profit.
 
 ``` sql
 SELECT
