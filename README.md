@@ -16,6 +16,52 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+42. Google
+
+Google's marketing team is making a Superbowl commercial and needs a simple statistic to put on their TV ad: the median number of searches a person made last year. However, at Google scale, querying the 2 trillion searches is too costly. Luckily, you have access to the summary table which tells you the number of searches made last year and how many Google users fall into that bucket. Write a query to report the median of searches made by a user. Round the median to one decimal point.
+
+Method 1: More efficient method for larger datasets
+``` sql
+WITH cte as(
+  SELECT
+    *,
+    SUM(num_users) OVER(ORDER BY searches) as cumsum_users,
+    SUM(num_users) OVER() as tot_users
+  FROM search_frequency
+)
+
+SELECT
+  ROUND(AVG(searches), 1) as median
+FROM
+  cte
+WHERE
+  tot_users <= cumsum_users * 2 AND
+  tot_users >= (cumsum_users - num_users) * 2
+;
+```
+
+Method 2: Using GENERATE_SERIES and PERCENTILE_CONT
+``` sql
+WITH searches_expanded AS (
+  SELECT
+    searches
+  FROM
+    search_frequency
+  GROUP BY
+    searches,
+    GENERATE_SERIES(1, num_users)
+)
+
+SELECT 
+  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY searches) AS median
+FROM searches_expanded
+;
+```
+
+
+<br>
+
+
 41. Amazon
 
 Amazon wants to maximize the storage capacity of its 500,000 square-foot warehouse by prioritizing a specific batch of prime items. The specific prime product batch detailed in the inventory table must be maintained. So, if the prime product batch specified in the item_category column included 1 laptop and 1 side table, that would be the base batch. We could not add another laptop without also adding a side table; they come all together as a batch set. After prioritizing the maximum number of prime batches, any remaining square footage will be utilized to stock non-prime batches, which also come in batch sets and cannot be separated into individual items. Write a query to find the maximum number of prime and non-prime batches that can be stored in the 500,000 square feet warehouse based on the following criteria:
