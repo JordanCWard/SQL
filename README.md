@@ -891,10 +891,7 @@ GROUP BY
 
 11. FAANG
 
-Companies often perform salary analyses to ensure fair compensation practices. <br>
-One useful analysis is to check if there are any employees earning more than their direct managers. <br>
-As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. <br>
-The result should include the employee's ID and name.
+Companies often perform salary analyses to ensure fair compensation practices. One useful analysis is to check if there are any employees earning more than their direct managers. As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. The result should include the employee's ID and name.
 
 ``` sql
 SELECT 
