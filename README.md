@@ -930,9 +930,7 @@ ORDER BY
 
 9. Robinhood
 
-Assume you're given the tables containing completed trade orders and user details in a Robinhood trading system. <br>
-Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. <br>
-Output the city name and the corresponding number of completed trade orders.
+Assume you're given the tables containing completed trade orders and user details in a Robinhood trading system. Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. Output the city name and the corresponding number of completed trade orders.
 
 ``` sql
 SELECT 
