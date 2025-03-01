@@ -1067,8 +1067,7 @@ FROM
 
 4.  Tesla
 
-Tesla is investigating production bottlenecks and they need your help to extract the relevant data. <br>
-Write a query to determine which parts have begun the assembly process but are not yet finished. <br>
+Tesla is investigating production bottlenecks and they need your help to extract the relevant data. Write a query to determine which parts have begun the assembly process but are not yet finished. <br>
 
 Assumptions <br>
 parts_assembly table contains all parts currently in production, each at varying stages of the assembly process. <br>
