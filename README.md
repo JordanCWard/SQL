@@ -16,6 +16,41 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+45. FAANG
+
+You work as a data analyst for a FAANG company that tracks employee salaries over time. The company wants to understand how the average salary in each department compares to the company's overall average salary each month. Write a query to compare the average salary of employees in each department to the company's average salary for March 2024. Return the comparison result as 'higher', 'lower', or 'same' for each department. Display the department ID, payment month (in MM-YYYY format), and the comparison result.
+
+
+``` sql
+WITH avg_salary AS (
+  SELECT
+    e.department_id,
+    TO_CHAR(s.payment_date, 'MM-YYYY') AS pay_month,
+    AVG(s.amount) AS salary
+  FROM
+    salary s
+  LEFT JOIN
+    employee e ON s.employee_id = e.employee_id
+  GROUP BY
+    pay_month,
+    department_id
+)
+
+SELECT
+  department_id,
+  pay_month,
+  CASE
+    WHEN salary < (SELECT avg(amount) FROM salary) THEN 'lower'
+    WHEN salary = (SELECT avg(amount) FROM salary) THEN 'same'
+    WHEN salary > (SELECT avg(amount) FROM salary) THEN 'higher'
+  END AS comparison
+FROM
+  avg_salary
+WHERE
+  pay_month = '03-2024'
+;
+```
+
 
 44. McKinsey
 
