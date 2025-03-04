@@ -3,7 +3,7 @@
 <!-- Hidden text for templates
 
 https://datalemur.com/questions?category=SQL
-
+https://leetcode.com/studyplan/top-sql-50/
 /*
 
 */
