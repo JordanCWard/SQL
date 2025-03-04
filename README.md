@@ -15,6 +15,57 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+47. Amazon
+
+Amazon Web Services (AWS) is powered by fleets of servers. Senior management has requested data-driven solutions to optimize server usage. Write a query that calculates the total time that the fleet of servers was running. The output should be in units of full days.
+
+Each server might start and stop several times.
+The total time in which the server fleet is running can be calculated as the sum of each server's uptime.
+
+
+``` sql
+WITH session_info AS (
+  SELECT
+    server_id,
+    session_status,
+    status_time AS start_time,
+    LEAD(status_time) OVER(PARTITION BY server_id ORDER BY status_time) AS end_time
+  FROM
+    server_utilization
+  ORDER BY
+    server_id ASC,
+    status_time ASC
+)
+
+SELECT
+  FLOOR(EXTRACT(EPOCH FROM SUM(end_time - start_time)) / 86400) AS total_uptime_days
+FROM
+  session_info
+WHERE
+  session_status = 'start'
+;
+```
+<br>
+
+Alternative version (no CTE) that works by negating the start date
+``` sql
+SELECT 
+  SUM(
+    CASE WHEN
+        session_status = 'start' THEN
+        -(EXTRACT(DAY from status_time))
+        ELSE EXTRACT(DAY from status_time
+    ) END
+  ) as total_uptime_days 
+FROM 
+  server_utilization
+;
+```
+<br>
+
+
+
+
 46. Stripe
 
 Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card to be charged twice. Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. Count such repeated payments.
