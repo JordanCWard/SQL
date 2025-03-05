@@ -2,10 +2,12 @@
 
 <!-- Hidden text for templates
 
-https://datalemur.com/questions?category=SQL
-https://leetcode.com/studyplan/top-sql-50/
 /*
+48- MySQL
+https://leetcode.com/studyplan/top-sql-50/
 
+1-47 PostgreSQL
+https://datalemur.com/questions?category=SQL
 */
 
 ``` sql
