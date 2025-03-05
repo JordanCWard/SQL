@@ -18,7 +18,26 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+49. Find Customer Referee (584)
 
+Find the names of the customer that are not referred by the customer with id = 2. Return the result table in any order.
+
+``` sql
+/*
+customer names
+exclude those referred by id = 2
+any order
+*/
+
+SELECT
+    name
+FROM
+    customer
+WHERE
+    referee_id != 2 OR referee_id IS NULL
+;
+```
+<br>
 
 
 48. Recyclable and Low Fat Products (1757)
@@ -40,6 +59,8 @@ WHERE
     low_fats = 'Y' AND recyclable = 'Y'
 ;
 ```
+<br>
+
 
 47. Amazon
 
