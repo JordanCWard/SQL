@@ -17,13 +17,17 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+
+
+
 48. Recyclable and Low Fat Products (1757)
 
 Write a solution to find the ids of products that are both low fat and recyclable. Return the result table in any order.
 
 ``` sql
 /*
-all products
+select products
 low fat and recyclable
 any order
 */
