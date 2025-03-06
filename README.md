@@ -18,6 +18,29 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+51. Article Views I (1148)
+
+Write a solution to find all the authors that viewed at least one of their own articles. Return the result table sorted by id in ascending order.
+
+``` sql
+/*
+author id
+where author id is the same as viewer id
+order by id ascending
+*/
+
+SELECT DISTINCT
+    author_id AS id
+FROM
+    views
+WHERE
+    author_id = viewer_id
+ORDER BY
+    id ASC
+```
+<br>
+
+
 50. Big Countries (595)
 
 A country is big if:
