@@ -52,20 +52,17 @@ Find the names of the customer that are not referred by the customer with id = 2
 
 ``` sql
 /*
-country name, population, area
-area at least 3000000 or population at least 25000000
+customer names
+exclude those referred by id = 2
 any order
 */
 
 SELECT
-    name,
-    population,
-    area
+    name
 FROM
-    world
+    customer
 WHERE
-    area >= 3000000 OR
-    population >= 25000000
+    referee_id != 2 OR referee_id IS NULL
 ;
 ```
 <br>
