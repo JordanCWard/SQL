@@ -26,6 +26,12 @@ it has an area of at least three million (i.e., 3000000 km2), or it has a popula
 Write a solution to find the name, population, and area of the big countries. Return the result table in any order.
 
 ``` sql
+/*
+country name, population, area
+area at least 3000000 or population at least 25000000
+any order
+*/
+
 SELECT
     name,
     population,
