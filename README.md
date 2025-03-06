@@ -24,7 +24,7 @@ Write a solution to find all the authors that viewed at least one of their own a
 
 ``` sql
 /*
-author id
+author id, no repeats
 where author id is the same as viewer id
 order by id ascending
 */
