@@ -18,6 +18,27 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+50. Big Countries (595)
+
+A country is big if:
+
+it has an area of at least three million (i.e., 3000000 km2), or it has a population of at least twenty-five million (i.e., 25000000).
+Write a solution to find the name, population, and area of the big countries. Return the result table in any order.
+
+``` sql
+SELECT
+    name,
+    population,
+    area
+FROM
+    world
+WHERE
+    area >= 3000000 OR
+    population >= 25000000
+;
+```
+<br>
+
 
 49. Find Customer Referee (584)
 
@@ -25,17 +46,20 @@ Find the names of the customer that are not referred by the customer with id = 2
 
 ``` sql
 /*
-customer names
-exclude those referred by id = 2
+country name, population, area
+area at least 3000000 or population at least 25000000
 any order
 */
 
 SELECT
-    name
+    name,
+    population,
+    area
 FROM
-    customer
+    world
 WHERE
-    referee_id != 2 OR referee_id IS NULL
+    area >= 3000000 OR
+    population >= 25000000
 ;
 ```
 <br>
