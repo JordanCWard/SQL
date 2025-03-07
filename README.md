@@ -24,6 +24,28 @@ https://datalemur.com/questions?category=SQL
 
 
 
+52. Replace Employee ID With The Unique Identifier (1378)
+
+Write a solution to show the unique ID of each user, If a user does not have a unique ID replace just show null. Return the result table in any order.
+
+``` sql
+/*
+unique id, name
+all names, whether they have a unique id or not
+any order
+*/
+
+SELECT
+    unique_id,
+    name
+FROM
+    employees
+LEFT JOIN
+    employeeuni ON employees.id = employeeuni.id
+;
+```
+<br>
+
 
 51. Invalid Tweets (1683)
 
