@@ -24,7 +24,7 @@ https://datalemur.com/questions?category=SQL
 
 
 
-52. Replace Employee ID With The Unique Identifier (1378)
+53. Replace Employee ID With The Unique Identifier (1378)
 
 Write a solution to show the unique ID of each user, If a user does not have a unique ID replace just show null. Return the result table in any order.
 
@@ -47,7 +47,7 @@ LEFT JOIN
 <br>
 
 
-51. Invalid Tweets (1683)
+52. Invalid Tweets (1683)
 
 Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15. Return the result table in any order.
 
