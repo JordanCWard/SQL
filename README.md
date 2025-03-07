@@ -11,12 +11,41 @@ https://leetcode.com/studyplan/top-sql-50/
 https://datalemur.com/questions?category=SQL
 */
 
+/*
+
+*/
+
 ``` sql
 
 ```
 <br>
 
 -->
+
+
+
+
+51. Invalid Tweets (1683)
+
+Write a solution to find the IDs of the invalid tweets. The tweet is invalid if the number of characters used in the content of the tweet is strictly greater than 15. Return the result table in any order.
+
+``` sql
+/*
+tweet id
+more than 15 characters in a tweet
+any order
+*/
+
+SELECT
+    tweet_id
+FROM
+    tweets
+WHERE
+    CHAR_LENGTH(content) > 15
+;
+```
+<br>
+
 
 51. Article Views I (1148)
 
