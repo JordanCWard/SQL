@@ -22,6 +22,35 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+
+
+55. Customer Who Visited but Did Not Make Any Transactions (1581)
+
+Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits. Return the result table sorted in any order.
+
+``` sql
+/*
+customer id, count of customer id
+for each visit id that doesn't exist in transactions table (subquery)
+group by customer id
+any order
+*/
+
+SELECT
+    customer_id,
+    COUNT(customer_id) AS count_no_trans
+FROM
+    visits v
+WHERE
+    v.visit_id NOT IN (SELECT visit_id FROM transactions)
+GROUP BY
+    customer_id
+;
+```
+<br>
+
+
 54. Product Sales Analysis I (1068)
 
 Write a solution to report the product_name, year, and price for each sale_id in the Sales table. Return the resulting table in any order.
