@@ -22,6 +22,29 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+54. Product Sales Analysis I (1068)
+
+Write a solution to report the product_name, year, and price for each sale_id in the Sales table. Return the resulting table in any order.
+
+``` sql
+/*
+product name, year, price
+for each sale id
+left join product table to sales table on product id
+any order
+*/
+
+SELECT
+    product_name,
+    year,
+    price
+FROM
+    sales
+LEFT JOIN
+    product ON sales.product_id = product.product_id
+;
+```
+<br>
 
 
 53. Replace Employee ID With The Unique Identifier (1378)
