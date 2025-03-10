@@ -23,6 +23,30 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+56. Rising Temperature (197)
+
+Write a solution to find all dates' id with higher temperatures compared to its previous dates (yesterday). Return the result table in any order.
+
+``` sql
+/*
+table 2 id
+where the temperature increased from one day to the next
+self join + 1
+where table two temperature > table one temperature
+any order
+*/
+
+SELECT
+    w2.id
+FROM
+    weather w1
+JOIN
+    weather w2 ON w1.id + 1 = w2.id
+WHERE
+    w2.temperature > w1.temperature
+;
+```
+<br>
 
 
 55. Customer Who Visited but Did Not Make Any Transactions (1581)
