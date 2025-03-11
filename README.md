@@ -24,6 +24,34 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+58. Employee Bonus (577)
+
+Write a solution to report the name and bonus amount of each employee with a bonus less than 1000. Return the result table in any order.
+
+``` sql
+/*
+employee name
+bonus
+
+bonus < 1000 or bonus doesn't exist
+
+any order
+*/
+
+SELECT
+    name,
+    bonus
+FROM
+    employee e
+LEFT JOIN
+    bonus b ON e.empID = b.empID
+WHERE
+    bonus < 1000 OR bonus IS NULL
+;
+```
+<br>
+
+
 57. Average Time of Process per Machine (1661)
 
 There is a factory website that has several machines each running the same number of processes. Write a solution to find the average time each machine takes to complete a process. The resulting table should have the machine_id along with the average time as processing_time, which should be rounded to 3 decimal places. Return the result table in any order.
