@@ -3,6 +3,8 @@
 <!-- Hidden text for templates
 
 /*
+https://platform.stratascratch.com/coding?code_type=3&is_freemium=1
+
 48- MySQL
 https://leetcode.com/studyplan/top-sql-50/
 
