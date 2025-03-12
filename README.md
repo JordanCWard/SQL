@@ -36,7 +36,7 @@ self inner join where id is the same as manager id
 
 group by manager id
 
-having at least 5 people for one manager
+having at least 5 direct reports for one manager, use count
 */
 
 SELECT
