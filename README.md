@@ -28,6 +28,7 @@ https://datalemur.com/questions?category=SQL
 
 Write a solution to find managers with at least five direct reports. Return the result table in any order.
 
+``` sql
 /*
 name of the manager
 
@@ -49,6 +50,7 @@ GROUP BY
 HAVING
     COUNT(*) >= 5
 ;
+```
 <br>
 
 
