@@ -24,6 +24,33 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+60. Managers with at least 5 direct reports (570)
+
+Write a solution to find managers with at least five direct reports. Return the result table in any order.
+
+/*
+name of the manager
+
+self inner join where id is the same as manager id
+
+group by manager id
+
+having at least 5 people for one manager
+*/
+
+SELECT
+    a.name
+FROM
+    employee a
+JOIN
+    employee b ON a.id = b.managerId
+GROUP BY
+    b.managerId
+HAVING
+    COUNT(*) >= 5
+;
+<br>
+
 
 59. Students and Examinations (1280)
 
