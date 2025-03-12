@@ -34,55 +34,34 @@ Write a solution to find the number of times each student attended each exam. Re
 student id
 student name
 subject name
-number of exams attended
+count of number of exams for each student in each subject
 
 list all exam subjects for every student, even if it's 0
 to do this, crossjoin students and subjects
 
-in the examinations table, count number of exams for each student in each subject
-group by the student id
+then left join the crossjoined table above to the examinations table
 
-join the number of exams with the tables that were crossjoined
-replace null values in the number of exams with zeros
-
-order by student id asc, student name asc
-
+order by student id asc, student name asc, subject name asc
+group by student id, student name, subject name
 */
 
-WITH all_possible_combos AS (
-    SELECT
-        student_id,
-        student_name,
-        subject_name
-    FROM
-        students
-    JOIN
-        subjects
-),
-
-exam_count AS (
 SELECT
-    student_id,
-    subject_name,
-    COUNT(subject_name) AS attended_exams
+    st.student_id
+    ,st.student_name
+    ,su.subject_name
+    ,COUNT(e.subject_name) AS attended_exams
 FROM
-    examinations
-GROUP BY
-    1, 2
-)
-
-SELECT
-    a.student_id,
-    a.student_name,
-    a.subject_name,
-    COALESCE(e.attended_exams, 0) attended_exams
-FROM
-    all_possible_combos a
+    students st
+JOIN
+    subjects su
 LEFT JOIN
-    exam_count e ON a.student_id = e.student_ID
-    AND a.subject_name = e.subject_name
+    examinations e
+        ON st.student_id = e.student_ID
+        AND su.subject_name = e.subject_name
+GROUP BY
+    St.student_id, St.student_name, Su.subject_name
 ORDER BY
-    student_id, subject_name
+    St.student_id, St.student_name, Su.subject_name
 ;
 ```
 <br>
