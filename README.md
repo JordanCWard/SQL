@@ -24,6 +24,70 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+59. Students and Examinations (1280)
+
+Write a solution to find the number of times each student attended each exam. Return the result table ordered by student_id and subject_name.
+
+``` sql
+/*
+student id
+student name
+subject name
+number of exams attended
+
+list all exam subjects for every student, even if it's 0
+to do this, crossjoin students and subjects
+
+in the examinations table, count number of exams for each student in each subject
+group by the student id
+
+join the number of exams with the tables that were crossjoined
+replace null values in the number of exams with zeros
+
+order by student id asc, student name asc
+
+*/
+
+WITH all_possible_combos AS (
+    SELECT
+        student_id,
+        student_name,
+        subject_name
+    FROM
+        students
+    JOIN
+        subjects
+),
+
+exam_count AS (
+SELECT
+    student_id,
+    subject_name,
+    COUNT(subject_name) AS attended_exams
+FROM
+    examinations
+GROUP BY
+    1, 2
+)
+
+SELECT
+    a.student_id,
+    a.student_name,
+    a.subject_name,
+    COALESCE(e.attended_exams, 0) attended_exams
+FROM
+    all_possible_combos a
+LEFT JOIN
+    exam_count e ON a.student_id = e.student_ID
+    AND a.subject_name = e.subject_name
+ORDER BY
+    student_id, subject_name
+;
+```
+<br>
+
+
 58. Employee Bonus (577)
 
 Write a solution to report the name and bonus amount of each employee with a bonus less than 1000. Return the result table in any order.
