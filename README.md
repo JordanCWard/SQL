@@ -24,6 +24,38 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+62. Number of Unique Subjects Taught by Each Teacher (2356)
+
+Write a solution to calculate the number of unique subjects each teacher teaches in the university. Return the result table in any order.
+
+``` sql
+/*
+What is the name of the table with the teachers?
+teacher
+What columns are in the teacher table?
+teacher_id, subject_id, department_id
+What are the data types?
+All three are integers.
+Should we return all columns or only specific columns?
+teacher_id and the number of unique subjects
+
+I am going to return the teacher id and the distinct count of the subject id from the teacher table.
+I will use an alias for the count of subject id as num_of_classes.
+I will group by teacher id.
+*/
+
+SELECT
+    teacher_id,
+    COUNT(DISTINCT subject_id) AS cnt
+FROM
+    teacher
+GROUP BY
+    teacher_id
+;
+```
+<br>
+
+
 61. Not Boring Movies (620)
 
 Write a solution to report the movies with an odd-numbered ID and a description that is not "boring". Return the result table ordered by rating in descending order.
