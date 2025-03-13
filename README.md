@@ -28,7 +28,7 @@ https://datalemur.com/questions?category=SQL
 
 Write a solution to report the movies with an odd-numbered ID and a description that is not "boring". Return the result table ordered by rating in descending order.
 
-
+``` sql
 /*
 What is the name of the table that stores movies?
 cinema
@@ -49,10 +49,8 @@ all columns
 
 
 I'm going to select the id, movie, description and rating columns. Then I'll filter the description twice in the where statement to remove boring descriptions and any even ids using mod. Then I'll order the resulting tables by rating in descending order.
-
 */
 
-``` sql
 SELECT
     id,
     movie,
