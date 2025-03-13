@@ -24,6 +24,52 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+61. Not Boring Movies (620)
+
+Write a solution to report the movies with an odd-numbered ID and a description that is not "boring". Return the result table ordered by rating in descending order.
+
+
+/*
+What is the name of the table that stores movies?
+cinema
+what is the grain of the cinema table?
+one row per movie
+What columns are available in the movie table?
+id, movie, description, rating
+What are the data types of the columns?
+id int, movie varchar (string or text), description varchar, rating float (decimal)
+Can any columns contain NULL values?
+yes, the id column
+Are there any duplicate movie IDs? Is movie IDs a primary key?
+no
+Are there ties in ratings? How should we break the ties?
+no
+Should we return all columns or only specific columns?
+all columns
+
+
+I'm going to select the id, movie, description and rating columns. Then I'll filter the description twice in the where statement to remove boring descriptions and any even ids using mod. Then I'll order the resulting tables by rating in descending order.
+
+*/
+
+``` sql
+SELECT
+    id,
+    movie,
+    description,
+    rating
+FROM
+    cinema
+WHERE
+    MOD(id, 2) <> 0
+    AND description <> 'boring'
+ORDER BY
+    rating DESC
+;
+```
+<br>
+
+
 60. Managers with at least 5 direct reports (570)
 
 Write a solution to find managers with at least five direct reports. Return the result table in any order.
