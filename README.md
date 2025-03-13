@@ -24,6 +24,56 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+63. Product Price at a Given Date (1164)
+
+Write a solution to find the prices of all products on 2019-08-16. Assume the price of all products before any change is 10. Return the result table in any order.
+
+``` sql
+/*
+What are the names of the table(s)?
+products
+What are the columns in the products table?
+product_id, new_price, change_date
+What are the data types?
+int, int, date
+What is the format of the date in change_date?
+YYYY-MM-DD
+
+I'm going to return two columns from the products table; the product id and the new price with conditions.
+The new price will be found using first value function partitioned by product id and ordered by change date descending as price.
+The columns will have the condition that the change date is less than or equal to 2019-08-16.
+This will get the newest price. However, if an item doesn't have a price, it will be missing.
+Thus, we need to use another table.
+This table will have a union with the first table.
+To find all items without prices and assign them 10, we will have two columns; product id and 10 as price.
+This will be from the products table.
+We will group by product id.
+The condition will be having a minimum change date of later than 2019-08-16.
+This will get all the product ids that are missing from the first table and add them on with a price of 10.
+*/
+
+SELECT
+    product_id,
+    FIRST_VALUE(new_price) OVER (PARTITION BY product_id ORDER BY change_date DESC) AS price
+FROM
+    products
+WHERE
+    change_date <= '2019-08-16'
+UNION
+SELECT
+    product_id,
+    10 AS price
+FROM
+    products
+GROUP BY
+    product_id
+HAVING
+    MIN(change_date) > '2019-08-16'
+;
+```
+<br>
+
+
 62. Number of Unique Subjects Taught by Each Teacher (2356)
 
 Write a solution to calculate the number of unique subjects each teacher teaches in the university. Return the result table in any order.
