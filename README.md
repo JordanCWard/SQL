@@ -47,8 +47,10 @@ no
 Should we return all columns or only specific columns?
 all columns
 
-
-I'm going to select the id, movie, description and rating columns. Then I'll filter the description twice in the where statement to remove boring descriptions and any even ids using mod. Then I'll order the resulting tables by rating in descending order.
+I am going to load the data from the cinema table.
+Filter rows based on two conditions: The id is odd (MOD(id,2) <> 0). The description is not "boring".
+Sort the filtered results by rating in descending order.
+Return the final result set.
 */
 
 SELECT
