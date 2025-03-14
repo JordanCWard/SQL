@@ -24,6 +24,64 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+64. Confirmation Rate (1934)
+
+The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places. Write a solution to find the confirmation rate of each user. Return the result table in any order.
+
+``` sql
+/*
+What are the names of the table or tables used?
+Signups
+Confirmations
+
+What are the columns and data types in the tables?
+signups
+user_id, time_stamp
+int, datetime
+
+confirmations
+user_id, time_stamp, action
+int, datetime, ENUM
+
+What values exist in the action column?
+confirmed, timeout
+
+Do you have the Entity relationship diagram available?
+no
+
+First I'll focus on finding the confirmation rate using the confirmations table.
+In a CTE named user confirmations, I will return two columns.
+First column is user id. Second column is the confirmation rate of a user which is the sum of columns with confirmed divided by count star, alias confirmation rate.
+I will group by user id.
+
+Then in a query below, I will use the signups table.
+I will left join it with the user confirmations table on user id.
+I will return two columns, user id from the signups table (alias s) and confirmation rate from user confirmations table.
+I will use coalesce on the confirmation rate to replace null values with 0.
+*/
+
+WITH user_confirmations AS (
+    SELECT
+        user_id,
+        ROUND(SUM(action = 'confirmed') / COUNT(*), 2) AS rate
+    FROM
+        confirmations
+    GROUP BY
+        user_id
+)
+
+SELECT
+    s.user_id,
+    COALESCE(rate, 0) AS confirmation_rate
+FROM
+    signups s
+LEFT JOIN
+    user_confirmations ON s.user_id = user_confirmations.user_id
+;
+```
+<br>
+
+
 63. Product Price at a Given Date (1164)
 
 Write a solution to find the prices of all products on 2019-08-16. Assume the price of all products before any change is 10. Return the result table in any order.
