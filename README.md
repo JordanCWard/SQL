@@ -25,7 +25,24 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+65. Average Selling Price (1251)
 
+Write a solution to find the average selling price for each product. average_price should be rounded to 2 decimal places. If a product does not have any sold units, its average selling price is assumed to be 0. Return the result table in any order.
+
+``` sql
+SELECT
+    p.product_id,
+    COALESCE(ROUND(SUM(p.price * u.units) / SUM(u.units), 2), 0) AS average_price
+FROM
+    prices p
+LEFT JOIN
+    unitssold u ON u.product_id = p.product_id
+    AND u.purchase_date BETWEEN p.start_date AND p.end_date
+GROUP BY
+    p.product_id
+;
+```
+<br>
 
 
 64. Confirmation Rate (1934)
