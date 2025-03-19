@@ -25,6 +25,23 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+66. Project Employees 1
+
+Write an SQL query that reports the average experience years of all the employees for each project, rounded to 2 digits. Return the result table in any order.
+
+``` sql
+SELECT
+    project_id,
+    ROUND(AVG(experience_years), 2) AS average_years
+FROM
+    project
+JOIN
+    employee ON project.employee_id = employee.employee_id
+GROUP BY
+    project_id
+;
+```
+<br>
 
 
 65. Average Selling Price (1251)
