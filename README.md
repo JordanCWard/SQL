@@ -24,10 +24,12 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+
+
 67. Percentage of Users Attended a Contest (1633)
 
 Write an SQL query that reports the average experience years of all the employees for each project, rounded to 2 digits. Return the result table in any order.
-
 
 ``` sql
 SELECT
