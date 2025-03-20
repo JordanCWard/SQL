@@ -24,7 +24,24 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+68. Queries Quality and Percentage
 
+We define query quality as the average of the ratio between query rating and its position. We also define poor query percentage as the percentage of all queries with rating less than 3.
+
+Write a solution to find each query_name, the quality and poor_query_percentage. Both quality and poor_query_percentage should be rounded to 2 decimal places. Return the result table in any order.
+
+``` sql
+SELECT
+    query_name,
+    ROUND(AVG(rating/position), 2) AS quality,
+    ROUND(100.0*AVG(CASE WHEN rating < 3 THEN 1 ELSE 0 END), 2) AS poor_query_percentage
+FROM
+    queries
+GROUP BY
+    query_name
+;
+```
+<br>
 
 
 67. Percentage of Users Attended a Contest (1633)
