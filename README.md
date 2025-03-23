@@ -33,6 +33,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 68. Queries Quality and Percentage
 
 We define query quality as the average of the ratio between query rating and its position. We also define poor query percentage as the percentage of all queries with rating less than 3.
