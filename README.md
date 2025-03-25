@@ -24,6 +24,28 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+
+
+71. Find Followers Count (1729)
+
+Write a solution that will, for each user, return the number of followers. Return the result table ordered by user_id in ascending order.
+
+``` sql
+SELECT
+    user_id,
+    count(follower_id) AS followers_count
+FROM
+    followers
+GROUP BY
+    user_id
+ORDER BY
+    user_id ASC
+;
+```
+<br>
+
+
 70. Classes More Than 5 Students (596)
 
 Write a solution to find all the classes that have at least five students. Return the result table in any order.
