@@ -24,7 +24,22 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+70. Classes More Than 5 Students (596)
 
+Write a solution to find all the classes that have at least five students. Return the result table in any order.
+
+``` sql
+SELECT
+    class
+FROM
+    courses
+GROUP BY
+    class
+HAVING
+    COUNT(student) >= 5
+;
+```
+<br>
 
 
 69. User Activity for the Past 30 Days 1 (1141)
