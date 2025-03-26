@@ -25,6 +25,32 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+72. Product Sales Analysis III
+
+``` sql
+WITH ordered_by_years AS (
+    SELECT
+        rank() OVER (PARTITION BY product_id ORDER BY year ASC) AS rank_by_year,
+        product_id,
+        year,
+        quantity,
+        price
+    FROM
+        sales
+)
+
+SELECT
+    product_id,
+    year AS first_year,
+    quantity,
+    price
+FROM
+    ordered_by_years
+WHERE
+    rank_by_year = 1
+;
+```
+<br>
 
 
 71. Find Followers Count (1729)
