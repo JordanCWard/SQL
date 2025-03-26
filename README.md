@@ -27,6 +27,8 @@ https://datalemur.com/questions?category=SQL
 
 72. Product Sales Analysis III
 
+Write a solution to select the product id, year, quantity, and price for the first year of every product sold. Return the resulting table in any order.
+
 ``` sql
 WITH ordered_by_years AS (
     SELECT
