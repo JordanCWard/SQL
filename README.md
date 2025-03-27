@@ -25,6 +25,33 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+74. Exchange seats (626)
+
+Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the id of the last student is not swapped. Return the result table ordered by id in ascending order.
+
+``` sql
+SELECT
+    id,
+    CASE
+        WHEN 
+            id % 2 = 1 
+            AND LEAD(student) OVER (ORDER BY id) IS NOT NULL 
+            THEN LEAD(student) OVER (ORDER BY id)
+        WHEN 
+            id % 2 = 0 
+            THEN LAG(student) OVER (ORDER BY id)
+        ELSE student
+    END AS student
+FROM
+    seat
+ORDER BY
+    id ASC
+;
+```
+<br>
+
+
+
 
 
 73. Employees whose manager left the company (1978)
