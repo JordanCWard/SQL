@@ -25,6 +25,27 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+73. Employees whose manager left the company (1978)
+
+Find the IDs of the employees whose salary is strictly less than $30000 and whose manager left the company. When a manager leaves the company, their information is deleted from the Employees table, but the reports still have their manager_id set to the manager that left. Return the result table ordered by employee_id.
+
+``` sql
+SELECT
+    employee_id
+FROM
+    employees
+WHERE
+    salary < 30000
+    AND manager_id NOT IN (SELECT employee_id FROM employees)
+ORDER BY
+    employee_id ASC
+;
+```
+<br>
+
+
+
 72. Product Sales Analysis III
 
 Write a solution to select the product id, year, quantity, and price for the first year of every product sold. Return the resulting table in any order.
