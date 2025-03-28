@@ -26,9 +26,24 @@ https://datalemur.com/questions?category=SQL
 
 
 
+76. Triangle judgement (610)
 
+Report for every three line segments whether they can form a triangle. Return the result table in any order.
 
-
+``` sql
+SELECT
+    x,
+    y,
+    z,
+    CASE
+        WHEN x+y>z AND x+z>y AND y+z>x THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM
+    triangle
+;
+```
+<br>
 
 
 75. Biggest single number (619)
