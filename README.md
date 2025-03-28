@@ -35,6 +35,9 @@ https://datalemur.com/questions?category=SQL
 
 A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
 
+
+*Subquery that returns a single value as an expression in the SELECT clause*
+
 ``` sql
 SELECT (
     SELECT
@@ -52,6 +55,26 @@ SELECT (
 ) AS num;
 ```
 <br>
+
+*From clause subquery*
+
+``` sql
+SELECT
+    MAX(num) AS num
+FROM (
+    SELECT
+        num
+    FROM
+        mynumbers
+    GROUP BY
+        num
+    HAVING
+        COUNT(num) = 1
+) AS unique_numbers
+;
+```
+<br>
+
 
 
 74. Exchange seats (626)
