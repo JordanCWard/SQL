@@ -31,7 +31,27 @@ https://datalemur.com/questions?category=SQL
 
 
 
+75. Biggest single number (619)
 
+A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
+
+``` sql
+SELECT (
+    SELECT
+        num
+    FROM
+        mynumbers
+    GROUP BY
+        num
+    HAVING
+        COUNT(num) = 1
+    ORDER BY
+        num DESC
+    LIMIT
+        1
+) AS num;
+```
+<br>
 
 
 74. Exchange seats (626)
@@ -60,9 +80,6 @@ ORDER BY
 <br>
 
 
-
-
-
 73. Employees whose manager left the company (1978)
 
 Find the IDs of the employees whose salary is strictly less than $30000 and whose manager left the company. When a manager leaves the company, their information is deleted from the Employees table, but the reports still have their manager_id set to the manager that left. Return the result table ordered by employee_id.
@@ -80,7 +97,6 @@ ORDER BY
 ;
 ```
 <br>
-
 
 
 72. Product Sales Analysis III
