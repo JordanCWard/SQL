@@ -26,6 +26,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 76. Triangle judgement (610)
 
 Report for every three line segments whether they can form a triangle. Return the result table in any order.
