@@ -24,6 +24,36 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+78. Movie rating (1341)
+79. 
+Find the name of the user who has rated the greatest number of movies. In case of a tie, return the lexicographically smaller user name. Find the movie name with the highest average rating in February 2020. In case of a tie, return the lexicographically smaller movie name.
+
+``` sql
+SELECT name AS results
+FROM (
+    SELECT u.name, COUNT(*) AS rating_count
+    FROM movierating mr
+    JOIN users u ON mr.user_id = u.user_id
+    GROUP BY u.user_id, u.name
+    ORDER BY rating_count DESC, u.name ASC
+    LIMIT 1
+) AS top_user
+
+UNION ALL
+
+SELECT title
+FROM (
+    SELECT m.title, AVG(mr.rating) AS avg_rating
+    FROM movierating mr
+    JOIN movies m ON mr.movie_id = m.movie_id
+    WHERE mr.created_at BETWEEN '2020-02-01' AND '2020-02-29'
+    GROUP BY m.movie_id, m.title
+    ORDER BY avg_rating DESC, m.title ASC
+    LIMIT 1
+) AS top_movie;
+```
+<br>
+
 
 77. Fix names in a table (1667)
 
