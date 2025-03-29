@@ -25,8 +25,21 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
-77.
+77. Fix names in a table (1667)
 
+Write a solution to fix the names so that only the first character is uppercase and the rest are lowercase. Return the result table ordered by user_id.
+
+``` sql
+SELECT
+    user_id,
+    CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name
+FROM
+    users
+ORDER BY
+    user_id ASC
+;
+```
+<br>
 
 
 76. Triangle judgement (610)
