@@ -39,7 +39,7 @@ FROM
     employee
 WHERE
     primary_flag='Y' OR 
-    employee_id in (
+    employee_id IN (
         SELECT
             employee_id
         FROM
