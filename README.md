@@ -25,6 +25,27 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+80. The number of employees which report to each employee (1731)
+
+For this problem, we will consider a manager an employee who has at least 1 other employee reporting to them. Write a solution to report the ids and the names of all managers, the number of employees who report directly to them, and the average age of the reports rounded to the nearest integer. Return the result table ordered by employee_id.
+
+``` sql
+SELECT
+    e1.employee_id,
+    e1.name,
+    COUNT(e2.reports_to) AS reports_count,
+    ROUND(AVG(e2.age), 0) AS average_age
+FROM
+    employees e1
+JOIN
+    employees e2 ON e1.employee_id = e2.reports_to
+GROUP BY
+    1
+ORDER BY
+    1
+;
+```
+<br>
 
 
 79. Primary department for each employee (1789)
