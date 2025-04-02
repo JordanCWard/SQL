@@ -26,6 +26,7 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
 81. Monthly transactions 1 (1193)
 
 Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount. Return the result table in any order.
