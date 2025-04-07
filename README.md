@@ -25,15 +25,27 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
-84. 
+84. Customers who bought all products (1045)
+
+Write a solution to report the customer ids from the Customer table that bought all the products in the Product table. Return the result table in any order.
 
 ``` sql
-
+SELECT
+    customer_id
+FROM
+    customer
+GROUP BY
+    customer_id
+HAVING
+    GROUP_CONCAT(DISTINCT product_key ORDER BY product_key ASC SEPARATOR ',') IN (
+        SELECT
+            GROUP_CONCAT(DISTINCT product_key ORDER BY product_key ASC SEPARATOR ',')
+        FROM
+            product
+    )
+;
 ```
 <br>
-
-
-
 
 
 83. Game Play Analysis IV (550)
