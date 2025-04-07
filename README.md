@@ -25,6 +25,14 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+84. 
+
+``` sql
+
+```
+<br>
+
+
 
 
 
