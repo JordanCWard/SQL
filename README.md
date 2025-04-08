@@ -27,11 +27,31 @@ https://datalemur.com/questions?category=SQL
 85. 
 
 
-
+V1: Subquery
 ``` sql
-
+SELECT
+    person_name
+FROM (
+    SELECT
+        person_name,
+        turn,
+        SUM(weight) OVER (ORDER BY turn ASC) AS cumulative_weight
+    FROM
+        queue
+    ) AS weight_sum
+WHERE
+    cumulative_weight <= 1000
+ORDER BY
+    turn DESC
+LIMIT
+    1
+;
 ```
 <br>
+
+
+
+
 
 
 84. Customers who bought all products (1045)
