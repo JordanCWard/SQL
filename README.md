@@ -25,6 +25,10 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
+
+
 84. Customers who bought all products (1045)
 
 Write a solution to report the customer ids from the Customer table that bought all the products in the Product table. Return the result table in any order.
