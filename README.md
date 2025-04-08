@@ -50,8 +50,31 @@ LIMIT
 <br>
 
 
+V2: CTE
+``` sql
+WITH weight_totals AS (
+SELECT
+    person_name,
+    SUM(weight) OVER (ORDER BY turn ASC) AS cumulative_weight
+FROM
+    queue
+ORDER BY
+    turn ASC
+)
 
-
+SELECT
+    person_name
+FROM
+    weight_totals
+WHERE
+    cumulative_weight <= 1000
+ORDER BY
+    cumulative_weight DESC
+LIMIT
+    1
+;
+```
+<br>
 
 
 84. Customers who bought all products (1045)
