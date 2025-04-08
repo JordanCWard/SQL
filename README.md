@@ -27,7 +27,7 @@ https://datalemur.com/questions?category=SQL
 
 
 
-85. 
+85. Last person to fit in the bus
 
 
 V1: Subquery
