@@ -25,6 +25,8 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
 86. Consecutive numbers (180)
 
 Find all numbers that appear at least three times consecutively. Return the result table in any order.
