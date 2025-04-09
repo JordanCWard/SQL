@@ -25,6 +25,37 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+86. Consecutive numbers (180)
+
+Find all numbers that appear at least three times consecutively. Return the result table in any order.
+
+``` sql
+WITH numbered_logs AS (
+    SELECT
+        num,
+        LEAD(num, 1) OVER (ORDER BY id) AS num_lead1,
+        LEAD(num, 2) OVER (ORDER BY id) AS num_lead2
+    FROM
+        logs
+),
+
+consecutive_nums AS (
+    SELECT 
+        num AS ConsecutiveNums
+    FROM
+        numbered_logs
+    WHERE 
+        num = num_lead1
+        AND num = num_lead2
+)
+
+SELECT DISTINCT
+    ConsecutiveNums
+FROM
+    consecutive_nums
+;
+```
+<br>
 
 
 85. Last person to fit in the bus
