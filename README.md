@@ -25,6 +25,39 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+87. Count Salary Categories
+
+Write a solution to calculate the number of bank accounts for each salary category. The salary categories are: <br>
+
+"Low Salary": All the salaries strictly less than $20000. <br>
+"Average Salary": All the salaries in the inclusive range [$20000, $50000]. <br>
+"High Salary": All the salaries strictly greater than $50000. <br>
+The result table must contain all three categories. If there are no accounts in a category, return 0. <br>
+
+Return the result table in any order.
+
+``` sql
+SELECT
+    category,
+    COUNT(account_id) AS accounts_count
+FROM (
+    SELECT 'Low Salary' AS category
+    UNION ALL
+    SELECT 'Average Salary'
+    UNION ALL
+    SELECT 'High Salary'
+    ) AS categories
+LEFT JOIN
+    accounts a ON
+    (income < 20000 AND category = 'Low Salary') OR
+    (income >= 20000 AND income <= 50000 AND category = 'Average Salary') OR
+    (income > 50000 AND category = 'High Salary')
+GROUP BY
+    category
+;
+```
+<br>
+
 
 
 86. Consecutive numbers (180)
