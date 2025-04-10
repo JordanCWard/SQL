@@ -25,6 +25,24 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+90. Group sold products by the date
+
+Write a solution to find for each date the number of different products sold and their names. The sold products names for each date should be sorted lexicographically. Return the result table ordered by sell_date.
+
+``` sql
+SELECT
+    sell_date,
+    COUNT(DISTINCT product) AS num_sold,
+    GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') AS products
+FROM
+    activities a1
+GROUP BY
+    sell_date
+;
+```
+<br>
+
+
 89. Patients with a condition
 
 Write a solution to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. Type I Diabetes always starts with DIAB1 prefix. Return the result table in any order.
