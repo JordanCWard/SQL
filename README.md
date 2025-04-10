@@ -25,6 +25,31 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+91. Delete duplicate emails
+
+Write a solution to delete all duplicate emails, keeping only one unique email with the smallest id.
+
+``` sql
+WITH ranked AS (
+    SELECT
+        id,
+        email,
+        LAG(email) OVER (ORDER BY email, id) AS prev_email
+    FROM
+        person
+)
+
+DELETE
+FROM person 
+WHERE id IN (
+    SELECT id
+    FROM ranked
+    WHERE email = prev_email
+);
+```
+<br>
+
+
 90. Group sold products by the date
 
 Write a solution to find for each date the number of different products sold and their names. The sold products names for each date should be sorted lexicographically. Return the result table ordered by sell_date.
