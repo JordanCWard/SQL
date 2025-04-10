@@ -25,6 +25,23 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+89. Patients with a condition
+
+Write a solution to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. Type I Diabetes always starts with DIAB1 prefix. Return the result table in any order.
+
+``` sql
+SELECT
+    patient_id,
+    patient_name,
+    conditions
+FROM
+    patients
+WHERE
+    conditions LIKE 'DIAB1%'
+    OR conditions LIKE '% DIAB1%'
+;
+```
+<br>
 
 
 88. Friend requests II: who has the most friends
