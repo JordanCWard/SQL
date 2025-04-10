@@ -38,22 +38,26 @@ Return the result table in any order.
 
 ``` sql
 SELECT
-    category,
-    COUNT(account_id) AS accounts_count
-FROM (
-    SELECT 'Low Salary' AS category
-    UNION ALL
-    SELECT 'Average Salary'
-    UNION ALL
-    SELECT 'High Salary'
-    ) AS categories
-LEFT JOIN
-    accounts a ON
-    (income < 20000 AND category = 'Low Salary') OR
-    (income >= 20000 AND income <= 50000 AND category = 'Average Salary') OR
-    (income > 50000 AND category = 'High Salary')
-GROUP BY
-    category
+    "Low Salary" AS category,
+    sum(income < 20000) AS accounts_count
+FROM
+    Accounts
+
+UNION ALL
+
+SELECT
+    "Average Salary" AS category,
+    sum(income BETWEEN 20000 AND 50000) AS accounts_count
+FROM
+    Accounts
+
+UNION ALL
+
+SELECT
+    "High Salary" AS category,
+    sum(income > 50000) AS accounts_count
+FROM
+    Accounts
 ;
 ```
 <br>
