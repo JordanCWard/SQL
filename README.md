@@ -25,6 +25,37 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
+88. Friend requests II: who has the most friends
+
+Write a solution to find the people who have the most friends and the most friends number. The test cases are generated so that only one person has the most friends.
+
+``` sql
+SELECT
+    id,
+    COUNT(id) AS num
+FROM (
+    
+SELECT requester_id AS id
+FROM RequestAccepted
+UNION ALL
+SELECT accepter_id
+FROM RequestAccepted
+
+) AS all_friends
+
+GROUP BY
+    1
+ORDER BY
+    2 DESC
+LIMIT
+    1
+;
+```
+<br>
+
+
 87. Count Salary Categories
 
 Write a solution to calculate the number of bank accounts for each salary category. The salary categories are: <br>
