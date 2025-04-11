@@ -25,6 +25,8 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
 91. Delete duplicate emails
 
 Write a solution to delete all duplicate emails, keeping only one unique email with the smallest id.
