@@ -25,8 +25,27 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+92. List the products ordered in a period (1327)
 
+Write a solution to get the names of products that have at least 100 units ordered in February 2020 and their amount. Return the result table in any order.
 
+``` sql
+SELECT
+    p.product_name,
+    SUM(unit) AS unit
+FROM
+    orders o
+JOIN
+    products p ON o.product_id = p.product_id
+WHERE
+    order_date BETWEEN '2020-02-01' AND '2020-02-29'
+GROUP BY
+    p.product_name
+HAVING
+    unit >= 100
+;
+```
+<br>
 
 
 91. Delete duplicate emails
