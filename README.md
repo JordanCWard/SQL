@@ -24,6 +24,42 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+93. Find users with valid e-emails
+
+Write a solution to find the users who have valid emails. A valid e-mail has a prefix name and a domain where: <br>
+
+The prefix name is a string that may contain letters (upper or lower case), digits, underscore '_', period '.', and/or dash '-'. <br>
+The prefix name must start with a letter. <br>
+The domain is '@leetcode.com'. <br>
+
+Return the result table in any order.
+
+``` sql
+SELECT
+    user_id,
+    name,
+    mail
+FROM
+    users
+
+WHERE
+
+    # Checks first character to be a letter
+    mail REGEXP '^[a-zA-Z]' 
+
+    # Checks if there is only one @ symbol
+    AND LENGTH(mail) - LENGTH(REPLACE(mail, '@', '')) = 1
+
+    # Checks if characters before the @ symbol are a-z, A-Z, 0-9, _, ., -
+    AND SUBSTRING_INDEX(mail, '@', 1) REGEXP '^[a-zA-Z0-9_.-]+$'
+
+    # Checks the domain at the end
+    AND SUBSTRING_INDEX(mail, '@', -1) = 'leetcode.com'
+    
+;
+```
+<br>
+
 
 92. List the products ordered in a period (1327)
 
