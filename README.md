@@ -61,6 +61,14 @@ WHERE
 <br>
 
 
+Combined into one WHERE statement
+``` sql
+WHERE
+    mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$'
+```
+<br>
+
+
 92. List the products ordered in a period (1327)
 
 Write a solution to get the names of products that have at least 100 units ordered in February 2020 and their amount. Return the result table in any order.
