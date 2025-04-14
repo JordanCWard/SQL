@@ -84,6 +84,14 @@ HAVING
 <br>
 
 
+Combined into one WHERE statement
+``` sql
+WHERE
+    mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$'
+```
+<br>
+
+
 91. Delete duplicate emails
 
 Write a solution to delete all duplicate emails, keeping only one unique email with the smallest id.
