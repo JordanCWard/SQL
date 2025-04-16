@@ -25,6 +25,25 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
+95. Second highest salary
+
+Write a solution to find the second highest distinct salary from the Employee table. If there is no second highest salary, return null.
+
+``` sql
+SELECT 
+  (
+    SELECT DISTINCT salary AS SecondHighestSalary
+    FROM Employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET 1
+  ) AS SecondHighestSalary;
+;
+```
+<br>
+
+
 94. Investments in 2016
 
 Write a solution to report the sum of all total investment values in 2016 tiv_2016, for all policyholders who have the same tiv_2015 value as one or more other policyholders, and are not located in the same city as any other policyholder (i.e., the (lat, lon) attribute pairs must be unique). Round tiv_2016 to two decimal places
