@@ -25,6 +25,36 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+97. Department top three salaries
+
+A company's executives are interested in seeing who earns the most money in each of the company's departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department. Write a solution to find the employees who are high earners in each of the departments. Return the result table in any order.
+
+``` sql
+WITH one_table AS (
+    SELECT
+    dense_rank() OVER (PARTITION BY departmentID ORDER BY salary DESC) AS ranked_salary,
+    d.name AS Department,
+    e.name AS Employee,
+    salary AS Salary
+FROM
+    employee e
+JOIN
+    department d ON e.departmentId = d.id
+)
+
+SELECT
+    Department,
+    Employee,
+    Salary
+FROM
+    one_table
+WHERE
+    ranked_salary < 4
+;
+```
+<br>
+
+
 96. Restaurant Growth
 
 You are the restaurant owner and you want to analyze a possible expansion (there will be at least one customer every day). Compute the moving average of how much the customer paid in a seven days window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places. Return the result table ordered by visited_on in ascending order.
