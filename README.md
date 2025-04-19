@@ -30,9 +30,18 @@ https://datalemur.com/questions?category=SQL
 98. Revising the select query I
 
 ``` sql
-
+SELECT
+    *
+FROM
+    city
+WHERE
+    population > 100000
+    AND
+    countrycode = 'USA'
+;
 ```
 <br>
+
 
 97. Department top three salaries
 
