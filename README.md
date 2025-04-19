@@ -3,14 +3,16 @@
 <!-- Hidden text for templates
 
 /*
-https://platform.stratascratch.com/coding?code_type=3&is_freemium=1
 
-48- MySQL
+98- MySQL
+https://www.hackerrank.com/domains/sql
+
+48-97 MySQL
 https://leetcode.com/studyplan/top-sql-50/
-
 
 1-47 PostgreSQL
 https://datalemur.com/questions?category=SQL
+
 */
 
 /*
@@ -24,6 +26,13 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+
+98. Revising the select query I
+
+``` sql
+
+```
+<br>
 
 97. Department top three salaries
 
