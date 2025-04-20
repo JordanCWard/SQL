@@ -26,6 +26,21 @@ https://datalemur.com/questions?category=SQL
 
 -->
 
+99. Revising the select query II
+
+Query the NAME field for all American cities in the CITY table with populations larger than 120000. The CountryCode for America is USA.
+
+``` sql
+SELECT
+    name
+FROM
+    city
+WHERE
+    countrycode = 'USA'
+    AND population > 120000
+;
+```
+<br>
 
 
 98. Revising the select query I
