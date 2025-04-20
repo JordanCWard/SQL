@@ -28,6 +28,25 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+
+101. Select by ID
+
+Query all columns for a city in CITY with the ID 1661.
+
+``` sql
+SELECT
+    *
+FROM
+    city
+WHERE
+    id = 1661
+;
+```
+<br>
+
+
 100. Select all
 
 Query all columns (attributes) for every row in the CITY table.
@@ -40,7 +59,6 @@ FROM
 ;
 ```
 <br>
-
 
 
 99. Revising the select query II
