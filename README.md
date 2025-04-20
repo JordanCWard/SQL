@@ -28,7 +28,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+102. Japanese cities' attributes
 
+Query all attributes of every Japanese city in the CITY table. The COUNTRYCODE for Japan is JPN.
+
+``` sql
+SELECT
+    *
+FROM
+    city
+WHERE
+    countrycode = 'JPN'
+;
+```
+<br>
 
 
 101. Select by ID
