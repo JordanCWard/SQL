@@ -27,6 +27,20 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+104. Weather observation station 1
+
+Query a list of CITY and STATE from the STATION table.
+
+``` sql
+SELECT
+    city,
+    state
+FROM
+    station
+;
+```
+<br>
+
 
 103. Japanese cities' names
 
