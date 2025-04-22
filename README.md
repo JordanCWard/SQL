@@ -29,6 +29,19 @@ https://datalemur.com/questions?category=SQL
 
 
 
+106. Weather observation station 4
+
+Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table.
+
+``` sql
+SELECT
+    COUNT(city) - COUNT(DISTINCT city)
+FROM
+    station
+;
+```
+<br>
+
 
 105. Weather observation station 3
 
