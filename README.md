@@ -28,7 +28,24 @@ https://datalemur.com/questions?category=SQL
 
 
 
+109. Weather observation station 7
 
+Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+
+``` sql
+SELECT DISTINCT
+    city
+FROM
+    station
+WHERE
+    city LIKE '%a'
+    OR city LIKE '%e'
+    OR city LIKE '%i'
+    OR city LIKE '%o'
+    OR city LIKE '%u'
+;
+```
+<br>
 
 
 108. Weather observation station 6
