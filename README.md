@@ -32,6 +32,8 @@ https://datalemur.com/questions?category=SQL
 
 112. Weather observation station 10
 
+Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
 ``` sql
 SELECT DISTINCT
     city
