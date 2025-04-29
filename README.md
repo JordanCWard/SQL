@@ -27,6 +27,23 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
+
+112. Weather observation station 10
+
+``` sql
+SELECT DISTINCT
+    city
+FROM
+    station
+WHERE
+    city REGEXP '.*[^aeiouAEIOU]$'
+;
+```
+<br>
+
+
 111. Weather observation station 9
 
 Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
