@@ -27,6 +27,40 @@ https://datalemur.com/questions?category=SQL
 -->
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+115. Higher than 75 marks
+
+Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+
+``` sql
+SELECT
+    name
+FROM
+    students
+WHERE
+    marks > 75
+ORDER BY
+    RIGHT(name, 3), ID
+;
+```
+<br>
+
+
 114. Weather observation station 12
 
 Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
