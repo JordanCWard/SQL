@@ -33,14 +33,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+116. Employee names
 
+Write a query that prints a list of employee names (i.e.: the name attribute) from the Employee table in alphabetical order.
 
-
-
-
-
-
-
+``` sql
+SELECT
+    name
+FROM
+    employee
+ORDER BY
+    name ASC
+;
+```
+<br>
 
 
 115. Higher than 75 marks
