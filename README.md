@@ -29,6 +29,26 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+118. Type of triangle
+
+Write a query identifying the type of each record in the TRIANGLES table using its three side lengths.
+
+``` sql
+SELECT
+    CASE
+        WHEN A+B<=C OR A+C<=B OR B+C<=A THEN 'Not A Triangle'
+        WHEN A = B AND B = C THEN 'Equilateral'
+        WHEN A = B OR B = C OR A = C THEN 'Isosceles'
+        ELSE 'Scalene' END
+FROM
+    triangles
+;
+```
+<br>
+
+
 117. Employee salaries
 
 Write a query that prints a list of employee names (i.e.: the name attribute) for employees in Employee having a salary greater than 2000 per month who have been employees for less than 10 months. Sort your result by ascending employee_id.
