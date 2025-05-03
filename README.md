@@ -31,6 +31,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 118. Type of triangle
 
 Write a query identifying the type of each record in the TRIANGLES table using its three side lengths.
