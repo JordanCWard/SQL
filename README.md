@@ -28,6 +28,38 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+
+
+
+120. Occupations
+
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output should consist of four columns (Doctor, Professor, Singer, and Actor) in that specific order, with their respective names listed alphabetically under each column.
+
+Note: Print NULL when there are no more names corresponding to an occupation.
+
+``` sql
+WITH ranked AS (
+    SELECT 
+        name,
+        occupation,
+        ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS rn
+    FROM occupations
+)
+
+SELECT
+    MAX(CASE WHEN occupation = 'Doctor' THEN name END) AS Doctor,
+    MAX(CASE WHEN occupation = 'Professor' THEN name END) AS Professor,
+    MAX(CASE WHEN occupation = 'Singer' THEN name END) AS Singer,
+    MAX(CASE WHEN occupation = 'Actor' THEN name END) AS Actor
+FROM ranked
+GROUP BY rn
+ORDER BY rn;
+```
+<br>
+
+
 119. The PADS
 
 Generate the following two result sets:
