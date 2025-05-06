@@ -30,7 +30,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+121. Revising Aggregations - The Count Function
 
+Query a count of the number of cities in CITY having a Population larger than 100k.
+
+``` sql
+SELECT
+    COUNT(*)
+FROM
+    city
+WHERE
+    population > 100000
+;
+```
+<br>
 
 
 120. Occupations
