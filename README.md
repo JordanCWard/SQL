@@ -28,6 +28,24 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+123. Revising Aggregations - The Sum Function
+
+Query the total population of all cities in CITY where District is California.
+
+``` sql
+SELECT
+    SUM(population)
+FROM
+    city
+WHERE
+    district = 'California'
+;
+```
+<br>
+
+
 122. Binary tree nodes
 
 You are given a table, BST, containing two columns: N and P, where N represents the value of a node in Binary Tree, and P is the parent of N.
@@ -52,7 +70,6 @@ ORDER BY
 ;
 ```
 <br>
-
 
 
 121. Revising Aggregations - The Count Function
