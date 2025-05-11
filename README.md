@@ -28,8 +28,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+124. Revising Aggregations - Averages
 
+Query the average population of all cities in CITY where District is California.
 
+``` sql
+SELECT
+    AVG(population)
+FROM
+    city
+WHERE
+    district = 'California'
+;
+```
+<br>
 
 
 123. Revising Aggregations - The Sum Function
