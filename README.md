@@ -28,6 +28,27 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+
+
+
+
+
+125. Average Population
+
+Query the average population for all cities in CITY, rounded down to the nearest integer.
+
+``` sql
+SELECT
+    ROUND(AVG(population), 0)
+FROM
+    city
+;
+```
+<br>
+
+
 124. Revising Aggregations - Averages
 
 Query the average population of all cities in CITY where District is California.
