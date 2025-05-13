@@ -32,7 +32,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+126. Japan Population
 
+Query the sum of the populations for all Japanese cities in CITY. The COUNTRYCODE for Japan is JPN.
+
+``` sql
+SELECT
+    SUM(population)
+FROM
+    city
+WHERE
+    countrycode = 'JPN'
+;
+```
+<br>
 
 
 125. Average Population
