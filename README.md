@@ -31,6 +31,19 @@ https://datalemur.com/questions?category=SQL
 
 
 
+127. Population Density Difference
+
+Query the difference between the maximum and minimum populations in CITY.
+
+``` sql
+SELECT
+    MAX(population) - MIN(population)
+FROM
+    city
+;
+```
+<br>
+
 
 126. Japan Population
 
