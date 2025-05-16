@@ -28,6 +28,34 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+
+
+
+
+
+129. Top Earners
+
+We define an employee's total earnings to be their monthly salary x months worked, and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. Then print these values as 2 space-separated integers.
+
+``` sql
+SELECT
+    salary * months AS earnings,
+    COUNT(*)
+FROM
+    Employee
+GROUP BY
+    earnings
+ORDER BY
+    earnings DESC
+LIMIT
+    1
+;
+```
+<br>
+
+
 128. The Blunder
 
 Samantha was tasked with calculating the average monthly salaries for all employees in the EMPLOYEES table, but did not realize her keyboard's  key was broken until after completing the calculation. She wants your help finding the difference between her miscalculation (using salaries with any zeros removed), and the actual average salary.
