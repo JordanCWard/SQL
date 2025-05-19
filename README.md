@@ -34,7 +34,6 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
 130. Weather Observation Station 2
 
 Query the following two values from the STATION table:
