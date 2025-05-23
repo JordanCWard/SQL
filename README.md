@@ -29,6 +29,20 @@ https://datalemur.com/questions?category=SQL
 
 
 
+134. Weather Observation Station 16
+
+Query the Western Longitude (LONG_W) for the largest Northern Latitude (LAT_N) in STATION that is less than 137.2345. Round your answer to 4 decimal places.
+
+``` sql
+SELECT
+    MIN(ROUND(LAT_N, 4))
+FROM
+    STATION
+WHERE
+    LAT_N > 38.7780
+;
+```
+<br>
 
 
 
