@@ -29,6 +29,19 @@ https://datalemur.com/questions?category=SQL
 
 
 
+136. Weather Observation Station 18
+
+Query the Manhattan Distance between points P1 and P2 and round it to a scale of 4 decimal places.
+
+``` sql
+SELECT
+    ROUND(ABS(MIN(LAT_N)-MAX(LAT_N))+ABS(MIN(LONG_W)-MAX(LONG_W)), 4)
+FROM
+    STATION
+;
+```
+<br>
+
 
 135. Weather Observation Station 17
 
