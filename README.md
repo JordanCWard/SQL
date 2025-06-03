@@ -31,6 +31,23 @@ https://datalemur.com/questions?category=SQL
 
 
 
+138. Population Census
+
+Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+
+``` sql
+SELECT
+    SUM(city.population)
+FROM
+    country
+LEFT JOIN
+    city on city.countrycode = country.code
+WHERE
+    CONTINENT = 'ASIA'
+;
+```
+<br>
+
 
 137. Weather Observation Station 19
 
