@@ -31,6 +31,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 138. Population Census
 
 Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
