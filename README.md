@@ -35,6 +35,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 139. African Cities
 
 Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
