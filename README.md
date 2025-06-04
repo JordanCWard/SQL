@@ -33,6 +33,24 @@ https://datalemur.com/questions?category=SQL
 
 
 
+139. African Cities
+
+Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+
+``` sql
+SELECT
+    city.name
+FROM
+    city
+LEFT JOIN
+    country ON country.code = city.countrycode
+WHERE
+    continent = 'Africa'
+;
+```
+<br>
+
+
 138. Population Census
 
 Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
