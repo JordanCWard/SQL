@@ -35,6 +35,8 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
 140. Average Population of Each Continent
 
 Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
