@@ -31,10 +31,21 @@ https://datalemur.com/questions?category=SQL
 
 
 
+141. Draw the Triangle 1
 
+P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20).
 
+``` sql
+WITH RECURSIVE counter_cte AS (
+    SELECT 20 AS n
+    UNION ALL
+    SELECT n - 1 FROM counter_cte WHERE n > 1
+)
 
-
+SELECT REPEAT('* ', n) AS output
+FROM counter_cte;
+```
+<br>
 
 
 140. Average Population of Each Continent
