@@ -29,11 +29,29 @@ https://datalemur.com/questions?category=SQL
 
 
 
+142. Draw the Triangle 2
+
+P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
+
+``` sql
+WITH RECURSIVE counter_cte AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1 FROM counter_cte WHERE n < 20
+)
+
+SELECT REPEAT('* ', n) AS output
+FROM counter_cte;
+```
+<br>
+
+
+
 
 
 141. Draw the Triangle 1
 
-P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20).
+P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(20) and ending with P(1).
 
 ``` sql
 WITH RECURSIVE counter_cte AS (
