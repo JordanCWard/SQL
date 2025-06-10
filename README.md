@@ -29,6 +29,36 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+
+
+143. New Companies
+
+Amber's conglomerate corporation just acquired some new companies. Each of the companies follows this hierarchy:
+
+![image](https://github.com/user-attachments/assets/611647ec-f9d6-4664-aaf1-6050d8e51524)
+
+Write a query to print the company_code, founder name, total number of lead managers, total number of senior managers, total number of managers, and total number of employees. The tables may contain duplicate records.
+
+``` sql
+SELECT DISTINCT
+    e.company_code,
+    c.founder,
+    COUNT(DISTINCT e.lead_manager_code),
+    COUNT(DISTINCT e.senior_manager_code),
+    COUNT(DISTINCT e.manager_code),
+    count(DISTINCT employee_code)
+FROM
+    employee e
+JOIN
+    company c ON c.company_code = e.company_code
+GROUP BY
+    1, 2
+;
+```
+<br>
+
+
 142. Draw the Triangle 2
 
 P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
