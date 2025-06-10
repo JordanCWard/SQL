@@ -47,7 +47,7 @@ SELECT DISTINCT
     COUNT(DISTINCT e.lead_manager_code),
     COUNT(DISTINCT e.senior_manager_code),
     COUNT(DISTINCT e.manager_code),
-    count(DISTINCT employee_code)
+    count(DISTINCT e.employee_code)
 FROM
     employee e
 JOIN
