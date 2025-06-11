@@ -29,7 +29,25 @@ https://datalemur.com/questions?category=SQL
 
 
 
+144. Weather Observation Station 20
 
+Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places.
+
+``` sql
+SELECT
+    ROUND(AVG(lat_n), 4) AS median
+FROM (
+    SELECT
+        lat_n,
+        ROW_NUMBER() OVER (ORDER BY lat_n) AS rn,
+        COUNT(*) OVER () AS cnt
+    FROM
+        station
+    ) AS ranked
+WHERE
+    rn IN (FLOOR((cnt + 1)/2), CEIL((cnt + 1)/2));
+```
+<br>
 
 
 143. New Companies
