@@ -29,9 +29,61 @@ https://datalemur.com/questions?category=SQL
 
 
 
+148. HackerRank
 
+Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 
+``` sql
+-- Select hacker ID, name, and number of challenges they've created
+SELECT
+    h.hacker_id,
+    h.name,
+    COUNT(*) AS challenge_count
+FROM
+    challenges c
+    
+-- Join the hackers table to get hacker names
+LEFT JOIN
+    hackers h ON c.hacker_id = h.hacker_id
+    
+-- Group by hacker ID and name to count challenges per hacker
+GROUP BY
+    h.hacker_id, h.name
+    
+-- Filter to include only:
+-- 1. Hackers with the maximum challenge count, OR
+-- 2. Hackers whose challenge count is unique (appears only once)
+HAVING
 
+    -- Maximum challenge count across all hackers
+    challenge_count = (
+        SELECT MAX(ch_count)
+        FROM (
+            SELECT COUNT(*) AS ch_count
+            FROM challenges
+            GROUP BY hacker_id
+        ) AS counts
+    )
+    
+    -- Challenge counts that occur only once
+    OR challenge_count IN (
+        SELECT ch_count
+        FROM (
+            -- Count how many hackers have each challenge count
+            SELECT COUNT(*) AS ch_count, COUNT(*) AS freq
+            FROM challenges
+            GROUP BY hacker_id
+        ) AS sub_counts
+        GROUP BY ch_count
+        HAVING COUNT(*) = 1 -- Only keep counts that occur once
+    )
+    
+-- Order the final result by challenge count descending, then by hacker ID
+ORDER BY
+    challenge_count DESC, h.hacker_id
+;
+```
+<br>
 
 
 147. Ollivander's Inventory
