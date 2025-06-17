@@ -34,54 +34,59 @@ https://datalemur.com/questions?category=SQL
 Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 
 ``` sql
--- Select hacker ID, name, and number of challenges they've created
-SELECT
-    h.hacker_id,
-    h.name,
-    COUNT(*) AS challenge_count
-FROM
-    challenges c
-    
--- Join the hackers table to get hacker names
-LEFT JOIN
-    hackers h ON c.hacker_id = h.hacker_id
-    
--- Group by hacker ID and name to count challenges per hacker
-GROUP BY
-    h.hacker_id, h.name
-    
--- Filter to include only:
--- 1. Hackers with the maximum challenge count, OR
--- 2. Hackers whose challenge count is unique (appears only once)
-HAVING
+/*
+    CTE #1: Calculate the total number of challenges created by each hacker.
+    Assign a rank based on that count in descending order.
+    Hackers with the same number of challenges will receive the same rank.
+*/
+WITH ranked_hackers AS (
+    SELECT
+        h.hacker_id,
+        h.name,
+        COUNT(*) AS challenge_count,
+        RANK() OVER (ORDER BY COUNT(*) DESC) AS rnk
+    FROM
+        challenges c
+    LEFT JOIN
+        hackers h ON c.hacker_id = h.hacker_id
+    GROUP BY
+        h.hacker_id, h.name
+),
 
-    -- Maximum challenge count across all hackers
-    challenge_count = (
-        SELECT MAX(ch_count)
-        FROM (
-            SELECT COUNT(*) AS ch_count
-            FROM challenges
-            GROUP BY hacker_id
-        ) AS counts
-    )
-    
-    -- Challenge counts that occur only once
-    OR challenge_count IN (
-        SELECT ch_count
-        FROM (
-            -- Count how many hackers have each challenge count
-            SELECT COUNT(*) AS ch_count, COUNT(*) AS freq
-            FROM challenges
-            GROUP BY hacker_id
-        ) AS sub_counts
-        GROUP BY ch_count
-        HAVING COUNT(*) = 1 -- Only keep counts that occur once
-    )
-    
--- Order the final result by challenge count descending, then by hacker ID
+/*
+    CTE #2: Count how many hackers received each rank.
+    This helps us identify ranks that are tied (i.e., freq > 1)
+    versus ranks that are unique (i.e., freq = 1).
+*/
+rank_frequencies AS (
+    SELECT
+        rnk,
+        COUNT(*) AS freq
+    FROM ranked_hackers
+    GROUP BY rnk
+)
+
+/*
+    Final result:
+    - Include all hackers with rank = 1 (even if it's tied).
+    - Include only non-top-ranked hackers whose rank is unique (freq = 1).
+    - Exclude tied ranks greater than 1.
+*/
+SELECT
+    rh.hacker_id,
+    rh.name,
+    rh.challenge_count
+FROM
+    ranked_hackers rh
+JOIN
+    rank_frequencies rf ON rh.rnk = rf.rnk
+WHERE
+    rh.rnk = 1                      -- Always include top-ranked hackers
+    OR (rh.rnk > 1 AND rf.freq = 1) -- Only include unique lower ranks
 ORDER BY
-    challenge_count DESC, h.hacker_id
-;
+    rh.challenge_count DESC,
+    rh.hacker_id;
+
 ```
 <br>
 
