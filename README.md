@@ -76,7 +76,45 @@ WHERE
 3.
 
 ``` sql
+-- Purpose: Calculate the cumulative number of passed assessments per school day starting from March 1, 2019
 
+WITH passed_per_day AS (
+    -- Get the count of passed assessments per test_date
+    SELECT
+        test_date,
+        COUNT(*) AS passed_count
+    FROM
+        mock_test_results  -- From the mock_test_results table
+    WHERE
+        passed = 1  -- Only include passed assessments
+        AND test_date >= '2019-03-01'  -- From March 1, 2019 onwards
+    GROUP BY
+        test_date
+),
+school_days AS (
+    -- Get the list of school days from March 1, 2019 onwards
+    SELECT
+        date AS school_date
+    FROM
+        mock_dates  -- From the mock_dates table
+    WHERE
+        is_school_day = 1  -- Only include school days
+        AND date >= '2019-03-01'
+)
+
+-- For each school day, calculate the cumulative number of passed assessments
+SELECT
+    sd.school_date AS date,
+    SUM(COALESCE(ppd.passed_count, 0)) OVER (
+        ORDER BY sd.school_date
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS cumulative_passed_assessments
+FROM
+    school_days sd
+LEFT JOIN
+    passed_per_day ppd ON sd.school_date = ppd.test_date  -- Join to bring in passed counts (0 if no tests that day)
+ORDER BY
+    sd.school_date;  -- Order by school date
 ```
 <br>
 
