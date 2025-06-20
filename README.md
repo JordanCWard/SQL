@@ -33,6 +33,8 @@ https://datalemur.com/questions?category=SQL
 
 <!--
 
+1.
+
 ``` sql
 -- Purpose: Retrieve the top 5 start dates with the highest number of enrollments
 
@@ -48,6 +50,41 @@ ORDER BY
     enrollment_count DESC  -- Order the results by enrollment_count in descending order
 LIMIT
     5;  -- Limit the output to the top 5 start_dates with the most enrollments
+```
+<br>
+
+
+2.
+
+``` sql
+-- Purpose: Calculate the number of 8th grade enrollments active on February 1, 2019
+
+-- Count the number of enrollments that match the criteria
+SELECT
+    COUNT(*) AS enrollment_count
+FROM
+    mock_enrollments  -- From the mock_enrollments table
+WHERE
+    start_date <= '2019-02-01'  -- Enrollment must have started on or before February 1, 2019
+    AND (end_date > '2019-02-01' OR end_date IS NULL)  -- Enrollment must still be active on February 1, 2019
+    AND grade = 8;  -- Only include 8th grade enrollments
+
+```
+<br>
+
+
+3.
+
+``` sql
+
+```
+<br>
+
+
+4.
+
+``` sql
+
 ```
 <br>
 
