@@ -31,11 +31,27 @@ https://datalemur.com/questions?category=SQL
 
 
 
+<!--
 
+``` sql
+-- Purpose: Retrieve the top 5 start dates with the highest number of enrollments
 
+-- Select the start_date and the count of enrollments for each start_date
+SELECT
+    start_date,
+    COUNT(*) AS enrollment_count
+FROM
+    mock_enrollments  -- From the mock_enrollments table
+GROUP BY
+    start_date        -- Group the results by start_date
+ORDER BY
+    enrollment_count DESC  -- Order the results by enrollment_count in descending order
+LIMIT
+    5;  -- Limit the output to the top 5 start_dates with the most enrollments
+```
+<br>
 
-
-
+-->
 
 
 
