@@ -122,7 +122,23 @@ ORDER BY
 4.
 
 ``` sql
+-- Purpose: Retrieve test results with formatted test dates, standardized subject names, and pass/fail labels
 
+SELECT
+    unique_id,  -- Unique identifier for the test result
+    strftime('%m/%d/%Y', test_date) AS test_date,  -- Format test_date as MM/DD/YYYY
+    CASE
+        WHEN subject = 'Science' THEN 'Biology'  -- Standardize subject name
+        ELSE subject
+    END AS subject,
+    CASE
+        WHEN passed = 1 THEN 'Passed'  -- Label passed tests
+        ELSE 'Not Passed'  -- Label failed tests
+    END AS result
+FROM
+    mock_test_results  -- From the mock_test_results table
+WHERE
+    test_date IS NOT NULL;  -- Only include records with a valid test_date
 ```
 <br>
 
