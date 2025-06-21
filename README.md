@@ -1,5 +1,4 @@
-+
-+# SQL Practice
+# SQL Practice
 
 <!-- Hidden text for templates
 
