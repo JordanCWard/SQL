@@ -1,4 +1,5 @@
-# SQL Practice
++
++# SQL Practice
 
 <!-- Hidden text for templates
 
@@ -25,6 +26,7 @@ https://datalemur.com/questions?category=SQL
 <br>
 
 -->
+
 
 
 
