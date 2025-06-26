@@ -29,28 +29,37 @@ https://datalemur.com/questions?category=SQL
 
 
 
+149. Contest Leaderboard
 
+The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the hacker_id, name, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending hacker_id. Exclude all hackers with a total score of 0 from your result.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+``` sql
+SELECT
+    h.hacker_id,
+    h.name,
+    SUM(ms.score) AS total_score
+FROM
+    hackers AS h
+INNER JOIN (
+    SELECT
+        hacker_id,
+        challenge_id,
+        MAX(score) AS score
+    FROM
+        submissions
+    GROUP BY
+        hacker_id, challenge_id
+) AS ms ON h.hacker_id = ms.hacker_id
+GROUP BY
+    h.hacker_id, h.name
+HAVING
+    total_score > 0
+ORDER BY
+    total_score DESC,
+    h.hacker_id
+;
+```
+<br>
 
 148. HackerRank
 
