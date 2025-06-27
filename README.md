@@ -32,6 +32,31 @@ https://datalemur.com/questions?category=SQL
 
 
 
+
+150. SQL Project Planning
+
+You are given a table, Projects, containing three columns: Task_ID, Start_Date and End_Date. It is guaranteed that the difference between the End_Date and the Start_Date is equal to 1 day for each row in the table.
+
+``` sql
+SELECT 
+  MIN(start_date) AS start_date,
+  MAX(end_date) AS end_date
+FROM (
+  SELECT 
+    start_date,
+    end_date,
+    @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
+    @prev_end := end_date
+  FROM projects
+  JOIN (SELECT @prev_end := NULL, @grp := 0) vars
+  ORDER BY start_date
+) AS grouped
+GROUP BY group_id
+ORDER BY DATEDIFF(MAX(end_date), MIN(start_date)) ASC, MIN(start_date) ASC;
+```
+<br>
+
+
 149. Contest Leaderboard
 
 The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the hacker_id, name, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending hacker_id. Exclude all hackers with a total score of 0 from your result.
