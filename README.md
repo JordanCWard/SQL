@@ -39,20 +39,27 @@ You are given a table, Projects, containing three columns: Task_ID, Start_Date a
 
 ``` sql
 SELECT 
-  MIN(start_date) AS start_date,
-  MAX(end_date) AS end_date
+    MIN(start_date) AS start_date,
+    MAX(end_date) AS end_date
 FROM (
-  SELECT 
-    start_date,
-    end_date,
-    @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
-    @prev_end := end_date
-  FROM projects
-  JOIN (SELECT @prev_end := NULL, @grp := 0) vars
-  ORDER BY start_date
+    SELECT 
+        start_date,
+        end_date,
+        @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
+        @prev_end := end_date
+    FROM
+        projects
+    JOIN
+        (SELECT @prev_end := NULL, @grp := 0) vars
+    ORDER BY
+        start_date
 ) AS grouped
-GROUP BY group_id
-ORDER BY DATEDIFF(MAX(end_date), MIN(start_date)) ASC, MIN(start_date) ASC;
+GROUP BY
+    group_id
+ORDER BY
+    DATEDIFF(MAX(end_date), MIN(start_date)) ASC,
+    MIN(start_date) ASC
+;
 ```
 <br>
 
