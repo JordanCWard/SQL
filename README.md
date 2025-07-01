@@ -37,6 +37,51 @@ https://datalemur.com/questions?category=SQL
 
 
 ``` sql
+SELECT
+    cn.contest_id,
+    cn.hacker_id,
+    cn.name,
+    SUM(s.total_submissions) AS total_submissions,
+    SUM(s.total_accepted_submissions) AS total_accepted_submissions,
+    SUM(v.total_views) AS total_views,
+    SUM(v.total_unique_views) AS total_unique_views
+FROM
+    contests cn
+JOIN 
+    colleges cl ON cn.contest_id = cl.contest_id
+JOIN 
+    challenges ch ON cl.college_id = ch.college_id
+LEFT JOIN (
+    SELECT
+        challenge_id,
+        SUM(total_views) AS total_views,
+        SUM(total_unique_views) AS total_unique_views
+    FROM
+        view_stats
+    GROUP BY
+        challenge_id
+) v ON ch.challenge_id = v.challenge_id
+LEFT JOIN (
+    SELECT
+        challenge_id,
+        SUM(total_submissions) AS total_submissions,
+        SUM(total_accepted_submissions) AS total_accepted_submissions
+    FROM
+        submission_stats
+    GROUP BY
+        challenge_id
+) s ON ch.challenge_id = s.challenge_id
+GROUP BY
+    cn.contest_id,
+    cn.hacker_id,
+    cn.name
+HAVING
+    total_submissions != 0 OR
+    total_accepted_submissions != 0 OR
+    total_views != 0 OR
+    total_unique_views != 0
+ORDER BY
+    cn.contest_id;
 
 ```
 <br>
