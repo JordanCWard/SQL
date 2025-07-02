@@ -4,7 +4,10 @@
 
 /*
 
-98- MySQL
+154- MySQL
+https://platform.stratascratch.com/coding?code_type=1
+
+98-153 MySQL
 https://www.hackerrank.com/domains/sql
 
 48-97 MySQL
@@ -28,8 +31,16 @@ https://datalemur.com/questions?category=SQL
 
 
 
+154. April & May Sign Up's
 
+You have been asked to get a list of all the sign up IDs with transaction start dates in either April or May. Since a sign up ID can be used for multiple transactions only output the unique ID. Your output should contain a list of non duplicated sign-up IDs.
 
+``` sql
+SELECT DISTINCT signup_id
+FROM transactions
+WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31';
+```
+<br>
 
 
 153. Interviews
