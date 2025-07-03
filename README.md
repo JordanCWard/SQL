@@ -35,10 +35,19 @@ https://datalemur.com/questions?category=SQL
 
 
 
+155. 
 
 
-
-
+``` sql
+SELECT
+    *
+FROM
+    airbnb_search_details
+WHERE
+    host_response_rate IS NULL
+;
+```
+<br>
 
 
 154. April & May Sign Up's
@@ -48,7 +57,8 @@ You have been asked to get a list of all the sign up IDs with transaction start 
 ``` sql
 SELECT DISTINCT signup_id
 FROM transactions
-WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31';
+WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31'
+;
 ```
 <br>
 
@@ -104,8 +114,8 @@ HAVING
     total_views != 0 OR
     total_unique_views != 0
 ORDER BY
-    cn.contest_id;
-
+    cn.contest_id
+;
 ```
 <br>
 
