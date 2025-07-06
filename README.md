@@ -176,18 +176,29 @@ ORDER BY
 You are given a table, Functions, containing two columns: X and Y. Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1. Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows such that X1 ≤ Y1.
 
 ``` sql
+-- Select pairs of (x, y) from the functions table
 SELECT 
     f1.x, 
     f1.y
 FROM 
     functions f1
+
+-- Join the table with itself to find reciprocal pairs (where x=y and y=x)
 JOIN 
     functions f2 ON f1.x = f2.y AND f1.y = f2.x
+
+-- Group by (x, y) to prepare for aggregation in the HAVING clause
 GROUP BY 
     f1.x, 
     f1.y
+
+-- Filter to include only:
+-- 1. Pairs appearing more than once (COUNT > 1)
+-- 2. Or pairs where x is less than y to avoid duplicates in reciprocal pairs
 HAVING 
     COUNT(f1.x) > 1 OR f1.x < f1.y
+
+-- Order the result set by x for better readability
 ORDER BY 
     f1.x;
 ```
