@@ -91,166 +91,7 @@ ORDER BY
 
 
 
-
-
-
-155. Google - Salary by Education
-
-Given the education levels and salaries of a group of individuals, find what is the average salary for each level of education.
-
-``` sql
-SELECT
-    AVG(salary) AS avg_salary,
-    education
-FROM
-    google_salaries
-GROUP BY
-    education;
-```
-<br>
-
-
-154. Airbnb - Find searches with no data for the host_response_rate column
-
-Find all search details where data is missing from the host_response_rate column.
-
-``` sql
-SELECT
-    *
-FROM
-    airbnb_search_details
-WHERE
-    host_response_rate IS NULL
-;
-```
-<br>
-
-
-153. Amazon - April & May Sign Up's
-
-You have been asked to get a list of all the sign up IDs with transaction start dates in either April or May. Since a sign up ID can be used for multiple transactions only output the unique ID. Your output should contain a list of non duplicated sign-up IDs.
-
-``` sql
-SELECT DISTINCT signup_id
-FROM transactions
-WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31'
-;
-```
-<br>
-
-
-152. Symmetric Pairs
-
-You are given a table, Functions, containing two columns: X and Y. Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1. Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows such that X1 ≤ Y1.
-
-``` sql
-SELECT 
-    f1.x, 
-    f1.y
-FROM 
-    functions f1
-JOIN 
-    functions f2 ON f1.x = f2.y AND f1.y = f2.x
-GROUP BY 
-    f1.x, 
-    f1.y
-HAVING 
-    COUNT(f1.x) > 1 OR f1.x < f1.y
-ORDER BY 
-    f1.x;
-```
-<br>
-
-
-151. Placements
-
-You are given three tables: Students, Friends and Packages. Students contains two columns: ID and Name. Friends contains two columns: ID and Friend_ID (ID of the ONLY best friend). Packages contains two columns: ID and Salary (offered salary in $ thousands per month). Write a query to output the names of those students whose best friends got offered a higher salary than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.
-
-``` sql
-SELECT
-    s.name
-FROM
-    students s
-JOIN
-    packages p1 ON s.id = p1.id
-JOIN
-    friends f ON s.id = f.id
-JOIN
-    packages p2 ON f.friend_id = p2.id
-WHERE
-    p2.salary > p1.salary
-ORDER BY
-    p2.salary
-;
-```
-<br>
-
-
-150. SQL Project Planning
-
-You are given a table, Projects, containing three columns: Task_ID, Start_Date and End_Date. It is guaranteed that the difference between the End_Date and the Start_Date is equal to 1 day for each row in the table.
-
-``` sql
-SELECT 
-    MIN(start_date) AS start_date,
-    MAX(end_date) AS end_date
-FROM (
-    SELECT 
-        start_date,
-        end_date,
-        @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
-        @prev_end := end_date
-    FROM
-        projects
-    JOIN
-        (SELECT @prev_end := NULL, @grp := 0) vars
-    ORDER BY
-        start_date
-) AS grouped
-GROUP BY
-    group_id
-ORDER BY
-    DATEDIFF(MAX(end_date), MIN(start_date)) ASC,
-    MIN(start_date) ASC
-;
-```
-<br>
-
-
-149. Contest Leaderboard
-
-The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the hacker_id, name, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending hacker_id. Exclude all hackers with a total score of 0 from your result.
-
-``` sql
-SELECT
-    h.hacker_id,
-    h.name,
-    SUM(ms.score) AS total_score
-FROM
-    hackers AS h
-INNER JOIN (
-    SELECT
-        hacker_id,
-        challenge_id,
-        MAX(score) AS score
-    FROM
-        submissions
-    GROUP BY
-        hacker_id, challenge_id
-) AS ms ON h.hacker_id = ms.hacker_id
-GROUP BY
-    h.hacker_id, h.name
-HAVING
-    total_score > 0
-ORDER BY
-    total_score DESC,
-    h.hacker_id
-;
-```
-<br>
-
-
-148. HackerRank
+155. HackerRank
 
 Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 
@@ -312,7 +153,123 @@ ORDER BY
 <br>
 
 
-147. Ollivander's Inventory
+
+
+
+154. Symmetric Pairs
+
+You are given a table, Functions, containing two columns: X and Y. Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1. Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows such that X1 ≤ Y1.
+
+``` sql
+SELECT 
+    f1.x, 
+    f1.y
+FROM 
+    functions f1
+JOIN 
+    functions f2 ON f1.x = f2.y AND f1.y = f2.x
+GROUP BY 
+    f1.x, 
+    f1.y
+HAVING 
+    COUNT(f1.x) > 1 OR f1.x < f1.y
+ORDER BY 
+    f1.x;
+```
+<br>
+
+
+153. Placements
+
+You are given three tables: Students, Friends and Packages. Students contains two columns: ID and Name. Friends contains two columns: ID and Friend_ID (ID of the ONLY best friend). Packages contains two columns: ID and Salary (offered salary in $ thousands per month). Write a query to output the names of those students whose best friends got offered a higher salary than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.
+
+``` sql
+SELECT
+    s.name
+FROM
+    students s
+JOIN
+    packages p1 ON s.id = p1.id
+JOIN
+    friends f ON s.id = f.id
+JOIN
+    packages p2 ON f.friend_id = p2.id
+WHERE
+    p2.salary > p1.salary
+ORDER BY
+    p2.salary
+;
+```
+<br>
+
+
+152. SQL Project Planning
+
+You are given a table, Projects, containing three columns: Task_ID, Start_Date and End_Date. It is guaranteed that the difference between the End_Date and the Start_Date is equal to 1 day for each row in the table.
+
+``` sql
+SELECT 
+    MIN(start_date) AS start_date,
+    MAX(end_date) AS end_date
+FROM (
+    SELECT 
+        start_date,
+        end_date,
+        @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
+        @prev_end := end_date
+    FROM
+        projects
+    JOIN
+        (SELECT @prev_end := NULL, @grp := 0) vars
+    ORDER BY
+        start_date
+) AS grouped
+GROUP BY
+    group_id
+ORDER BY
+    DATEDIFF(MAX(end_date), MIN(start_date)) ASC,
+    MIN(start_date) ASC
+;
+```
+<br>
+
+
+151. Contest Leaderboard
+
+The total score of a hacker is the sum of their maximum scores for all of the challenges. Write a query to print the hacker_id, name, and total score of the hackers ordered by the descending score. If more than one hacker achieved the same total score, then sort the result by ascending hacker_id. Exclude all hackers with a total score of 0 from your result.
+
+``` sql
+SELECT
+    h.hacker_id,
+    h.name,
+    SUM(ms.score) AS total_score
+FROM
+    hackers AS h
+INNER JOIN (
+    SELECT
+        hacker_id,
+        challenge_id,
+        MAX(score) AS score
+    FROM
+        submissions
+    GROUP BY
+        hacker_id, challenge_id
+) AS ms ON h.hacker_id = ms.hacker_id
+GROUP BY
+    h.hacker_id, h.name
+HAVING
+    total_score > 0
+ORDER BY
+    total_score DESC,
+    h.hacker_id
+;
+```
+<br>
+
+
+
+
+150. Ollivander's Inventory
 
 Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
 
@@ -346,7 +303,7 @@ ORDER BY
 <br>
 
 
-146. Top Competitors
+149. Top Competitors
 
 Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
 
@@ -376,7 +333,7 @@ ORDER BY
 <br>
 
 
-145. The Report
+148. The Report
 
 Ketty gives Eve a task to generate a report containing three columns: Name, Grade and Mark. Ketty doesn't want the NAMES of those students who received a grade lower than 8. The report must be in descending order by grade -- i.e. higher grades are entered first. If there is more than one student with the same grade (8-10) assigned to them, order those particular students by their name alphabetically. Finally, if the grade is lower than 8, use "NULL" as their name and list them by their grades in descending order. If there is more than one student with the same grade (1-7) assigned to them, order those particular students by their marks in ascending order.
 
@@ -400,7 +357,7 @@ ORDER BY
 <br>
 
 
-144. Weather Observation Station 20
+147. Weather Observation Station 20
 
 Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to 4 decimal places.
 
@@ -421,7 +378,7 @@ WHERE
 <br>
 
 
-143. New Companies
+146. New Companies
 
 Amber's conglomerate corporation just acquired some new companies. Each of the companies follows this hierarchy:
 
@@ -448,7 +405,7 @@ GROUP BY
 <br>
 
 
-142. Draw the Triangle 2
+145 Draw the Triangle 2
 
 P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
 
@@ -468,7 +425,7 @@ FROM counter_cte;
 
 
 
-141. Draw the Triangle 1
+144. Draw the Triangle 1
 
 P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(20) and ending with P(1).
 
@@ -483,6 +440,57 @@ SELECT REPEAT('* ', n) AS output
 FROM counter_cte;
 ```
 <br>
+
+
+
+143. Google - Salary by Education
+
+Given the education levels and salaries of a group of individuals, find what is the average salary for each level of education.
+
+``` sql
+SELECT
+    AVG(salary) AS avg_salary,
+    education
+FROM
+    google_salaries
+GROUP BY
+    education;
+```
+<br>
+
+
+142. Airbnb - Find searches with no data for the host_response_rate column
+
+Find all search details where data is missing from the host_response_rate column.
+
+``` sql
+SELECT
+    *
+FROM
+    airbnb_search_details
+WHERE
+    host_response_rate IS NULL
+;
+```
+<br>
+
+
+141. Amazon - April & May Sign Up's
+
+You have been asked to get a list of all the sign up IDs with transaction start dates in either April or May. Since a sign up ID can be used for multiple transactions only output the unique ID. Your output should contain a list of non duplicated sign-up IDs.
+
+``` sql
+SELECT DISTINCT signup_id
+FROM transactions
+WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31'
+;
+```
+<br>
+
+
+
+
+
 
 
 140. Average Population of Each Continent
