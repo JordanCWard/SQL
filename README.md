@@ -210,21 +210,31 @@ ORDER BY
 You are given three tables: Students, Friends and Packages. Students contains two columns: ID and Name. Friends contains two columns: ID and Friend_ID (ID of the ONLY best friend). Packages contains two columns: ID and Salary (offered salary in $ thousands per month). Write a query to output the names of those students whose best friends got offered a higher salary than them. Names must be ordered by the salary amount offered to the best friends. It is guaranteed that no two students got same salary offer.
 
 ``` sql
+-- Select the names of students whose friends have higher package salaries
 SELECT
     s.name
 FROM
     students s
+
+-- Join students with their own packages
 JOIN
     packages p1 ON s.id = p1.id
+
+-- Join students with their friends
 JOIN
     friends f ON s.id = f.id
+
+-- Join friends with their respective packages
 JOIN
     packages p2 ON f.friend_id = p2.id
+
+-- Filter for cases where a friend's salary is higher than the student's salary
 WHERE
     p2.salary > p1.salary
+
+-- Order the results by the friend's salary (ascending)
 ORDER BY
-    p2.salary
-;
+    p2.salary;
 ```
 <br>
 
