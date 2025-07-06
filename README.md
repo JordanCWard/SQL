@@ -40,6 +40,7 @@ Samantha interviews many candidates from different colleges using coding challen
 Note: A specific contest can be used to screen candidates at more than one college, but each college only holds 1 screening contest.
 
 ``` sql
+-- Select contest details along with aggregated statistics for submissions and views
 SELECT
     cn.contest_id,
     cn.hacker_id,
@@ -50,10 +51,16 @@ SELECT
     SUM(v.total_unique_views) AS total_unique_views
 FROM
     contests cn
+
+-- Join contests with colleges to link contests to their respective colleges
 JOIN 
     colleges cl ON cn.contest_id = cl.contest_id
+
+-- Join colleges with challenges to get all challenges for each college
 JOIN 
     challenges ch ON cl.college_id = ch.college_id
+
+-- Left join aggregated view statistics for each challenge
 LEFT JOIN (
     SELECT
         challenge_id,
@@ -64,6 +71,8 @@ LEFT JOIN (
     GROUP BY
         challenge_id
 ) v ON ch.challenge_id = v.challenge_id
+
+-- Left join aggregated submission statistics for each challenge
 LEFT JOIN (
     SELECT
         challenge_id,
@@ -74,15 +83,21 @@ LEFT JOIN (
     GROUP BY
         challenge_id
 ) s ON ch.challenge_id = s.challenge_id
+
+-- Group results by contest to aggregate stats at the contest level
 GROUP BY
     cn.contest_id,
     cn.hacker_id,
     cn.name
+
+-- Filter out contests that have no submissions or views at all
 HAVING
     total_submissions != 0 OR
     total_accepted_submissions != 0 OR
     total_views != 0 OR
     total_unique_views != 0
+
+-- Order the results by contest_id for better readability
 ORDER BY
     cn.contest_id
 ;
