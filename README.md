@@ -33,59 +33,7 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
-
-
-
-
-
-
-156. Google - Salary by Education
-
-Given the education levels and salaries of a group of individuals, find what is the average salary for each level of education.
-
-``` sql
-SELECT
-    AVG(salary) AS avg_salary,
-    education
-FROM
-    google_salaries
-GROUP BY
-    education;
-```
-<br>
-
-
-155. Airbnb - Find searches with no data for the host_response_rate column
-
-Find all search details where data is missing from the host_response_rate column.
-
-``` sql
-SELECT
-    *
-FROM
-    airbnb_search_details
-WHERE
-    host_response_rate IS NULL
-;
-```
-<br>
-
-
-154. Amazon - April & May Sign Up's
-
-You have been asked to get a list of all the sign up IDs with transaction start dates in either April or May. Since a sign up ID can be used for multiple transactions only output the unique ID. Your output should contain a list of non duplicated sign-up IDs.
-
-``` sql
-SELECT DISTINCT signup_id
-FROM transactions
-WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31'
-;
-```
-<br>
-
-
-153. Interviews
+156. Interviews
 
 Samantha interviews many candidates from different colleges using coding challenges and contests. Write a query to print the contest_id, hacker_id, name, and the sums of total_submissions, total_accepted_submissions, total_views, and total_unique_views for each contest sorted by contest_id. Exclude the contest from the result if all four sums are 0.
 
@@ -137,6 +85,55 @@ HAVING
     total_unique_views != 0
 ORDER BY
     cn.contest_id
+;
+```
+<br>
+
+
+
+
+
+
+155. Google - Salary by Education
+
+Given the education levels and salaries of a group of individuals, find what is the average salary for each level of education.
+
+``` sql
+SELECT
+    AVG(salary) AS avg_salary,
+    education
+FROM
+    google_salaries
+GROUP BY
+    education;
+```
+<br>
+
+
+154. Airbnb - Find searches with no data for the host_response_rate column
+
+Find all search details where data is missing from the host_response_rate column.
+
+``` sql
+SELECT
+    *
+FROM
+    airbnb_search_details
+WHERE
+    host_response_rate IS NULL
+;
+```
+<br>
+
+
+153. Amazon - April & May Sign Up's
+
+You have been asked to get a list of all the sign up IDs with transaction start dates in either April or May. Since a sign up ID can be used for multiple transactions only output the unique ID. Your output should contain a list of non duplicated sign-up IDs.
+
+``` sql
+SELECT DISTINCT signup_id
+FROM transactions
+WHERE transaction_start_date BETWEEN '2020-04-01' AND '2020-05-31'
 ;
 ```
 <br>
