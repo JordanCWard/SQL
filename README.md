@@ -244,24 +244,32 @@ ORDER BY
 You are given a table, Projects, containing three columns: Task_ID, Start_Date and End_Date. It is guaranteed that the difference between the End_Date and the Start_Date is equal to 1 day for each row in the table.
 
 ``` sql
+-- Select the earliest start_date and latest end_date for each group of consecutive projects
 SELECT 
     MIN(start_date) AS start_date,
     MAX(end_date) AS end_date
 FROM (
+    -- Assign group IDs to consecutive projects where start_date equals previous end_date
     SELECT 
         start_date,
         end_date,
-        @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,
-        @prev_end := end_date
+        @grp := IF(@prev_end = start_date, @grp, @grp + 1) AS group_id,  -- Increment group_id if current start_date does not match previous end_date
+        @prev_end := end_date  -- Update @prev_end for the next row
     FROM
         projects
+    -- Initialize session variables for tracking previous end_date and group ID
     JOIN
         (SELECT @prev_end := NULL, @grp := 0) vars
+    -- Ensure rows are processed in chronological order by start_date
     ORDER BY
         start_date
 ) AS grouped
+
+-- Group projects by the assigned group_id to find ranges of consecutive projects
 GROUP BY
     group_id
+
+-- Order the result by the duration of each group (shortest first), then by start_date
 ORDER BY
     DATEDIFF(MAX(end_date), MIN(start_date)) ASC,
     MIN(start_date) ASC
