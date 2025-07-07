@@ -31,9 +31,6 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
-
-
 <!--
 ALWAYS ADD COMMENTS
 -->
@@ -41,10 +38,58 @@ ALWAYS ADD COMMENTS
 
 
 
+157. Bloomberg
 
+The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
 
+``` sql
+-- Get each ticker's highest and lowest opening price and the month-year it occurred
+SELECT
+    ticker,
 
+    -- Find month-year of highest opening price for each ticker
+    TO_CHAR(
+        MAX(date) FILTER (
+            WHERE open = (
+                SELECT MAX(open)
+                FROM stock_prices t2
+                WHERE t2.ticker = t1.ticker
+            )
+        ),
+        'Mon-YYYY'
+    ) AS highest_mth,
 
+    -- Highest opening price for the ticker
+    MAX(open) AS highest_open,
+
+    -- Find month-year of lowest opening price for each ticker
+    TO_CHAR(
+        MIN(date) FILTER (
+            WHERE open = (
+                SELECT MIN(open)
+                FROM stock_prices t2
+                WHERE t2.ticker = t1.ticker
+            )
+        ),
+        'Mon-YYYY'
+    ) AS lowest_mth,
+
+    -- Lowest opening price for the ticker
+    MIN(open) AS lowest_open
+
+FROM
+    stock_prices t1
+
+-- Group results by ticker symbol
+GROUP BY
+    ticker
+
+-- Order results alphabetically by ticker
+ORDER BY
+    ticker;
+
+```
+<br>
 
 
 156. Interviews
@@ -3239,36 +3284,30 @@ ORDER BY
 <br>
 
 
-32. Bloomberg
+32. Shopify: Order Details
 
-The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
+Find order details made by Jill and Eva.
+Consider the Jill and Eva as first names of customers.
+Output the order date, details and cost along with the first name.
+Order records based on the customer id in ascending order.
 
 ``` sql
-SELECT 
-  ticker, 
-  TO_CHAR(MAX(date) FILTER (WHERE open = (
-          SELECT 
-            MAX(open) 
-          FROM 
-            stock_prices t2 
-          WHERE 
-            t2.ticker = t1.ticker)), 'Mon-YYYY') AS highest_mth, 
-  MAX(open) AS highest_open, 
-  TO_CHAR(MIN(date) FILTER (WHERE open = (
-          SELECT 
-            MIN(open) 
-          FROM 
-            stock_prices t2 
-          WHERE 
-            t2.ticker = t1.ticker)), 'Mon-YYYY') AS lowest_mtn, 
-  MIN(open) AS lowest_open 
-FROM 
-  stock_prices t1 
-GROUP BY 
-  ticker
+-- Get orders for customers named Jill or Eva
+SELECT
+    o.order_date,
+    o.order_details,
+    o.total_order_cost,
+    c.first_name
+FROM
+    orders AS o
+INNER JOIN
+    customers AS c
+    ON o.cust_id = c.id
+WHERE
+    c.first_name IN ('Jill', 'Eva')
 ORDER BY
-  ticker
-;
+    o.cust_id;
+
 ```
 <br>
 
