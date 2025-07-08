@@ -3525,37 +3525,23 @@ ORDER BY
 <br>
 
 
-25. Amazon
+25. Meta/Facebook
 
-Assume you're given a table containing data on Amazon customers and their spending on products in different category, write a query to identify the top two highest-grossing products within each category in the year 2022. The output should include the category, product, and total spend.
+Meta/Facebook has developed a new programing language called Hack.To measure the popularity of Hack they ran a survey with their employees. The survey included data on previous programing familiarity as well as the number of years of experience, age, gender and most importantly satisfaction with Hack. Due to an error location data was not collected, but your supervisor demands a report showing average popularity of Hack by office location. Luckily the user IDs of employees completing the surveys were stored.
+Based on the above, find the average popularity of the Hack per office location.
+Output the location along with the average popularity.
 
 ``` sql
-WITH ranked_products AS (
-  SELECT
-    category,
-    product,
-    sum(spend) as total_spent,
-    row_number() OVER (
-      PARTITION BY category
-      ORDER BY sum(spend) DESC) AS ranking
-  FROM
-    product_spend
-  WHERE
-    transaction_date BETWEEN '01/01/2022' AND '12/31/2022'
-  GROUP BY
-    category,
-    product
-)
-
-SELECT
-  category,
-  product,
-  total_spent
+-- Average hack survey popularity by employee location
+SELECT  
+    e.location,
+    AVG(h.popularity) AS avg_popularity
 FROM
-  ranked_products
-WHERE
-  ranking < 3
-;
+    facebook_employees e
+JOIN
+    facebook_hack_survey h ON e.id = h.employee_id
+GROUP BY
+    e.location;
 ```
 <br>
 
