@@ -37,7 +37,40 @@ ALWAYS ADD COMMENTS
 
 
 
+158. Amazon
 
+Assume you're given a table containing data on Amazon customers and their spending on products in different category, write a query to identify the top two highest-grossing products within each category in the year 2022. The output should include the category, product, and total spend.
+
+``` sql
+-- Rank products within each category by total spend in 2022
+WITH ranked_products AS (
+    SELECT
+        category,
+        product,
+        SUM(spend) AS total_spent,
+        ROW_NUMBER() OVER (
+            PARTITION BY category ORDER BY SUM(spend) DESC
+        ) AS ranking
+    FROM
+        product_spend
+    WHERE
+        transaction_date BETWEEN '2022-01-01' AND '2022-12-31'
+    GROUP BY
+        category,
+        product
+)
+
+-- Select top 2 products per category
+SELECT
+    category,
+    product,
+    total_spent
+FROM
+    ranked_products
+WHERE
+    ranking < 3;
+```
+<br>
 
 
 157. Bloomberg
