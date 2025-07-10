@@ -2146,29 +2146,20 @@ FROM (
 <br>
 
 
+74. Forbes
 
-74. Exchange seats (626)
-
-Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the id of the last student is not swapped. Return the result table ordered by id in ascending order.
+Find the most profitable company from the financial sector. Output the result along with the continent.
 
 ``` sql
+-- Get the company and continent of the most profitable company
 SELECT
-    id,
-    CASE
-        WHEN 
-            id % 2 = 1 
-            AND LEAD(student) OVER (ORDER BY id) IS NOT NULL 
-            THEN LEAD(student) OVER (ORDER BY id)
-        WHEN 
-            id % 2 = 0 
-            THEN LAG(student) OVER (ORDER BY id)
-        ELSE student
-    END AS student
+    company,
+    continent
 FROM
-    seat
+    forbes_global_2010_2014
 ORDER BY
-    id ASC
-;
+    profits DESC
+LIMIT 1;
 ```
 <br>
 
