@@ -40,6 +40,33 @@ ALWAYS ADD COMMENTS
 
 
 
+160. Exchange seats
+
+Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the id of the last student is not swapped. Return the result table ordered by id in ascending order.
+
+``` sql
+-- Swap adjacent students in the 'seat' table based on their id
+SELECT
+    id,
+    CASE
+        -- If id is odd and there is a next student, take the next student's name
+        WHEN id % 2 = 1 
+             AND LEAD(student) OVER (ORDER BY id) IS NOT NULL
+        THEN LEAD(student) OVER (ORDER BY id)
+        
+        -- If id is even, take the previous student's name
+        WHEN id % 2 = 0 
+        THEN LAG(student) OVER (ORDER BY id)
+        
+        -- Otherwise, keep the current student's name
+        ELSE student
+    END AS student
+FROM
+    seat
+ORDER BY
+    id ASC;
+```
+<br>
 
 
 159. Wayfair
