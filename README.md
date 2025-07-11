@@ -36,8 +36,45 @@ ALWAYS ADD COMMENTS
 -->
 
 
+161. Restaurant Growth
 
+You are the restaurant owner and you want to analyze a possible expansion (there will be at least one customer every day). Compute the moving average of how much the customer paid in a seven days window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places. Return the result table ordered by visited_on in ascending order.
 
+``` sql
+-- Get dates, total amounts, and 7-day rolling averages for customer activity
+SELECT
+    visited_on,
+    amount,
+    average_amount
+FROM (
+    -- Compute total amount and rolling 7-day average for each date
+    SELECT DISTINCT
+        visited_on,
+        
+        -- Sum of amounts over the current day and previous 6 days
+        SUM(amount) OVER (
+            ORDER BY visited_on
+            RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW
+        ) AS amount,
+        
+        -- Rolling 7-day average of amounts, rounded to 2 decimal places
+        ROUND(
+            SUM(amount) OVER (
+                ORDER BY visited_on
+                RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW
+            ) / 7, 2
+        ) AS average_amount
+    FROM
+        Customer
+) AS whole_totals
+WHERE
+    -- Only include rows starting from the 7th day (to ensure full 7-day window)
+    DATEDIFF(
+        visited_on,
+        (SELECT MIN(visited_on) FROM Customer)
+    ) >= 6;
+```
+<br>
 
 
 160. Exchange seats
