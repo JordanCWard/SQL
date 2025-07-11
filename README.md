@@ -1557,34 +1557,20 @@ WHERE
 <br>
 
 
-96. Restaurant Growth
+96. Churro Activity Date
 
-You are the restaurant owner and you want to analyze a possible expansion (there will be at least one customer every day). Compute the moving average of how much the customer paid in a seven days window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places. Return the result table ordered by visited_on in ascending order.
+Find the inspection date and risk category (pe_description) of facilities named 'STREET CHURROS' that received a score below 95.
 
 ``` sql
+-- Get inspection dates and descriptions for STREET CHURROS with scores below 95
 SELECT
-    visited_on,
-    amount,
-    average_amount 
-FROM (
-    SELECT DISTINCT
-        visited_on,
-        SUM(amount) OVER (
-            ORDER BY visited_on
-            RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW
-            ) AS amount,
-        ROUND(SUM(amount) OVER (
-            ORDER BY visited_on
-            RANGE BETWEEN INTERVAL 6 DAY PRECEDING AND CURRENT ROW)
-            / 7, 2) AS average_amount
-    FROM Customer
-    ) AS whole_totals
+    activity_date,
+    pe_description
+FROM
+    los_angeles_restaurant_health_inspections
 WHERE
-    DATEDIFF(visited_on, (
-        SELECT MIN(visited_on)
-        FROM Customer)
-        ) >= 6
-;
+    facility_name = 'STREET CHURROS'
+    AND score < 95;
 ```
 <br>
 
