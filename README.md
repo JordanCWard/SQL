@@ -1164,45 +1164,25 @@ ORDER BY rn;
 <br>
 
 
-119. The PADS
+119. San Francisco health inspection violations
 
-Generate the following two result sets:
+You are given a dataset of health inspections that includes details about violations. Each row represents an inspection, and if an inspection resulted in a violation, the violation_id column will contain a value.
 
-Query an alphabetically ordered list of all names in OCCUPATIONS, immediately followed by the first letter of each profession as a parenthetical (i.e.: enclosed in parentheses). For example: AnActorName(A), ADoctorName(D), AProfessorName(P), and ASingerName(S).
-Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
-
-There are a total of [occupation_count] [occupation]s.
-where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name. If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
-
-Note: There will be at least two entries in the table for each type of occupation.
+Count the total number of violations that occurred at 'Roxanne Cafe' for each year, based on the inspection date. Output the year and the corresponding number of violations in ascending order of the year.
 
 ``` sql
-SELECT result_text
-FROM (
-    SELECT 
-        CONCAT(name, '(', LEFT(occupation, 1), ')') AS result_text,
-        1 AS sort_priority,
-        name AS sort_name,
-        NULL AS sort_count
-    FROM occupations
-
-    UNION ALL
-
-    SELECT 
-        CONCAT('There are a total of ', COUNT(*), ' ', LOWER(occupation), 's.') AS result_text,
-        2 AS sort_priority,
-        LOWER(occupation) AS sort_name,
-        COUNT(*) AS sort_count
-    FROM occupations
-    GROUP BY occupation
-) AS combined_result
-
-ORDER BY 
-    sort_priority ASC,
-    CASE WHEN sort_priority = 1 THEN sort_name END ASC,
-    CASE WHEN sort_priority = 2 THEN sort_count END ASC,
-    CASE WHEN sort_priority = 2 THEN sort_name END ASC
-;
+-- Get yearly count of inspections for Roxanne Cafe
+SELECT
+    YEAR(inspection_date) AS inspection_year,
+    COUNT(*) AS total_inspections
+FROM
+    sf_restaurant_health_violations
+WHERE
+    business_name = 'Roxanne Cafe'
+GROUP BY
+    inspection_year
+ORDER BY
+    inspection_year;
 ```
 <br>
 
