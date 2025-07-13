@@ -55,7 +55,7 @@ Note: There will be at least two entries in the table for each type of occupatio
 -- Select the final result text from the combined subquery
 SELECT result_text
 FROM (
-    -- Block 1: Get each name with the first letter of their occupation in parentheses
+    -- Get each name with the first letter of their occupation in parentheses
     SELECT 
         CONCAT(name, '(', LEFT(occupation, 1), ')') AS result_text,
         1 AS sort_priority,                -- Set sort priority for individual names
@@ -65,7 +65,7 @@ FROM (
 
     UNION ALL
 
-    -- Block 2: Get count of each occupation in lowercase with proper message
+    -- Get count of each occupation in lowercase with proper message
     SELECT 
         CONCAT('There are a total of ', COUNT(*), ' ', LOWER(occupation), 's.') AS result_text,
         2 AS sort_priority,                -- Set sort priority for summary counts
