@@ -38,7 +38,49 @@ ALWAYS ADD COMMENTS
 
 
 
+162. The PADS
 
+Generate the following two result sets:
+
+Query an alphabetically ordered list of all names in OCCUPATIONS, immediately followed by the first letter of each profession as a parenthetical (i.e.: enclosed in parentheses). For example: AnActorName(A), ADoctorName(D), AProfessorName(P), and ASingerName(S). Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
+
+There are a total of [occupation_count] [occupation]s. where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name. If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
+
+Note: There will be at least two entries in the table for each type of occupation.
+
+``` sql
+-- Select the final result text from the combined subquery
+SELECT result_text
+FROM (
+    -- Block 1: Get each name with the first letter of their occupation in parentheses
+    SELECT 
+        CONCAT(name, '(', LEFT(occupation, 1), ')') AS result_text,
+        1 AS sort_priority,                -- Set sort priority for individual names
+        name AS sort_name,                 -- Used for sorting individual names alphabetically
+        NULL AS sort_count                 -- Placeholder for count (not needed in this block)
+    FROM occupations
+
+    UNION ALL
+
+    -- Block 2: Get count of each occupation in lowercase with proper message
+    SELECT 
+        CONCAT('There are a total of ', COUNT(*), ' ', LOWER(occupation), 's.') AS result_text,
+        2 AS sort_priority,                -- Set sort priority for summary counts
+        LOWER(occupation) AS sort_name,    -- Used for sorting counts alphabetically if counts are equal
+        COUNT(*) AS sort_count             -- Used for sorting by count
+    FROM occupations
+    GROUP BY occupation
+) AS combined_result
+
+-- Order results: first names alphabetically, then counts by count ascending and name alphabetically
+ORDER BY 
+    sort_priority ASC,                     -- First show individual names (priority 1), then counts (priority 2)
+    CASE WHEN sort_priority = 1 THEN sort_name END ASC,  -- Sort names alphabetically
+    CASE WHEN sort_priority = 2 THEN sort_count END ASC, -- Sort counts ascending
+    CASE WHEN sort_priority = 2 THEN sort_name END ASC   -- If counts equal, sort by occupation name
+;
+```
+<br>
 
 
 161. Restaurant Growth
