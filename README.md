@@ -39,9 +39,41 @@ ALWAYS ADD COMMENTS
 
 
 
+163. IBM
 
+IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). Additionally, it should count the number of employees who did not run any queries during this period. Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
 
+``` sql
+-- CTE: count distinct queries per employee in Q3 2023
+WITH query_count AS (
+    SELECT
+        employee_id,
+        COUNT(DISTINCT query_id) AS total_queries
+    FROM
+        queries
+    WHERE
+        query_starttime >= '2023-07-01T00:00:00Z' -- start of Q3
+        AND query_starttime < '2023-10-01T00:00:00Z' -- end of Q3
+    GROUP BY
+        employee_id
+    ORDER BY
+        total_queries DESC
+)
 
+-- Join employees with query counts and group summary
+SELECT
+    COALESCE(total_queries, '0') AS unique_queries, -- replace NULL with 0
+    COUNT(*) AS employee_count -- count employees per query count
+FROM
+    employees
+LEFT JOIN
+    query_count ON employees.employee_id = query_count.employee_id
+GROUP BY
+    unique_queries
+ORDER BY
+    unique_queries;
+```
+<br>
 
 
 162. The PADS
