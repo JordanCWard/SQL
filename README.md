@@ -3904,38 +3904,19 @@ ORDER BY
 <br>
 
 
-14. IBM
+14. Lyft
 
-IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). Additionally, it should count the number of employees who did not run any queries during this period. Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
+Find all Lyft drivers who earn either equal to or less than 30k USD or equal to or more than 70k USD. Output all details related to retrieved records.
 
 ``` sql
-WITH query_count AS (
+-- Select Lyft drivers with salary <= 30,000 or >= 70,000
 SELECT
-  employee_id,
-  COUNT(DISTINCT query_id) AS total_queries
+    *
 FROM
-  queries
+    lyft_drivers
 WHERE
-  query_starttime >= '2023-07-01T00:00:00Z'
-  AND query_starttime < '2023-10-01T00:00:00Z'
-GROUP BY
-  employee_id
-ORDER BY
-  total_queries DESC
-)
-
-SELECT
-  COALESCE(total_queries, '0') AS unique_queries,
-  COUNT(COALESCE(total_queries, '0')) AS employee_count
-FROM
-  employees
-LEFT JOIN
-  query_count ON employees.employee_id = query_count.employee_id
-GROUP BY
-  unique_queries
-ORDER BY
-  unique_queries
-;
+    yearly_salary <= 30000
+    OR yearly_salary >= 70000;
 ```
 <br>
 
