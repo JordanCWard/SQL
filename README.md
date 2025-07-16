@@ -36,6 +36,44 @@ ALWAYS ADD COMMENTS
 -->
 
 
+164. FAANG
+
+As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department. You're tasked with identifying these high earners across all departments. Write a query to display the employee's name along with their department name and salary. In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. If multiple employees have the same salary, then order them alphabetically.
+
+``` sql
+-- Rank employees within each department by salary (highest first)
+WITH ranked_departments AS (
+    SELECT
+        dense_rank() OVER (
+            PARTITION BY e.department_id  -- Restart ranking for each department
+            ORDER BY salary DESC          -- Rank by salary descending
+        ) AS ranking,
+        name,
+        salary,
+        department_name
+    FROM
+        employee AS e
+    LEFT JOIN
+        department AS d
+        ON e.department_id = d.department_id  -- Join to get department names
+)
+
+-- Select top 3 highest paid employees per department
+SELECT
+    department_name,
+    name,
+    salary
+FROM
+    ranked_departments
+WHERE
+    ranking < 4  -- Keep only ranks 1, 2, and 3 (top 3 per department)
+ORDER BY
+    department_name,  -- Group results by department
+    salary DESC,      -- Sort highest salary first within department
+    name;             -- Tie-breaker: sort by employee name
+```
+<br>
+
 
 
 
