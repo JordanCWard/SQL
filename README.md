@@ -3661,36 +3661,24 @@ WHERE
 <br>
 
 
-26. FAANG
+26. Amazon
 
-As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department. You're tasked with identifying these high earners across all departments. Write a query to display the employee's name along with their department name and salary. In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. If multiple employees have the same salary, then order them alphabetically.
+Find the job titles of the employees with the highest salary. If multiple employees have the same highest salary, include the job titles for all such employees.
 
 ``` sql
-WITH ranked_departments AS (
-  SELECT
-    dense_rank() OVER (PARTITION BY e.department_id ORDER BY salary DESC) AS ranking,
-    name,
-    salary,
-    department_name
-  FROM
-    employee AS e
-  LEFT JOIN
-    department AS d ON e.department_id = d.department_id
-)
-
+-- Get the worker titles for workers with the highest salary
 SELECT
-  department_name,
-  name,
-  salary
+    t.worker_title
 FROM
-  ranked_departments
+    worker w
+JOIN
+    title t
+    ON w.worker_id = t.worker_ref_id
 WHERE
-  ranking < 4
-ORDER BY
-  department_name,
-  salary DESC,
-  name
-;
+    w.salary = (
+        SELECT MAX(salary)
+        FROM worker
+    );
 ```
 <br>
 
