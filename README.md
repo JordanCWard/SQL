@@ -3768,24 +3768,25 @@ ORDER BY
 <br>
 
 
-23. Snapchat
+23. Apple
 
-Assume you're given tables with information on Snapchat users, including their ages and time spent sending and opening snaps. Write a query to obtain a breakdown of the time spent sending vs. opening snaps as a percentage of total time spent on these activities grouped by age group. Round the percentage to 2 decimal places in the output.
+Find the details of each customer regardless of whether the customer made an order. Output the customer's first name, last name, and the city along with the order details. Sort records based on the customer's first name and the order details in ascending order.
 
 ``` sql
-SELECT 
-  age_bucket, 
-  ROUND(100.0*
-    SUM(CASE WHEN activity_type = 'send' THEN time_spent ELSE 0 END)/
-    SUM(CASE WHEN activity_type = 'send' OR activity_type = 'open' THEN time_spent ELSE 0 END), 2) AS send_perc, 
-  ROUND(100.0*
-    SUM(CASE WHEN activity_type = 'open' THEN time_spent ELSE 0 END)/
-    SUM(CASE WHEN activity_type = 'send' OR activity_type = 'open' THEN time_spent ELSE 0 END), 2) AS open_perc
-FROM 
-  activities 
-  LEFT JOIN age_breakdown ON activities.user_id = age_breakdown.user_id 
-GROUP BY 
-  age_bucket;
+-- Get all customers and their orders (include customers with no orders)
+SELECT
+    c.first_name,
+    c.last_name,
+    c.city,
+    o.order_details
+FROM
+    customers c
+LEFT JOIN
+    orders o
+    ON o.cust_id = c.id
+ORDER BY
+    c.first_name,
+    o.order_details;
 ```
 <br>
 
