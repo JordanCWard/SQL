@@ -36,6 +36,48 @@ ALWAYS ADD COMMENTS
 -->
 
 
+
+
+165. Snapchat
+
+Assume you're given tables with information on Snapchat users, including their ages and time spent sending and opening snaps. Write a query to obtain a breakdown of the time spent sending vs. opening snaps as a percentage of total time spent on these activities grouped by age group. Round the percentage to 2 decimal places in the output.
+
+``` sql
+-- Calculate percentage of time spent on 'send' and 'open' activities by age bucket
+SELECT
+    age_bucket,
+
+    -- Percentage of time spent on 'send' activities
+    ROUND(
+        100.0 * SUM(CASE WHEN activity_type = 'send' THEN time_spent ELSE 0 END)
+        /
+        SUM(CASE WHEN activity_type IN ('send', 'open') THEN time_spent ELSE 0 END),
+        2
+    ) AS send_perc,
+
+    -- Percentage of time spent on 'open' activities
+    ROUND(
+        100.0 * SUM(CASE WHEN activity_type = 'open' THEN time_spent ELSE 0 END)
+        /
+        SUM(CASE WHEN activity_type IN ('send', 'open') THEN time_spent ELSE 0 END),
+        2
+    ) AS open_perc
+
+FROM
+    activities
+
+    -- Join age breakdown to map user_id to age_bucket
+    LEFT JOIN age_breakdown
+        ON activities.user_id = age_breakdown.user_id
+
+GROUP BY
+    age_bucket;
+```
+<br>
+
+
+
+
 164. FAANG
 
 As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department. You're tasked with identifying these high earners across all departments. Write a query to display the employee's name along with their department name and salary. In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. If multiple employees have the same salary, then order them alphabetically.
