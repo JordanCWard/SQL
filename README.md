@@ -44,7 +44,21 @@ ALWAYS ADD COMMENTS
 A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
 
 ``` sql
-
+-- Get the largest number in `mynumbers` that appears exactly once
+SELECT (
+    SELECT
+        num
+    FROM
+        mynumbers
+    GROUP BY
+        num
+    HAVING
+        COUNT(num) = 1
+    ORDER BY
+        num DESC
+    LIMIT
+        1
+) AS num;
 ```
 <br>
 
