@@ -2294,47 +2294,21 @@ FROM
 <br>
 
 
-75. Biggest single number (619)
+75. Unique Users Per Client Per Month
 
-A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
-
-
-*Subquery that returns a single value as an expression in the SELECT clause*
+Write a query that returns the number of unique users per client for each month. Assume all events occur within the same year, so only month needs to be be in the output as a number from 1 to 12.
 
 ``` sql
-SELECT (
-    SELECT
-        num
-    FROM
-        mynumbers
-    GROUP BY
-        num
-    HAVING
-        COUNT(num) = 1
-    ORDER BY
-        num DESC
-    LIMIT
-        1
-) AS num;
-```
-<br>
-
-*From clause subquery*
-
-``` sql
+-- Count distinct users per client per month from fact_events
 SELECT
-    MAX(num) AS num
-FROM (
-    SELECT
-        num
-    FROM
-        mynumbers
-    GROUP BY
-        num
-    HAVING
-        COUNT(num) = 1
-) AS unique_numbers
-;
+    client_id,
+    MONTH(time_id) AS month,
+    COUNT(DISTINCT user_id) AS users_num
+FROM
+    fact_events
+GROUP BY
+    client_id,
+    month;
 ```
 <br>
 
