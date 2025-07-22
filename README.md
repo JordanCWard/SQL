@@ -76,13 +76,6 @@ GROUP BY
 <br>
 
 
-
-
-
-
-
-
-
 166. Biggest single number
 
 A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
