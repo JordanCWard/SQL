@@ -3626,34 +3626,21 @@ ORDER BY row_num;
 <br>
 
 
-30. Google
+30. Microsoft
 
-Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day. Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns. <br>
-
-Definition: Within a day, measurements taken at 1st, 3rd, and 5th times are considered odd-numbered measurements, and measurements taken at 2nd, 4th, and 6th times are considered even-numbered measurements.
+Find the number of employees working in the Admin department that joined in April or later, in any year.
 
 ``` sql
-WITH ranked_measurements AS (
-  SELECT
-    row_number() OVER (PARTITION BY DATE_TRUNC('day', measurement_time) ORDER BY measurement_time) AS ranking,
-    measurement_value,
-    DATE_TRUNC('day', measurement_time) AS measurement_day
-  FROM
-    measurements
-)
-
+-- Count all Admin workers who joined after March
 SELECT
-  measurement_day,
-  SUM(CASE WHEN ranking % 2 != 0 THEN measurement_value ELSE 0 END) AS odd_sum,
-  SUM(CASE WHEN ranking % 2 = 0 THEN measurement_value ELSE 0 END) AS even_sum
+    COUNT(*)
 FROM
-  ranked_measurements
-GROUP BY
-  measurement_day
-;
+    worker
+WHERE
+    MONTH(joining_date) > 3
+    AND department = 'Admin';
 ```
 <br>
-
 
 
 29. Microsoft
