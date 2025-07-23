@@ -2419,32 +2419,23 @@ ORDER BY
 <br>
 
 
-72. Product Sales Analysis III
+72. Amazon
 
-Write a solution to select the product id, year, quantity, and price for the first year of every product sold. Return the resulting table in any order.
+Find the number of workers by department who joined on or after April 1, 2014. Output the department name along with the corresponding number of workers. Sort the results based on the number of workers in descending order.
 
 ``` sql
-WITH ordered_by_years AS (
-    SELECT
-        rank() OVER (PARTITION BY product_id ORDER BY year ASC) AS rank_by_year,
-        product_id,
-        year,
-        quantity,
-        price
-    FROM
-        sales
-)
-
+-- Get count of workers per department who joined after 2014-04-01
 SELECT
-    product_id,
-    year AS first_year,
-    quantity,
-    price
+    department,
+    COUNT(*) AS num_workers
 FROM
-    ordered_by_years
+    worker
 WHERE
-    rank_by_year = 1
-;
+    joining_date >= '2014-04-01'
+GROUP BY
+    1
+ORDER BY
+    2 DESC;
 ```
 <br>
 
