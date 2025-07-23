@@ -37,9 +37,34 @@ ALWAYS ADD COMMENTS
 
 
 
+168. Amazon
 
+``` sql
+-- Rank each product's sales by year (earliest year = rank 1)
+WITH ordered_by_years AS (
+    SELECT
+        RANK() OVER (PARTITION BY product_id ORDER BY year ASC) AS rank_by_year,  -- Rank years per product
+        product_id,
+        year,
+        quantity,
+        price
+    FROM
+        sales
+)
 
-
+-- Select the first year’s sales data for each product
+SELECT
+    product_id,
+    year AS first_year,     -- Rename 'year' to 'first_year' for clarity
+    quantity,
+    price
+FROM
+    ordered_by_years
+WHERE
+    rank_by_year = 1        -- Keep only the earliest year per product
+;
+```
+<br>
 
 
 167. Google
