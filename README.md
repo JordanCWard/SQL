@@ -37,6 +37,11 @@ ALWAYS ADD COMMENTS
 
 
 
+
+
+
+
+
 168. Product Sales Analysis III
 
 Write a solution to select the product id, year, quantity, and price for the first year of every product sold. Return the resulting table in any order.
