@@ -37,9 +37,38 @@ ALWAYS ADD COMMENTS
 
 
 
+169. Find users with valid e-emails
 
+Write a solution to find the users who have valid emails. A valid e-mail has a prefix name and a domain where:
 
+The prefix name is a string that may contain letters (upper or lower case), digits, underscore '_', period '.', and/or dash '-'.
+The prefix name must start with a letter.
+The domain is '@leetcode.com'.
 
+Return the result table in any order.
+
+``` sql
+-- Select users with valid leetcode.com emails based on several validation rules
+SELECT
+    user_id,
+    name,
+    mail
+FROM
+    users
+WHERE
+    -- First character must be a letter
+    mail REGEXP '^[a-zA-Z]'
+    
+    -- Must contain exactly one '@' symbol
+    AND LENGTH(mail) - LENGTH(REPLACE(mail, '@', '')) = 1
+
+    -- Local part (before '@') can only contain a-z, A-Z, 0-9, _, ., -
+    AND SUBSTRING_INDEX(mail, '@', 1) REGEXP '^[a-zA-Z0-9_.-]+$'
+
+    -- Domain must be exactly 'leetcode.com'
+    AND SUBSTRING_INDEX(mail, '@', -1) = 'leetcode.com';
+```
+<br>
 
 
 168. Product Sales Analysis III
