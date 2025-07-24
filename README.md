@@ -68,6 +68,13 @@ WHERE
 ```
 <br>
 
+Combined into one WHERE statement
+``` sql
+WHERE
+    mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$'
+```
+<br>
+
 
 168. Product Sales Analysis III
 
@@ -1901,14 +1908,6 @@ FROM
 JOIN
     db_dept d ON e.department_id = d.id;
 ;
-```
-<br>
-
-
-Combined into one WHERE statement
-``` sql
-WHERE
-    mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode[.]com$'
 ```
 <br>
 
