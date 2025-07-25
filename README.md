@@ -2107,35 +2107,23 @@ FROM
 
 
 
-86. Consecutive numbers (180)
+86. Artist Appearance Count
 
-Find all numbers that appear at least three times consecutively. Return the result table in any order.
+Find how many times each artist appeared on the Spotify ranking list.  
+Output the artist name along with the corresponding number of occurrences.  
+Order records by the number of occurrences in descending order.
 
 ``` sql
-WITH numbered_logs AS (
-    SELECT
-        num,
-        LEAD(num, 1) OVER (ORDER BY id) AS num_lead1,
-        LEAD(num, 2) OVER (ORDER BY id) AS num_lead2
-    FROM
-        logs
-),
-
-consecutive_nums AS (
-    SELECT 
-        num AS ConsecutiveNums
-    FROM
-        numbered_logs
-    WHERE 
-        num = num_lead1
-        AND num = num_lead2
-)
-
-SELECT DISTINCT
-    ConsecutiveNums
+-- Get the number of songs per artist, ordered by most songs
+SELECT
+    artist,
+    COUNT(*)
 FROM
-    consecutive_nums
-;
+    spotify_worldwide_daily_song_ranking
+GROUP BY
+    artist
+ORDER BY
+    2 DESC;
 ```
 <br>
 
