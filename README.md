@@ -37,6 +37,40 @@ ALWAYS ADD COMMENTS
 
 
 
+170. Consecutive numbers
+
+Find all numbers that appear at least three times consecutively. Return the result table in any order.
+
+``` sql
+-- Step 1: Generate numbered logs with a sliding window to check the next two numbers
+WITH numbered_logs AS (
+    SELECT
+        num,
+        LEAD(num, 1) OVER (ORDER BY id) AS num_lead1,  -- Get the next number
+        LEAD(num, 2) OVER (ORDER BY id) AS num_lead2   -- Get the number after the next
+    FROM
+        logs
+),
+
+-- Step 2: Identify numbers that appear three times consecutively
+consecutive_nums AS (
+    SELECT 
+        num AS ConsecutiveNums
+    FROM
+        numbered_logs
+    WHERE 
+        num = num_lead1 AND num = num_lead2  -- Check if current and next two numbers are the same
+)
+
+-- Step 3: Return distinct values of numbers that appear consecutively three times
+SELECT DISTINCT
+    ConsecutiveNums
+FROM
+    consecutive_nums;
+```
+<br>
+
+
 169. Find users with valid e-emails
 
 Write a solution to find the users who have valid emails. A valid e-mail has a prefix name and a domain where:  
