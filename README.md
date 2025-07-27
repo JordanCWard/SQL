@@ -43,22 +43,21 @@ ALWAYS ADD COMMENTS
 The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places. Write a solution to find the confirmation rate of each user. Return the result table in any order.
 
 ``` sql
--- CTE to calculate the confirmation rate per user
+-- Calculate the confirmation rate (percentage of 'confirmed' actions) per user, including users with no confirmations
 WITH user_confirmations AS (
     SELECT
         user_id,
-        -- Calculate the proportion of 'confirmed' actions per user, rounded to 2 decimal places
-        ROUND(SUM(action = 'confirmed')::numeric / COUNT(*), 2) AS rate
+        -- Calculate proportion of 'confirmed' actions, rounded to 2 decimal places
+        ROUND(SUM(action = 'confirmed') / COUNT(*), 2) AS rate
     FROM
         confirmations
     GROUP BY
         user_id
 )
 
--- Main query to get each signup's confirmation rate
 SELECT
     s.user_id,
-    -- If no confirmation data exists for a user, default the rate to 0
+    -- Use 0 if no confirmation record exists for the user
     COALESCE(uc.rate, 0) AS confirmation_rate
 FROM
     signups s
