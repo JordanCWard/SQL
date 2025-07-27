@@ -44,6 +44,7 @@ The confirmation rate of a user is the number of 'confirmed' messages divided by
 
 ``` sql
 -- Calculate the confirmation rate (percentage of 'confirmed' actions) per user, including users with no confirmations
+
 WITH user_confirmations AS (
     SELECT
         user_id,
