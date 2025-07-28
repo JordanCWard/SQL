@@ -3246,39 +3246,23 @@ WHERE
 <br>
 
 
-45. FAANG
+45. Top Ranked Songs
 
-You work as a data analyst for a FAANG company that tracks employee salaries over time. The company wants to understand how the average salary in each department compares to the company's overall average salary each month. Write a query to compare the average salary of employees in each department to the company's average salary for March 2024. Return the comparison result as 'higher', 'lower', or 'same' for each department. Display the department ID, payment month (in MM-YYYY format), and the comparison result.
-
+Find songs that have ranked in the top position. Output the track name and the number of times it ranked at the top. Sort your records by the number of times the song was in the top position in descending order.
 
 ``` sql
-WITH avg_salary AS (
-  SELECT
-    e.department_id,
-    TO_CHAR(s.payment_date, 'MM-YYYY') AS pay_month,
-    AVG(s.amount) AS salary
-  FROM
-    salary s
-  LEFT JOIN
-    employee e ON s.employee_id = e.employee_id
-  GROUP BY
-    pay_month,
-    department_id
-)
-
+-- Get the count of times each track reached position 1 in the Spotify worldwide daily ranking
 SELECT
-  department_id,
-  pay_month,
-  CASE
-    WHEN salary < (SELECT avg(amount) FROM salary) THEN 'lower'
-    WHEN salary = (SELECT avg(amount) FROM salary) THEN 'same'
-    WHEN salary > (SELECT avg(amount) FROM salary) THEN 'higher'
-  END AS comparison
+    trackname,
+    COUNT(*) AS times_at_number_one
 FROM
-  avg_salary
+    spotify_worldwide_daily_song_ranking
 WHERE
-  pay_month = '03-2024'
-;
+    position = 1
+GROUP BY
+    trackname
+ORDER BY
+    times_at_number_one DESC;
 ```
 <br>
 
