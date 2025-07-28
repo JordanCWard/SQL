@@ -38,6 +38,43 @@ ALWAYS ADD COMMENTS
 
 
 
+172. FAANG
+
+You work as a data analyst for a FAANG company that tracks employee salaries over time. The company wants to understand how the average salary in each department compares to the company's overall average salary each month. Write a query to compare the average salary of employees in each department to the company's average salary for March 2024. Return the comparison result as 'higher', 'lower', or 'same' for each department. Display the department ID, payment month (in MM-YYYY format), and the comparison result.
+
+``` sql
+-- CTE to calculate the average salary per department per month
+WITH avg_salary AS (
+  SELECT
+    e.department_id,  -- Department of the employee
+    TO_CHAR(s.payment_date, 'MM-YYYY') AS pay_month,  -- Convert payment date to month-year format
+    AVG(s.amount) AS salary  -- Average salary for that department and month
+  FROM
+    salary s
+  LEFT JOIN
+    employee e ON s.employee_id = e.employee_id  -- Join to get department information
+  GROUP BY
+    e.department_id,
+    TO_CHAR(s.payment_date, 'MM-YYYY')  -- Group by department and month
+)
+
+-- Compare each department's average salary to the overall average salary
+SELECT
+  department_id,
+  pay_month,
+  CASE
+    WHEN salary < (SELECT AVG(amount) FROM salary) THEN 'lower'  -- Below overall average
+    WHEN salary = (SELECT AVG(amount) FROM salary) THEN 'same'   -- Equal to overall average
+    WHEN salary > (SELECT AVG(amount) FROM salary) THEN 'higher' -- Above overall average
+  END AS comparison
+FROM
+  avg_salary
+WHERE
+  pay_month = '03-2024';  -- Filter for the specific month of March 2024
+```
+<br>
+
+
 171. Confirmation Rate
 
 The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places. Write a solution to find the confirmation rate of each user. Return the result table in any order.
