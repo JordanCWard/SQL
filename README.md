@@ -31,14 +31,41 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
-
-
 <!--
 ALWAYS ADD COMMENTS
 -->
 
 
+
+173. LinkedIn
+
+Given a table of candidates and their skills, you're tasked with finding the candidates best suited for an open Data Science job. You want to find candidates who are proficient in Python, Tableau, and PostgreSQL. Write a query to list the candidates who possess all of the required skills for the job. Sort the output by candidate ID in ascending order.
+
+``` sql
+-- Aggregate all skills for each candidate into a comma-separated string
+WITH candidate_skills AS (
+  SELECT 
+    candidate_id, 
+    STRING_AGG(skill, ', ') AS all_skills
+  FROM 
+    candidates
+  GROUP BY 
+    candidate_id
+)
+
+-- Select candidates who have all required skills
+SELECT 
+  candidate_id
+FROM 
+  candidate_skills
+WHERE 
+  all_skills LIKE '%Python%'       -- Candidate must know Python
+  AND all_skills LIKE '%Tableau%'  -- Candidate must know Tableau
+  AND all_skills LIKE '%PostgreSQL%' -- Candidate must know PostgreSQL
+ORDER BY 
+  candidate_id ASC;
+```
+<br>
 
 
 172. FAANG
