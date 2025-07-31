@@ -4020,29 +4020,21 @@ WHERE
 <br>
 
 
-19. CVS Health
+19. Bikes last used
 
-CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name. Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
+Find the last time each bike was in use. Output both the bike number and the date-timestamp of the bike's last use (i.e., the date-time the bike was returned). Order the results by bikes that were most recently used.
 
 ``` sql
-WITH manufacturer_sales AS (
-  SELECT
-    manufacturer,
-    ROUND((SUM(total_sales))/1000000, 0) AS sum_of_profit
-  FROM
-    pharmacy_sales
-  GROUP BY
-    manufacturer
-  ORDER BY
-    sum_of_profit DESC, manufacturer ASC
-)
-
+-- Get the latest end_time for each bike_number
 SELECT
-  manufacturer,
-  CONCAT('$', sum_of_profit, ' million') AS sales_mil
+    bike_number,
+    MAX(end_time) AS latest_end_time
 FROM
-  manufacturer_sales
-;
+    dc_bikeshare_q1_2012
+GROUP BY
+    bike_number
+ORDER BY
+    latest_end_time DESC;
 ```
 <br>
 
