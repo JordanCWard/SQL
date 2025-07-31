@@ -36,9 +36,33 @@ ALWAYS ADD COMMENTS
 -->
 
 
+174. CVS Health
 
+CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name. Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
 
+``` sql
+-- Aggregate total sales per manufacturer and convert to millions
+WITH manufacturer_sales AS (
+  SELECT
+    manufacturer,
+    ROUND(SUM(total_sales) / 1000000, 0) AS sum_of_profit
+  FROM
+    pharmacy_sales
+  GROUP BY
+    manufacturer
+  ORDER BY
+    sum_of_profit DESC, manufacturer ASC
+)
 
+-- Format the result with a dollar sign and 'million' suffix
+SELECT
+  manufacturer,
+  CONCAT('$', sum_of_profit, ' million') AS sales_mil
+FROM
+  manufacturer_sales;
+
+```
+<br>
 
 
 173. LinkedIn
