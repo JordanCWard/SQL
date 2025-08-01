@@ -4,16 +4,19 @@
 
 /*
 
-154- MySQL
+MySQL (others available)
+https://platform.stratascratch.com/coding/9622-number-of-bathrooms-and-bedrooms?code_type=3
+
+MySQL
 https://platform.stratascratch.com/coding?code_type=1
 
-98-153 MySQL
+MySQL
 https://www.hackerrank.com/domains/sql
 
-48-97 MySQL
+MySQL
 https://leetcode.com/studyplan/top-sql-50/
 
-1-47 PostgreSQL
+PostgreSQL
 https://datalemur.com/questions?category=SQL
 
 */
