@@ -46,16 +46,21 @@ Amazon Web Services (AWS) is powered by fleets of servers. Senior management has
 Each server might start and stop several times. The total time in which the server fleet is running can be calculated as the sum of each server's uptime.
 
 ``` sql
--- Define a CTE to identify session intervals by pairing each 'start' status with the subsequent status timestamp
+-- Define a CTE to identify session intervals
+-- For each server_id, pair each session status with the timestamp of the following event
 WITH session_info AS (
   SELECT
     server_id,
     session_status,
     status_time AS start_time,
+    
+    -- Use LEAD to look ahead to the next status_time within the same server_id partition
+    -- This allows us to derive the end_time of a session based on when the next event occurs
     LEAD(status_time) OVER (
       PARTITION BY server_id 
       ORDER BY status_time
     ) AS end_time
+
   FROM
     server_utilization
   ORDER BY
@@ -63,8 +68,11 @@ WITH session_info AS (
     status_time ASC
 )
 
--- Compute the total uptime (in whole days) by summing all 'start' session durations across servers
+-- Aggregate total uptime for sessions that started
 SELECT
+  -- Calculate total duration in seconds, then convert to days by dividing by 86400
+  -- EXTRACT(EPOCH FROM interval) returns the duration in seconds
+  -- FLOOR is used to return the result as a whole number (i.e., complete days only)
   FLOOR(
     EXTRACT(EPOCH FROM SUM(end_time - start_time)) / 86400
   ) AS total_uptime_days
