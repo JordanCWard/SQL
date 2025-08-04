@@ -40,8 +40,40 @@ ALWAYS ADD COMMENTS
 
 
 
+176. Amazon
 
+Amazon Web Services (AWS) is powered by fleets of servers. Senior management has requested data-driven solutions to optimize server usage. Write a query that calculates the total time that the fleet of servers was running. The output should be in units of full days.  
+Each server might start and stop several times. The total time in which the server fleet is running can be calculated as the sum of each server's uptime.
 
+``` sql
+-- Define a CTE to identify session intervals by pairing each 'start' status with the subsequent status timestamp
+WITH session_info AS (
+  SELECT
+    server_id,
+    session_status,
+    status_time AS start_time,
+    LEAD(status_time) OVER (
+      PARTITION BY server_id 
+      ORDER BY status_time
+    ) AS end_time
+  FROM
+    server_utilization
+  ORDER BY
+    server_id ASC,
+    status_time ASC
+)
+
+-- Compute the total uptime (in whole days) by summing all 'start' session durations across servers
+SELECT
+  FLOOR(
+    EXTRACT(EPOCH FROM SUM(end_time - start_time)) / 86400
+  ) AS total_uptime_days
+FROM
+  session_info
+WHERE
+  session_status = 'start';
+```
+<br>
 
 
 175. Amazon
