@@ -3312,50 +3312,19 @@ WHERE
 
 47. Amazon
 
-Amazon Web Services (AWS) is powered by fleets of servers. Senior management has requested data-driven solutions to optimize server usage. Write a query that calculates the total time that the fleet of servers was running. The output should be in units of full days.
-
-Each server might start and stop several times.
-The total time in which the server fleet is running can be calculated as the sum of each server's uptime.
-
+Write a query that will calculate the number of shipments per month. The unique key for one shipment is a combination of shipment_id and sub_id. Output the year_month in format YYYY-MM and the number of shipments in that month.
 
 ``` sql
-WITH session_info AS (
-  SELECT
-    server_id,
-    session_status,
-    status_time AS start_time,
-    LEAD(status_time) OVER(PARTITION BY server_id ORDER BY status_time) AS end_time
-  FROM
-    server_utilization
-  ORDER BY
-    server_id ASC,
-    status_time ASC
-)
-
+-- Count shipments grouped by year and month
 SELECT
-  FLOOR(EXTRACT(EPOCH FROM SUM(end_time - start_time)) / 86400) AS total_uptime_days
+    COUNT(shipment_id) AS shipment_count,
+    DATE_FORMAT(shipment_date, '%Y-%m') AS year_month
 FROM
-  session_info
-WHERE
-  session_status = 'start'
-;
+    amazon_shipment
+GROUP BY
+    year_month;
 ```
 <br>
-
-Alternative version (no CTE) that works by negating the start date
-``` sql
-SELECT
-  SUM(CASE
-    WHEN session_status = 'start'
-    THEN -(EXTRACT(DAY from status_time))
-    ELSE EXTRACT(DAY from status_time) END
-  ) as total_uptime_days
-FROM server_utilization
-;
-```
-<br>
-
-
 
 
 46. Stripe
