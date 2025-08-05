@@ -2289,31 +2289,25 @@ WHERE
 <br>
 
 
-88. Friend requests II: who has the most friends
+88. Yelp
 
-Write a solution to find the people who have the most friends and the most friends number. The test cases are generated so that only one person has the most friends.
+Find the review_text that received the highest number of  cool votes.  
+Output the business name along with the review text with the highest number of cool votes.
 
 ``` sql
+-- Retrieve reviews that have the highest 'cool' score among all Yelp reviews
 SELECT
-    id,
-    COUNT(id) AS num
-FROM (
-    
-SELECT requester_id AS id
-FROM RequestAccepted
-UNION ALL
-SELECT accepter_id
-FROM RequestAccepted
+    business_name,
+    review_text
+FROM
+    yelp_reviews
 
-) AS all_friends
-
-GROUP BY
-    1
-ORDER BY
-    2 DESC
-LIMIT
-    1
-;
+-- Filter to only include reviews with the maximum 'cool' value
+WHERE
+    cool = (
+        SELECT MAX(cool)
+        FROM yelp_reviews
+    );
 ```
 <br>
 
