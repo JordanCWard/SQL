@@ -50,7 +50,34 @@ ALWAYS ADD COMMENTS
 Write a solution to find the people who have the most friends and the most friends number. The test cases are generated so that only one person has the most friends.
 
 ``` sql
+-- Create a unified list of all user IDs involved in friendships,
+-- including both requesters and accepters
+SELECT
+    id,
+    COUNT(id) AS num
+FROM (
+    -- Select requester IDs and alias them as 'id'
+    SELECT requester_id AS id
+    FROM RequestAccepted
 
+    UNION ALL
+
+    -- Select accepter IDs and alias them as 'id'
+    SELECT accepter_id
+    FROM RequestAccepted
+) AS all_friends
+
+-- Group by user ID to count total occurrences (i.e., total friendships)
+GROUP BY
+    id
+
+-- Order by the count in descending order to find the most connected user
+ORDER BY
+    num DESC
+
+-- Return only the top result (user with the most friends)
+LIMIT
+    1;
 ```
 <br>
 
