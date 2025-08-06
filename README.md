@@ -45,6 +45,36 @@ ALWAYS ADD COMMENTS
 -->
 
 
+
+178. Weather observation station
+
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+
+``` sql
+-- Select the city or cities with the shortest and longest names from the station table
+-- Includes ties if multiple cities share the same shortest or longest length
+
+SELECT city, len
+FROM (
+    SELECT
+        city,
+        CHAR_LENGTH(city) AS len,
+        
+        -- Assign rank based on ascending city name length and alphabetical order
+        RANK() OVER (ORDER BY CHAR_LENGTH(city), city) AS shortest_rank,
+        
+        -- Assign rank based on descending city name length and alphabetical order
+        RANK() OVER (ORDER BY CHAR_LENGTH(city) DESC, city) AS longest_rank
+    FROM
+        station
+) ranked
+
+-- Filter for cities ranked first in either shortest or longest length
+WHERE shortest_rank = 1 OR longest_rank = 1;
+```
+<br>
+
+
 177. Friend requests
 
 Write a solution to find the people who have the most friends and the most friends number. The test cases are generated so that only one person has the most friends.
