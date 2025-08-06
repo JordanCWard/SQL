@@ -1940,34 +1940,19 @@ WHERE
 <br>
 
 
-107. Weather observation station 5
+107. Share of Active Users
 
-Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+Calculate the percentage of users who are both from the US and have an 'open' status, as indicated in the fb_active_users table.
 
 ``` sql
-(
-    SELECT
-        city,
-        CHAR_LENGTH(city) AS len
-    FROM
-        station
-    ORDER BY
-        CHAR_LENGTH(city) ASC,
-        city ASC
-    LIMIT 1
-)
-UNION
-(
-    SELECT
-        city,
-        CHAR_LENGTH(city) AS len
-    FROM
-        station
-    ORDER BY
-        CHAR_LENGTH(city) DESC,
-        city ASC
-    LIMIT 1
-);
+-- Calculate the percentage of active users from the USA with 'open' status
+SELECT
+    100 * AVG(CASE 
+        WHEN country = 'USA' AND status = 'open' THEN 1 
+        ELSE 0 
+    END) AS usa_open_percentage
+FROM
+    fb_active_users;
 ```
 <br>
 
