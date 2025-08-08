@@ -46,8 +46,53 @@ ALWAYS ADD COMMENTS
 
 
 
+179. Election results
 
+The election is conducted in a city and everyone can vote for one or more candidates, or choose not to vote at all. Each person has 1 vote so if they vote for multiple candidates, their vote gets equally split across these candidates. For example, if a person votes for 2 candidates, these candidates receive an equivalent of 0.5 vote each. Some voters have chosen not to vote, which explains the blank entries in the dataset.
 
+Find out who got the most votes and won the election. Output the name of the candidate or multiple names in case of a tie. To avoid issues with a floating-point error you can round the number of votes received by a candidate to 3 decimal places.
+
+``` sql
+-- 1. Filter out rows where candidate is NULL or blank
+WITH filtered AS (
+  SELECT 
+    voter, 
+    candidate
+  FROM voting_results
+  WHERE NULLIF(TRIM(candidate), '') IS NOT NULL
+),
+
+-- 2. Assign each (voter, candidate) row a weight
+--    Weight = 1 / total number of votes cast by that voter
+scored AS (
+  SELECT
+    voter,
+    candidate,
+    1.0 / COUNT(*) OVER (PARTITION BY voter) AS vote_points
+  FROM filtered
+),
+
+-- 3. Aggregate total points per candidate
+agg AS (
+  SELECT
+    candidate,
+    SUM(vote_points) AS total_points
+  FROM scored
+  GROUP BY candidate
+)
+
+-- 4. Rank candidates by total points and pick the top one(s)
+SELECT candidate
+FROM (
+  SELECT
+    candidate,
+    total_points,
+    RANK() OVER (ORDER BY total_points DESC) AS rnk
+  FROM agg
+) r
+WHERE rnk = 1;
+```
+<br>
 
 
 178. Weather observation station
