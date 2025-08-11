@@ -1219,36 +1219,26 @@ ORDER BY
 
 
 
-150. Ollivander's Inventory
+150. Flags per Video
 
-Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
-
-Hermione decides the best way to choose is by determining the minimum number of gold galleons needed to buy each non-evil wand of high power and age. Write a query to print the id, age, coins_needed, and power of the wands that Ron's interested in, sorted in order of descending power. If more than one wand has same power, sort the result in order of descending age.
+For each video, find how many unique users flagged it. A unique user can be identified using the combination of their first name and last name. Do not consider rows in which there is no flag ID.
 
 ``` sql
-SELECT
-    w.id,
-    p.age,
-    w.coins_needed,
-    w.power
-FROM
-    wands w
-JOIN
-    wands_property p ON w.code = p.code
-WHERE
-    p.is_evil = 0
-    AND (p.age, w.power, w.coins_needed) IN (
-        SELECT p2.age, w2.power, MIN(w2.coins_needed)
-        FROM wands w2
-        JOIN wands_property p2 ON w2.code = p2.code
-        WHERE p2.is_evil = 0
-        GROUP BY p2.age, w2.power
-    )
-ORDER BY
-    4 DESC,
-    2 DESC
-;
+-- Count the number of unique users per video_id.
+-- A user is identified by the concatenation of user_firstname and user_lastname,
+-- with NULL first names replaced by the last name (via COALESCE).
+-- Only considers rows where flag_id is not NULL.
 
+SELECT
+    video_id,
+    COUNT(
+        DISTINCT CONCAT(
+            COALESCE(user_firstname, user_lastname)
+        )
+    ) AS num_users
+FROM user_flags
+WHERE flag_id IS NOT NULL
+GROUP BY video_id;
 ```
 <br>
 
