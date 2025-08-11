@@ -50,8 +50,45 @@ ALWAYS ADD COMMENTS
 
 
 
+180. Ollivander's Inventory
 
+Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
 
+Hermione decides the best way to choose is by determining the minimum number of gold galleons needed to buy each non-evil wand of high power and age. Write a query to print the id, age, coins_needed, and power of the wands that Ron's interested in, sorted in order of descending power. If more than one wand has same power, sort the result in order of descending age.
+
+``` sql
+-- Retrieve details of the most cost-efficient non-evil wands,
+-- ensuring that for each (age, power) combination, only the wand(s) 
+-- requiring the minimum coins_needed is selected.
+-- Results are sorted by power (descending) and then by age (descending).
+
+SELECT
+    w.id,               -- Unique wand identifier
+    p.age,              -- Age category of the wand
+    w.coins_needed,     -- Number of coins required to purchase the wand
+    w.power             -- Power rating of the wand
+FROM wands AS w
+JOIN wands_property AS p
+    ON w.code = p.code
+WHERE
+    p.is_evil = 0  -- Only include non-evil wands
+    AND (p.age, w.power, w.coins_needed) IN (
+        -- Subquery: for each (age, power) pair, find the minimum coins_needed
+        SELECT 
+            p2.age,
+            w2.power,
+            MIN(w2.coins_needed) AS min_coins_needed
+        FROM wands AS w2
+        JOIN wands_property AS p2
+            ON w2.code = p2.code
+        WHERE p2.is_evil = 0
+        GROUP BY p2.age, w2.power
+    )
+ORDER BY
+    w.power DESC,  -- Higher power first
+    p.age DESC;    -- For equal power, older wands first
+```
+<br>
 
 
 179. Election results
