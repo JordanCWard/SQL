@@ -927,56 +927,46 @@ WHERE
 <br>
 
 
-157. Bloomberg
+157. User with Most Approved Flags
 
-The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
+Which user flagged the most distinct videos that ended up approved by YouTube? Output, in one column, their full name or names in case of a tie. In the user's full name, include a space between the first and the last name.
 
 ``` sql
--- Get each ticker's highest and lowest opening price and the month-year it occurred
+-- CTE to calculate the number of distinct approved videos per user
+WITH cte AS (
+    SELECT
+        -- Build a clean, properly spaced username from first and last names
+        -- NULLIF avoids double spaces if a name part is blank
+        -- CONCAT_WS automatically skips NULL values
+        -- TRIM removes any leading/trailing spaces
+        TRIM(CONCAT_WS(' ', NULLIF(u.user_firstname, ''), NULLIF(u.user_lastname, ''))) AS username,
+
+        -- Count distinct videos flagged by this user and approved
+        COUNT(DISTINCT u.video_id) AS vids,
+
+        -- Assign a rank based on the count (highest count = rank 1)
+        -- DENSE_RANK ensures that ties share the same rank value
+        DENSE_RANK() OVER (
+            ORDER BY COUNT(DISTINCT u.video_id) DESC
+        ) AS rnk
+    FROM user_flags u
+
+    -- Join only approved flags from the review table
+    -- Filter is applied in the ON clause to ensure only "APPROVED" reviews are counted
+    JOIN flag_review f
+        ON f.flag_id = u.flag_id
+       AND f.reviewed_outcome = 'APPROVED'
+
+    -- Group by the raw first/last name fields to ensure correct counts
+    GROUP BY u.user_firstname, u.user_lastname
+)
+
+-- Final output: only the user(s) with the top approved video count
 SELECT
-    ticker,
-
-    -- Find month-year of highest opening price for each ticker
-    TO_CHAR(
-        MAX(date) FILTER (
-            WHERE open = (
-                SELECT MAX(open)
-                FROM stock_prices t2
-                WHERE t2.ticker = t1.ticker
-            )
-        ),
-        'Mon-YYYY'
-    ) AS highest_mth,
-
-    -- Highest opening price for the ticker
-    MAX(open) AS highest_open,
-
-    -- Find month-year of lowest opening price for each ticker
-    TO_CHAR(
-        MIN(date) FILTER (
-            WHERE open = (
-                SELECT MIN(open)
-                FROM stock_prices t2
-                WHERE t2.ticker = t1.ticker
-            )
-        ),
-        'Mon-YYYY'
-    ) AS lowest_mth,
-
-    -- Lowest opening price for the ticker
-    MIN(open) AS lowest_open
-
-FROM
-    stock_prices t1
-
--- Group results by ticker symbol
-GROUP BY
-    ticker
-
--- Order results alphabetically by ticker
-ORDER BY
-    ticker;
-
+    username,
+    vids
+FROM cte
+WHERE rnk = 1;
 ```
 <br>
 
