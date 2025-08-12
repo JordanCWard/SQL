@@ -52,9 +52,53 @@ ALWAYS ADD COMMENTS
 
 The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
 
+``` sql
+-- Get each ticker's highest and lowest opening price and the month-year it occurred
+SELECT
+    ticker,
 
+    -- Find month-year of highest opening price for each ticker
+    TO_CHAR(
+        MAX(date) FILTER (
+            WHERE open = (
+                SELECT MAX(open)
+                FROM stock_prices t2
+                WHERE t2.ticker = t1.ticker
+            )
+        ),
+        'Mon-YYYY'
+    ) AS highest_mth,
 
+    -- Highest opening price for the ticker
+    MAX(open) AS highest_open,
 
+    -- Find month-year of lowest opening price for each ticker
+    TO_CHAR(
+        MIN(date) FILTER (
+            WHERE open = (
+                SELECT MIN(open)
+                FROM stock_prices t2
+                WHERE t2.ticker = t1.ticker
+            )
+        ),
+        'Mon-YYYY'
+    ) AS lowest_mth,
+
+    -- Lowest opening price for the ticker
+    MIN(open) AS lowest_open
+
+FROM
+    stock_prices t1
+
+-- Group results by ticker symbol
+GROUP BY
+    ticker
+
+-- Order results alphabetically by ticker
+ORDER BY
+    ticker;
+```
+<br>
 
 
 180. Ollivander's Inventory
