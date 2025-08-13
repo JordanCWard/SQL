@@ -48,6 +48,15 @@ https://datalemur.com/questions?category=SQL
 ALWAYS ADD COMMENTS
 -->
 
+
+182. Stripe
+
+
+
+
+
+
+
 181. Bloomberg
 
 The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
