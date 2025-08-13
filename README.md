@@ -3538,30 +3538,42 @@ GROUP BY
 <br>
 
 
-46. Stripe
+46. Find Students At Median Writing
 
-Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card to be charged twice. Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. Count such repeated payments.
+Identify the IDs of students who scored exactly at the median for the SAT writing section.
 
 ``` sql
-WITH trasaction_comparison AS (
-  SELECT 
-    merchant_id,
-    EXTRACT(EPOCH FROM transaction_timestamp -
-      LAG(transaction_timestamp) OVER(
-        PARTITION BY merchant_id, credit_card_id, amount 
-        ORDER BY transaction_timestamp)
-    )/60 AS minute_difference
-  FROM 
-    transactions
+-- CTE #1: Assigns a sequential row number (rn) to each row ordered by sat_writing,
+-- and computes the total row count (cnt) for later median calculation.
+WITH ranked AS (
+    SELECT
+        student_id,
+        sat_writing,
+        ROW_NUMBER() OVER (ORDER BY sat_writing) AS rn,
+        COUNT(*)     OVER ()                     AS cnt
+    FROM sat_scores
+),
+
+-- CTE #2: Determines the median value from the ranked set.
+-- For odd counts, selects the single middle row.
+-- For even counts, selects the two middle rows and averages them.
+median AS (
+    SELECT
+        AVG(sat_writing) AS median_value
+    FROM ranked
+    WHERE rn BETWEEN (cnt + 1) DIV 2  -- Lower middle row index
+                AND (cnt + 2) DIV 2   -- Upper middle row index
 )
 
+-- Final query: Retrieves all student_id values where sat_writing equals the median.
 SELECT
-  COUNT(minute_difference) AS payment_count
+    s.student_id
 FROM
-  trasaction_comparison
+    sat_scores AS s
+CROSS JOIN
+    median AS m
 WHERE
-  minute_difference <= 10
-;
+    s.sat_writing = m.median_value;  -- Use a small tolerance if sat_writing is decimal/float
 ```
 <br>
 
