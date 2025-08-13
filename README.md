@@ -51,10 +51,36 @@ ALWAYS ADD COMMENTS
 
 182. Stripe
 
+Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card to be charged twice. Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. Count such repeated payments.
 
+``` sql
+-- CTE: Calculate the time difference (in minutes) between consecutive transactions
+-- for the same merchant, credit card, and transaction amount.
+WITH transaction_comparison AS (
+    SELECT 
+        merchant_id,
+        EXTRACT(
+            EPOCH FROM transaction_timestamp 
+            - LAG(transaction_timestamp) OVER (
+                PARTITION BY merchant_id, credit_card_id, amount
+                ORDER BY transaction_timestamp
+            )
+        ) / 60 AS minute_difference
+    FROM 
+        transactions
+)
 
+-- Final query: Count how many transactions occurred within 10 minutes
+-- of the previous transaction for the same merchant, credit card, and amount.
+SELECT
+    COUNT(minute_difference) AS payment_count
+FROM
+    transaction_comparison
+WHERE
+    minute_difference <= 10;
 
-
+```
+<br>
 
 
 181. Bloomberg
