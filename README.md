@@ -57,9 +57,9 @@ Julia asked her students to create some coding challenges. Write a query to prin
 
 ``` sql
 /*
-    CTE #1: Calculate the total number of challenges created by each hacker.
-    Assign a rank based on that count in descending order.
-    Hackers with the same number of challenges will receive the same rank.
+    CTE #1: Compute the total challenges created per hacker.
+    Assign ranks in descending order of challenge count.
+    Hackers with equal counts share the same rank.
 */
 WITH ranked_hackers AS (
     SELECT
@@ -67,18 +67,14 @@ WITH ranked_hackers AS (
         h.name,
         COUNT(*) AS challenge_count,
         RANK() OVER (ORDER BY COUNT(*) DESC) AS rnk
-    FROM
-        challenges c
-    LEFT JOIN
-        hackers h ON c.hacker_id = h.hacker_id
-    GROUP BY
-        h.hacker_id, h.name
+    FROM challenges c
+    LEFT JOIN hackers h ON c.hacker_id = h.hacker_id
+    GROUP BY h.hacker_id, h.name
 ),
 
 /*
-    CTE #2: Count how many hackers received each rank.
-    This helps us identify ranks that are tied (i.e., freq > 1)
-    versus ranks that are unique (i.e., freq = 1).
+    CTE #2: Calculate the frequency of each rank.
+    Used to distinguish between tied and unique ranks.
 */
 rank_frequencies AS (
     SELECT
@@ -90,21 +86,19 @@ rank_frequencies AS (
 
 /*
     Final result:
-    - Include all hackers with rank = 1 (even if it's tied).
-    - Include only non-top-ranked hackers whose rank is unique (freq = 1).
+    - Always include all top-ranked hackers (rank = 1).
+    - Include lower-ranked hackers only if their rank is unique (freq = 1).
     - Exclude tied ranks greater than 1.
 */
 SELECT
     rh.hacker_id,
     rh.name,
     rh.challenge_count
-FROM
-    ranked_hackers rh
-JOIN
-    rank_frequencies rf ON rh.rnk = rf.rnk
+FROM ranked_hackers rh
+JOIN rank_frequencies rf ON rh.rnk = rf.rnk
 WHERE
-    rh.rnk = 1                      -- Always include top-ranked hackers
-    OR (rh.rnk > 1 AND rf.freq = 1) -- Only include unique lower ranks
+    rh.rnk = 1
+    OR (rh.rnk > 1 AND rf.freq = 1)
 ORDER BY
     rh.challenge_count DESC,
     rh.hacker_id;
