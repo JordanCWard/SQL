@@ -1136,64 +1136,45 @@ ORDER BY
 
 
 
-155. HackerRank
+155. Host Popularity Rental Prices
 
-Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
+You are given a table named airbnb_host_searches that contains data for rental property searches made by users. Determine the minimum, average, and maximum rental prices for each popularity-rating bucket. A popularity-rating bucket should be assigned to every record based on its number_of_reviews.
+
+The host’s popularity rating is defined as below:
+•   0 reviews: "New"
+•   1 to 5 reviews: "Rising"
+•   6 to 15 reviews: "Trending Up"
+•   16 to 40 reviews: "Popular"
+•   More than 40 reviews: "Hot"
+
+Output host popularity rating and their minimum, average and maximum rental prices. Order the solution by the minimum price.
 
 ``` sql
-/*
-    CTE #1: Calculate the total number of challenges created by each hacker.
-    Assign a rank based on that count in descending order.
-    Hackers with the same number of challenges will receive the same rank.
-*/
-WITH ranked_hackers AS (
+-- Classify listings into popularity categories based on number_of_reviews
+WITH rating AS (
     SELECT
-        h.hacker_id,
-        h.name,
-        COUNT(*) AS challenge_count,
-        RANK() OVER (ORDER BY COUNT(*) DESC) AS rnk
-    FROM
-        challenges c
-    LEFT JOIN
-        hackers h ON c.hacker_id = h.hacker_id
-    GROUP BY
-        h.hacker_id, h.name
-),
-
-/*
-    CTE #2: Count how many hackers received each rank.
-    This helps us identify ranks that are tied (i.e., freq > 1)
-    versus ranks that are unique (i.e., freq = 1).
-*/
-rank_frequencies AS (
-    SELECT
-        rnk,
-        COUNT(*) AS freq
-    FROM ranked_hackers
-    GROUP BY rnk
+        id,
+        price,
+        number_of_reviews,
+        CASE
+            WHEN number_of_reviews = 0 THEN 'New'
+            WHEN number_of_reviews BETWEEN 1 AND 5 THEN 'Rising'
+            WHEN number_of_reviews BETWEEN 6 AND 15 THEN 'Trending Up'
+            WHEN number_of_reviews BETWEEN 16 AND 40 THEN 'Popular'
+            ELSE 'Hot'
+        END AS pop_rating
+    FROM airbnb_host_searches
 )
 
-/*
-    Final result:
-    - Include all hackers with rank = 1 (even if it's tied).
-    - Include only non-top-ranked hackers whose rank is unique (freq = 1).
-    - Exclude tied ranks greater than 1.
-*/
+-- Compute price statistics by popularity category
 SELECT
-    rh.hacker_id,
-    rh.name,
-    rh.challenge_count
-FROM
-    ranked_hackers rh
-JOIN
-    rank_frequencies rf ON rh.rnk = rf.rnk
-WHERE
-    rh.rnk = 1                      -- Always include top-ranked hackers
-    OR (rh.rnk > 1 AND rf.freq = 1) -- Only include unique lower ranks
-ORDER BY
-    rh.challenge_count DESC,
-    rh.hacker_id;
-
+    pop_rating,
+    MIN(price) AS min_price,              -- Minimum price in category
+    ROUND(AVG(price), 2) AS avg_price,    -- Average price (2 decimals)
+    MAX(price) AS max_price               -- Maximum price in category
+FROM rating
+GROUP BY pop_rating
+ORDER BY min_price;                       -- Sort results by minimum price
 ```
 <br>
 
