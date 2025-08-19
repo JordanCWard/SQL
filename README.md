@@ -59,6 +59,42 @@ ALWAYS ADD COMMENTS
 -->
 
 
+184. Top Competitors
+
+Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
+
+``` sql
+-- Retrieve hackers who have achieved full scores on more than one challenge
+-- The query joins submissions, challenges, difficulty, and hackers tables
+-- to identify hackers who solved multiple challenges at the maximum score.
+
+SELECT
+    h.hacker_id,  -- Unique identifier for each hacker
+    h.name        -- Hacker's name
+FROM
+    submissions s
+    LEFT JOIN challenges c 
+        ON s.challenge_id = c.challenge_id
+    LEFT JOIN difficulty d 
+        ON c.difficulty_level = d.difficulty_level
+    LEFT JOIN hackers h 
+        ON s.hacker_id = h.hacker_id
+WHERE
+    s.score = d.score  -- Only consider submissions where the hacker achieved the full score
+GROUP BY
+    h.hacker_id, 
+    h.name            -- Group results by hacker to count solved challenges
+HAVING
+    COUNT(*) > 1      -- Only include hackers who solved more than one challenge perfectly
+ORDER BY
+    COUNT(*) DESC,    -- Rank hackers by number of full-score challenges (highest first)
+    h.hacker_id ASC   -- Tie-breaker: order by hacker ID in ascending order
+;
+```
+<br>
+
+
+
 183. HackerRank
 
 Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
