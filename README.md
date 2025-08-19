@@ -1386,32 +1386,24 @@ GROUP BY video_id;
 <br>
 
 
-149. Top Competitors
+149. Top 10 Songs 2010
 
-Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
+Find the top 10 ranked songs in 2010. Output the rank, group name, and song name, but do not show the same song twice. Sort the result based on the rank in ascending order.
 
 ``` sql
-SELECT
-    h.hacker_id,
-    h.name
+-- Top 10 songs from the Billboard Year-End Hot 100 for 2010
+
+SELECT DISTINCT
+    year_rank,
+    group_name,
+    song_name
 FROM
-    submissions s
-LEFT JOIN
-    challenges c ON s.challenge_id = c.challenge_id
-LEFT JOIN
-    difficulty d ON c.difficulty_level = d.difficulty_level
-LEFT JOIN
-    hackers h ON s.hacker_id = h.hacker_id
+    billboard_top_100_year_end
 WHERE
-    s.score = d.score
-GROUP BY
-    1, 2
-HAVING
-    COUNT(*) > 1
+    year = '2010'
+    AND year_rank <= 10   -- Limit to the top 10
 ORDER BY
-    COUNT(*) DESC,
-    1 ASC
-;
+    year_rank ASC;        -- Rank #1 at the top
 ```
 <br>
 
