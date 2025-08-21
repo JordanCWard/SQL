@@ -43,6 +43,29 @@ ALWAYS ADD COMMENTS
 -->
 
 
+185. Draw the Triangle 2
+
+P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
+
+``` sql
+-- Generate a sequence of numbers from 1 to 20 using a recursive CTE
+WITH RECURSIVE counter_cte AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1
+    FROM counter_cte
+    WHERE n < 20
+)
+
+-- Create a string of asterisks repeated by the counter value
+SELECT 
+    REPEAT('* ', n) AS output
+FROM 
+    counter_cte;
+```
+<br>
+
+
 184. Top Competitors
 
 Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
