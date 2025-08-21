@@ -1502,24 +1502,21 @@ GROUP BY
 <br>
 
 
-145 Draw the Triangle 2
+145. Processed Ticket Rate By Type
 
-P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
+Find the processed rate of tickets for each type. The processed rate is defined as the number of processed tickets divided by the total number of tickets for that type. Round this result to two decimal places.
 
 ``` sql
-WITH RECURSIVE counter_cte AS (
-    SELECT 1 AS n
-    UNION ALL
-    SELECT n + 1 FROM counter_cte WHERE n < 20
-)
-
-SELECT REPEAT('* ', n) AS output
-FROM counter_cte;
+-- Calculate the average number of processed complaints per type
+SELECT
+    type,
+    ROUND(SUM(processed) / COUNT(processed), 2) AS avg_processed
+FROM
+    facebook_complaints
+GROUP BY
+    type;
 ```
 <br>
-
-
-
 
 
 144. Draw the Triangle 1
