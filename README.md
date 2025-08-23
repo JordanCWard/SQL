@@ -46,8 +46,6 @@ ALWAYS ADD COMMENTS
 
 
 
-
-
 185. Draw the Triangle 2
 
 P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
