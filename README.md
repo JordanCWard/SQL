@@ -42,8 +42,29 @@ https://datalemur.com/questions?category=SQL
 ALWAYS ADD COMMENTS
 -->
 
+186. Department top three salaries
 
+A company's executives are interested in seeing who earns the most money in each of the company's departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department. Write a solution to find the employees who are high earners in each of the departments. Return the result table in any order.
 
+``` sql
+-- Top-3 salaries per department (ties included via DENSE_RANK)
+WITH one_table AS (
+  SELECT
+    DENSE_RANK() OVER (PARTITION BY e.departmentId ORDER BY e.salary DESC) AS ranked_salary,
+    d.name  AS Department,
+    e.name  AS Employee,
+    e.salary AS Salary
+  FROM employee   e
+  JOIN department d ON d.id = e.departmentId
+)
+SELECT
+  Department,
+  Employee,
+  Salary
+FROM one_table
+WHERE ranked_salary <= 3;  -- keep top 3 per department; includes ties at rank 3
+```
+<br>
 
 
 185. Draw the Triangle 2
