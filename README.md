@@ -2361,32 +2361,19 @@ WHERE
 <br>
 
 
-97. Department top three salaries
+97. Customer Revenue In March
 
-A company's executives are interested in seeing who earns the most money in each of the company's departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department. Write a solution to find the employees who are high earners in each of the departments. Return the result table in any order.
+Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019. An active user is a customer who made at least one transaction in March 2019. Output the revenue along with the customer id and sort the results based on the revenue in descending order.
 
 ``` sql
-WITH one_table AS (
-    SELECT
-    dense_rank() OVER (PARTITION BY departmentID ORDER BY salary DESC) AS ranked_salary,
-    d.name AS Department,
-    e.name AS Employee,
-    salary AS Salary
-FROM
-    employee e
-JOIN
-    department d ON e.departmentId = d.id
-)
-
+-- Aggregate total order cost per customer for March 1–29, 2019
 SELECT
-    Department,
-    Employee,
-    Salary
-FROM
-    one_table
-WHERE
-    ranked_salary < 4
-;
+    cust_id,
+    SUM(total_order_cost) AS total_cost
+FROM orders
+WHERE order_date BETWEEN '2019-03-01' AND '2019-03-29'
+GROUP BY cust_id
+ORDER BY 2 DESC;
 ```
 <br>
 
