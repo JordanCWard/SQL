@@ -43,8 +43,14 @@ ALWAYS ADD COMMENTS
 -->
 
 
+187. Twitter
 
+Given a table of tweet data over a specified time period, calculate the 3-day rolling average of tweets for each user. Output the user ID, tweet date, and rolling averages rounded to 2 decimal places.
 
+``` sql
+
+```
+<br>
 
 
 186. Department top three salaries
