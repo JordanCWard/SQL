@@ -4273,24 +4273,22 @@ GROUP BY
 <br>
 
 
-24. Twitter
+24. Titanic Survivors and Non-Survivors
 
-Given a table of tweet data over a specified time period, calculate the 3-day rolling average of tweets for each user. Output the user ID, tweet date, and rolling averages rounded to 2 decimal places.
+Make a report showing the number of survivors and non-survivors by passenger class. Output the number of survivors and non-survivors by each class.
 
 ``` sql
+/* 
+   Cross-tab survival outcomes by passenger class.
+   Each CASE maps pclass values into separate columns via conditional aggregation.
+*/
 SELECT
-  user_id,
-  tweet_date,
-  ROUND(AVG(tweet_count) OVER
-    (PARTITION BY user_id
-    ORDER BY tweet_date ASC
-    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2) AS rolling_avg_3d
-FROM
-  tweets
-ORDER BY
-  user_id ASC,
-  tweet_date ASC
-;
+    survived,
+    SUM(CASE WHEN pclass = 1 THEN 1 END) AS class1_count,
+    SUM(CASE WHEN pclass = 2 THEN 1 END) AS class2_count,
+    SUM(CASE WHEN pclass = 3 THEN 1 END) AS class3_count
+FROM titanic
+GROUP BY survived;
 ```
 <br>
 
