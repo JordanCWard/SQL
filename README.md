@@ -48,7 +48,25 @@ ALWAYS ADD COMMENTS
 Given a table of tweet data over a specified time period, calculate the 3-day rolling average of tweets for each user. Output the user ID, tweet date, and rolling averages rounded to 2 decimal places.
 
 ``` sql
-
+/*
+   Compute a 3-day rolling average of tweet counts per user.
+   - Window defined by user_id partition, ordered by tweet_date.
+   - Frame: 2 preceding rows + current row (non-cumulative moving average).
+   - ROUND for presentation only (2 decimal precision).
+*/
+SELECT
+    user_id,
+    tweet_date,
+    ROUND(
+        AVG(tweet_count) OVER (
+            PARTITION BY user_id
+            ORDER BY tweet_date ASC
+            ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+        ), 
+        2
+    ) AS rolling_avg_3d
+FROM tweets
+ORDER BY user_id, tweet_date;
 ```
 <br>
 
