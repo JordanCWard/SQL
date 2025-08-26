@@ -429,9 +429,6 @@ LIMIT
 
 176. Amazon
 
-Amazon Web Services (AWS) is powered by fleets of servers. Senior management has requested data-driven solutions to optimize server usage. Write a query that calculates the total time that the fleet of servers was running. The output should be in units of full days.  
-Each server might start and stop several times. The total time in which the server fleet is running can be calculated as the sum of each server's uptime.
-
 ``` sql
 -- Define a CTE to identify session intervals
 -- For each server_id, pair each session status with the timestamp of the following event
@@ -473,10 +470,6 @@ WHERE
 
 175. Amazon
 
-Amazon wants to maximize the storage capacity of its 500,000 square-foot warehouse by prioritizing a specific batch of prime items. The specific prime product batch detailed in the inventory table must be maintained. So, if the prime product batch specified in the item_category column included 1 laptop and 1 side table, that would be the base batch. We could not add another laptop without also adding a side table; they come all together as a batch set. After prioritizing the maximum number of prime batches, any remaining square footage will be utilized to stock non-prime batches, which also come in batch sets and cannot be separated into individual items. Write a query to find the maximum number of prime and non-prime batches that can be stored in the 500,000 square feet warehouse based on the following criteria: Prioritize stocking prime batches After accommodating prime items, allocate any remaining space to non-prime batches Output the item_type with prime_eligible first followed by not_prime, along with the maximum number of batches that can be stocked.
-
-Assumptions: Products must be stocked in batches, so we want to find the largest available quantity of prime batches, and then the largest available quantity of non-prime batches. Non-prime items must always be available in stock to meet customer demand, so the non-prime item count should never be zero. Item count should be whole numbers (integers).
-
 ``` sql
 SELECT
   -- Calculate how many prime_eligible items can fit into 500,000 total square footage
@@ -507,8 +500,6 @@ FROM
 
 174. CVS Health
 
-CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products. Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name. Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
-
 ``` sql
 -- Aggregate total sales per manufacturer and convert to millions
 WITH manufacturer_sales AS (
@@ -535,8 +526,6 @@ FROM
 
 
 173. LinkedIn
-
-Given a table of candidates and their skills, you're tasked with finding the candidates best suited for an open Data Science job. You want to find candidates who are proficient in Python, Tableau, and PostgreSQL. Write a query to list the candidates who possess all of the required skills for the job. Sort the output by candidate ID in ascending order.
 
 ``` sql
 -- Aggregate all skills for each candidate into a comma-separated string
@@ -566,8 +555,6 @@ ORDER BY
 
 
 172. FAANG
-
-You work as a data analyst for a FAANG company that tracks employee salaries over time. The company wants to understand how the average salary in each department compares to the company's overall average salary each month. Write a query to compare the average salary of employees in each department to the company's average salary for March 2024. Return the comparison result as 'higher', 'lower', or 'same' for each department. Display the department ID, payment month (in MM-YYYY format), and the comparison result.
 
 ``` sql
 -- CTE to calculate the average salary per department per month
@@ -604,8 +591,6 @@ WHERE
 
 171. Confirmation Rate
 
-The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places. Write a solution to find the confirmation rate of each user. Return the result table in any order.
-
 ``` sql
 -- Calculate the confirmation rate (percentage of 'confirmed' actions) per user, including users with no confirmations
 
@@ -633,8 +618,6 @@ LEFT JOIN
 
 
 170. Consecutive numbers
-
-Find all numbers that appear at least three times consecutively. Return the result table in any order.
 
 ``` sql
 -- Step 1: Generate numbered logs with a sliding window to check the next two numbers
@@ -667,12 +650,6 @@ FROM
 
 
 169. Find users with valid e-emails
-
-Write a solution to find the users who have valid emails. A valid e-mail has a prefix name and a domain where:  
-The prefix name is a string that may contain letters (upper or lower case), digits, underscore '_', period '.', and/or dash '-'. \n  
-The prefix name must start with a letter.  
-The domain is '@leetcode.com'.  
-Return the result table in any order.
 
 ``` sql
 -- Select users with valid leetcode.com emails based on several validation rules
@@ -707,8 +684,6 @@ WHERE
 
 168. Product Sales Analysis III
 
-Write a solution to select the product id, year, quantity, and price for the first year of every product sold. Return the resulting table in any order.
-
 ``` sql
 -- Rank each product's sales by year (earliest year = rank 1)
 WITH ordered_by_years AS (
@@ -738,10 +713,6 @@ WHERE
 
 
 167. Google
-
-Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day. Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns.
-
-Definition: Within a day, measurements taken at 1st, 3rd, and 5th times are considered odd-numbered measurements, and measurements taken at 2nd, 4th, and 6th times are considered even-numbered measurements.
 
 ``` sql
 -- CTE to assign row numbers to measurements partitioned by day
@@ -773,8 +744,6 @@ GROUP BY
 
 166. Biggest single number
 
-A single number is a number that appeared only once in the MyNumbers table. Find the largest single number. If there is no single number, report null.
-
 ``` sql
 -- Get the largest number in `mynumbers` that appears exactly once
 SELECT (
@@ -796,8 +765,6 @@ SELECT (
 
 
 165. Snapchat
-
-Assume you're given tables with information on Snapchat users, including their ages and time spent sending and opening snaps. Write a query to obtain a breakdown of the time spent sending vs. opening snaps as a percentage of total time spent on these activities grouped by age group. Round the percentage to 2 decimal places in the output.
 
 ``` sql
 -- Calculate percentage of time spent on 'send' and 'open' activities by age bucket
@@ -833,11 +800,7 @@ GROUP BY
 <br>
 
 
-
-
 164. FAANG
-
-As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department. You're tasked with identifying these high earners across all departments. Write a query to display the employee's name along with their department name and salary. In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. If multiple employees have the same salary, then order them alphabetically.
 
 ``` sql
 -- Rank employees within each department by salary (highest first)
@@ -874,11 +837,7 @@ ORDER BY
 <br>
 
 
-
-
 163. IBM
-
-IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). Additionally, it should count the number of employees who did not run any queries during this period. Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
 
 ``` sql
 -- CTE: count distinct queries per employee in Q3 2023
@@ -914,14 +873,6 @@ ORDER BY
 
 
 162. The PADS
-
-Generate the following two result sets:
-
-Query an alphabetically ordered list of all names in OCCUPATIONS, immediately followed by the first letter of each profession as a parenthetical (i.e.: enclosed in parentheses). For example: AnActorName(A), ADoctorName(D), AProfessorName(P), and ASingerName(S). Query the number of ocurrences of each occupation in OCCUPATIONS. Sort the occurrences in ascending order, and output them in the following format:
-
-There are a total of [occupation_count] [occupation]s. where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name. If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
-
-Note: There will be at least two entries in the table for each type of occupation.
 
 ``` sql
 -- Select the final result text from the combined subquery
@@ -959,8 +910,6 @@ ORDER BY
 
 
 161. Restaurant Growth
-
-You are the restaurant owner and you want to analyze a possible expansion (there will be at least one customer every day). Compute the moving average of how much the customer paid in a seven days window (i.e., current day + 6 days before). average_amount should be rounded to two decimal places. Return the result table ordered by visited_on in ascending order.
 
 ``` sql
 -- Get dates, total amounts, and 7-day rolling averages for customer activity
@@ -1000,8 +949,6 @@ WHERE
 
 
 160. Exchange seats
-
-Write a solution to swap the seat id of every two consecutive students. If the number of students is odd, the id of the last student is not swapped. Return the result table ordered by id in ascending order.
 
 ``` sql
 -- Swap adjacent students in the 'seat' table based on their id
