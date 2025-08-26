@@ -94,8 +94,6 @@ WHERE ranked_salary <= 3;  -- keep top 3 per department; includes ties at rank 3
 
 185. Draw the Triangle 2
 
-P(R) represents a pattern drawn in R rows. Write a query to print the pattern P(20) starting with P(1) and ending with P(20).
-
 ``` sql
 -- Generate a sequence of numbers from 1 to 20 using a recursive CTE
 WITH RECURSIVE counter_cte AS (
@@ -116,8 +114,6 @@ FROM
 
 
 184. Top Competitors
-
-Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
 
 ``` sql
 -- Retrieve hackers who have achieved full scores on more than one challenge
@@ -152,8 +148,6 @@ ORDER BY
 
 
 183. HackerRank
-
-Julia asked her students to create some coding challenges. Write a query to print the hacker_id, name, and the total number of challenges created by each student. Sort your results by the total number of challenges in descending order. If more than one student created the same number of challenges, then sort the result by hacker_id. If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 
 ``` sql
 /*
@@ -208,8 +202,6 @@ ORDER BY
 
 182. Stripe
 
-Sometimes, payment transactions are repeated by accident; it could be due to user error, API failure or a retry error that causes a credit card to be charged twice. Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. Count such repeated payments.
-
 ``` sql
 -- CTE: Calculate the time difference (in minutes) between consecutive transactions
 -- for the same merchant, credit card, and transaction amount.
@@ -241,8 +233,6 @@ WHERE
 
 
 181. Bloomberg
-
-The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance. Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years. For each FAANG stock, display the ticker symbol, the month and year with the corresponding highest and lowest open prices. Ensure that the results are sorted by ticker symbol.
 
 ``` sql
 -- Get each ticker's highest and lowest opening price and the month-year it occurred
@@ -295,10 +285,6 @@ ORDER BY
 
 180. Ollivander's Inventory
 
-Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
-
-Hermione decides the best way to choose is by determining the minimum number of gold galleons needed to buy each non-evil wand of high power and age. Write a query to print the id, age, coins_needed, and power of the wands that Ron's interested in, sorted in order of descending power. If more than one wand has same power, sort the result in order of descending age.
-
 ``` sql
 -- Retrieve details of the most cost-efficient non-evil wands,
 -- ensuring that for each (age, power) combination, only the wand(s) 
@@ -335,10 +321,6 @@ ORDER BY
 
 
 179. Election results
-
-The election is conducted in a city and everyone can vote for one or more candidates, or choose not to vote at all. Each person has 1 vote so if they vote for multiple candidates, their vote gets equally split across these candidates. For example, if a person votes for 2 candidates, these candidates receive an equivalent of 0.5 vote each. Some voters have chosen not to vote, which explains the blank entries in the dataset.
-
-Find out who got the most votes and won the election. Output the name of the candidate or multiple names in case of a tie. To avoid issues with a floating-point error you can round the number of votes received by a candidate to 3 decimal places.
 
 ``` sql
 -- 1. Filter out rows where candidate is NULL or blank
@@ -385,8 +367,6 @@ WHERE rnk = 1;
 
 178. Weather observation station
 
-Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
-
 ``` sql
 -- Select the city or cities with the shortest and longest names from the station table
 -- Includes ties if multiple cities share the same shortest or longest length
@@ -413,8 +393,6 @@ WHERE shortest_rank = 1 OR longest_rank = 1;
 
 
 177. Friend requests
-
-Write a solution to find the people who have the most friends and the most friends number. The test cases are generated so that only one person has the most friends.
 
 ``` sql
 -- Create a unified list of all user IDs involved in friendships,
