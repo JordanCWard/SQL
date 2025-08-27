@@ -1939,29 +1939,18 @@ WHERE
 <br>
 
 
-120. Occupations
-
-Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output should consist of four columns (Doctor, Professor, Singer, and Actor) in that specific order, with their respective names listed alphabetically under each column.
-
-Note: Print NULL when there are no more names corresponding to an occupation.
+120. Top Businesses With Most Reviews
 
 ``` sql
-WITH ranked AS (
-    SELECT 
-        name,
-        occupation,
-        ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS rn
-    FROM occupations
-)
-
+-- Select top 5 businesses with the highest review counts
 SELECT
-    MAX(CASE WHEN occupation = 'Doctor' THEN name END) AS Doctor,
-    MAX(CASE WHEN occupation = 'Professor' THEN name END) AS Professor,
-    MAX(CASE WHEN occupation = 'Singer' THEN name END) AS Singer,
-    MAX(CASE WHEN occupation = 'Actor' THEN name END) AS Actor
-FROM ranked
-GROUP BY rn
-ORDER BY rn;
+    name,
+    review_count
+FROM
+    yelp_business
+ORDER BY
+    review_count DESC
+LIMIT 5;
 ```
 <br>
 
