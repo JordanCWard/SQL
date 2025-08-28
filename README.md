@@ -47,9 +47,8 @@ ALWAYS ADD COMMENTS
 
 ``` sql
 /*
-This query takes a semicolon-delimited list of categories from the `yelp_business` table,
-splits them into individual category values, and then aggregates the total review counts
-(`review_count`) for each category across all businesses.
+This query takes a semicolon-delimited list of categories, splits them into individual category
+values, and then aggregates the total review counts for each category across all businesses.
 
 Steps:
 1. Generate a sequence of numbers using a recursive CTE (acts as category index positions).
