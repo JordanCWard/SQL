@@ -59,8 +59,7 @@ Steps:
 5. Return categories ordered by their total review_count (highest first).
 */
 
--- Recursive CTE to generate a sequence of numbers (1..20)
--- Increase the upper limit (20) if rows can have more than 20 categories
+-- Recursive CTE to generate a sequence of numbers (1-20)
 WITH RECURSIVE numbers AS (
     SELECT 1 AS n
     UNION ALL
@@ -69,7 +68,7 @@ WITH RECURSIVE numbers AS (
     WHERE n < 20
 )
 
--- Main query: expand categories and compute weighted totals
+-- Expand categories and compute weighted totals
 SELECT 
     -- Extract the nth category value
     TRIM(
