@@ -43,6 +43,61 @@ ALWAYS ADD COMMENTS
 -->
 
 
+189. Reviews of Categories
+
+``` sql
+This query takes a semicolon-delimited list of categories from the `yelp_business` table,
+splits them into individual category values, and then aggregates the total review counts
+(`review_count`) for each category across all businesses.
+
+Steps:
+1. Generate a sequence of numbers using a recursive CTE (acts as category index positions).
+2. Use SUBSTRING_INDEX to extract the nth category from each row’s semicolon-delimited string.
+3. Join numbers to each row so that every category gets expanded into its own row.
+4. Sum the review_count for each category across all businesses.
+5. Return categories ordered by their total review_count (highest first).
+*/
+
+-- Recursive CTE to generate a sequence of numbers (1..20)
+-- Increase the upper limit (20) if rows can have more than 20 categories
+WITH RECURSIVE numbers AS (
+    SELECT 1 AS n
+    UNION ALL
+    SELECT n + 1
+    FROM numbers
+    WHERE n < 20
+)
+
+-- Main query: expand categories and compute weighted totals
+SELECT 
+    -- Extract the nth category value
+    TRIM(
+        SUBSTRING_INDEX(
+            SUBSTRING_INDEX(y.categories, ';', n), 
+            ';', 
+            -1
+        )
+    ) AS item,
+
+    -- Total review count summed across all businesses containing this category
+    SUM(y.review_count) AS total_qty
+
+FROM yelp_business y
+
+-- Ensure we only generate rows up to the number of categories in each string
+JOIN numbers 
+  ON n <= 1 + LENGTH(y.categories) - LENGTH(REPLACE(y.categories, ';', ''))
+
+-- Group results by unique category
+GROUP BY item
+
+-- Exclude empty strings (in case of trailing semicolons)
+HAVING item <> ''
+
+-- Order categories by total review count, highest first
+ORDER BY total_qty DESC;
+```
+<br>
 
 
 188. Occupations
