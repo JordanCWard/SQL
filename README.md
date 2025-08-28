@@ -46,6 +46,7 @@ ALWAYS ADD COMMENTS
 189. Reviews of Categories
 
 ``` sql
+/*
 This query takes a semicolon-delimited list of categories from the `yelp_business` table,
 splits them into individual category values, and then aggregates the total review counts
 (`review_count`) for each category across all businesses.
