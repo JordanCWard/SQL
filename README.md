@@ -46,7 +46,12 @@ ALWAYS ADD COMMENTS
 
 
 
+190. Income By Title and Gender
 
+``` sql
+
+```
+<br>
 
 189. Reviews of Categories
 
