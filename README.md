@@ -49,9 +49,38 @@ ALWAYS ADD COMMENTS
 190. Income By Title and Gender
 
 ``` sql
+/*
+    Purpose:
+    This query calculates the average total compensation (salary + bonus) 
+    for employees, grouped by their job title and sex.
+    
+    Why:
+    Since employees may have multiple bonus records, we first aggregate 
+    bonuses per worker. This prevents double-counting and ensures accurate 
+    total compensation before averaging.
+*/
 
+-- Aggregate bonuses per worker before joining to employee data
+WITH bonus_summary AS (
+    SELECT
+        worker_ref_id,
+        SUM(bonus) AS total_bonus
+    FROM sf_bonus
+    GROUP BY worker_ref_id
+)
+SELECT
+    e.employee_title,
+    e.sex,
+    AVG(e.salary + b.total_bonus) AS avg_total_compensation
+FROM bonus_summary b
+JOIN sf_employee e
+    ON b.worker_ref_id = e.id
+GROUP BY
+    e.employee_title,
+    e.sex;
 ```
 <br>
+
 
 189. Reviews of Categories
 
