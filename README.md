@@ -44,6 +44,46 @@ https://datalemur.com/questions?category=SQL
 ALWAYS ADD COMMENTS
 -->
 
+191. Game Play Analysis
+
+``` sql
+/*
+    Purpose:
+    This query calculates the fraction of players who logged in 
+    again the day after their first login. The result is rounded 
+    to two decimal places.
+
+    - Numerator: Number of players who logged in the day after their first login.
+    - Denominator: Total number of distinct players.
+*/
+
+SELECT
+    ROUND(
+        COUNT(DISTINCT player_id) /     -- Numerator: players meeting the condition
+        (SELECT COUNT(DISTINCT player_id) FROM Activity),  -- Denominator: all players
+        2
+    ) AS fraction
+FROM
+    Activity
+WHERE
+    -- Check if (player_id, previous_day) matches (player_id, first_login)
+    (player_id, DATE_SUB(event_date, INTERVAL 1 DAY)) IN (
+        /*
+            Subquery: Finds each player's first login date.
+            - MIN(event_date) ensures only the earliest login per player.
+            - Used to verify if a later login happened exactly one day after.
+        */
+        SELECT
+            player_id,
+            MIN(event_date) AS first_login
+        FROM
+            Activity
+        GROUP BY
+            player_id
+    )
+;
+```
+<br>
 
 
 190. Income By Title and Gender
@@ -54,7 +94,6 @@ ALWAYS ADD COMMENTS
     This query calculates the average total compensation (salary + bonus) 
     for employees, grouped by their job title and sex.
     
-    Why:
     Since employees may have multiple bonus records, we first aggregate 
     bonuses per worker. This prevents double-counting and ensures accurate 
     total compensation before averaging.
