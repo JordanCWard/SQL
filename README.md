@@ -48,11 +48,9 @@ ALWAYS ADD COMMENTS
 
 ``` sql
 /*
-    Purpose:
-    This query calculates the fraction of players who logged in 
-    again the day after their first login. The result is rounded 
-    to two decimal places.
-
+    Calculates the fraction of players who logged in again the day after their
+    first login. The result is rounded to two decimal places.
+    
     - Numerator: Number of players who logged in the day after their first login.
     - Denominator: Total number of distinct players.
 */
@@ -90,9 +88,8 @@ WHERE
 
 ``` sql
 /*
-    Purpose:
-    This query calculates the average total compensation (salary + bonus) 
-    for employees, grouped by their job title and sex.
+    Calculates the average total compensation (salary + bonus) for
+    employees, grouped by their job title and sex.
     
     Since employees may have multiple bonus records, we first aggregate 
     bonuses per worker. This prevents double-counting and ensures accurate 
