@@ -2811,28 +2811,23 @@ HAVING
 <br>
 
 
-83. Game Play Analysis IV (550)
-
-Write a solution to report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places. In other words, you need to count the number of players that logged in for at least two consecutive days starting from their first login date, then divide that number by the total number of players.
+83. Matching Similar Hosts and Guests
 
 ``` sql
-SELECT
-    ROUND(
-        COUNT(DISTINCT player_id) / 
-        (SELECT COUNT(DISTINCT player_id) FROM Activity), 2)
-    AS fraction
+/*
+    Retrieves all unique host–guest pairs from Airbnb data where the host
+    and guest share the same gender and nationality.
+*/
+
+SELECT DISTINCT
+    h.host_id,       -- Unique identifier for the host
+    g.guest_id       -- Unique identifier for the guest
 FROM
-    activity
-WHERE
-    (player_id, DATE_SUB(event_date, INTERVAL 1 DAY)) IN (
-        SELECT
-            player_id,
-            MIN(event_date) AS first_login
-        FROM
-            Activity
-        GROUP BY
-            player_id
-    )
+    airbnb_hosts h
+JOIN
+    airbnb_guests g
+    ON h.gender = g.gender            -- Match by gender
+   AND h.nationality = g.nationality  -- Match by nationality
 ;
 ```
 <br>
