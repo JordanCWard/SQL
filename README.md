@@ -44,10 +44,29 @@ https://datalemur.com/questions?category=SQL
 ALWAYS ADD COMMENTS
 -->
 
-192. Percentage of shipable orders
+192. Percentage of Shipable Orders
 
 ``` sql
+/* 
+   Calculates the percentage of orders that have a non-null 
+   customer address. It joins the orders table with customers and 
+   evaluates the presence of an address for each order.
 
+   - CASE WHEN ensures we count only non-null addresses as 1, null as 0.
+   - SUM of these values gives total orders with valid addresses.
+   - COUNT(*) gives total orders considered.
+   - Multiplying by 100.0 produces a percentage result.
+*/
+
+SELECT
+    100.0 * (
+        SUM(CASE WHEN c.address IS NULL THEN 0 ELSE 1 END) 
+        / COUNT(*)
+    ) AS pct_orders_with_address
+FROM
+    orders o
+LEFT JOIN
+    customers c ON o.cust_id = c.id;
 ```
 <br>
 
