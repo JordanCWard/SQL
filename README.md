@@ -44,6 +44,14 @@ https://datalemur.com/questions?category=SQL
 ALWAYS ADD COMMENTS
 -->
 
+192. Percentage of shipable orders
+
+``` sql
+
+```
+<br>
+
+
 191. Game Play Analysis
 
 ``` sql
