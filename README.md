@@ -58,7 +58,35 @@ ALWAYS ADD COMMENTS
 -->
 
 
-193. 
+193. Spam Posts
+
+``` sql
+-- Calculate the daily percentage of Facebook posts containing the keyword "spam"
+SELECT
+    post_date,  -- Grouping and reporting by the post date
+
+    -- Compute the percentage of posts containing "spam" within each date
+    100 * SUM(
+        CASE 
+            -- If the post_keywords field contains 'spam', count it as 1
+            WHEN post_keywords LIKE '%spam%' THEN 1 
+            ELSE 0 
+        END
+    ) / COUNT(*) AS spam_percentage  -- Divide spam count by total posts and multiply by 100
+
+FROM
+    facebook_post_views AS v  -- Table that tracks views of each post
+
+-- Join with the posts table to access keywords and post-level metadata
+LEFT JOIN
+    facebook_posts AS p 
+    ON v.post_id = p.post_id
+
+-- Group results by each date so percentages are calculated per day
+GROUP BY
+    post_date;
+```
+<br>
 
 
 192. Percentage of Shipable Orders
