@@ -84,26 +84,16 @@ GROUP BY
 192. Percentage of Shipable Orders
 
 ``` sql
-/* 
-   Calculates the percentage of orders that have a non-null 
-   customer address. It joins the orders table with customers and 
-   evaluates the presence of an address for each order.
-
-   - CASE WHEN ensures we count only non-null addresses as 1, null as 0.
-   - SUM of these values gives total orders with valid addresses.
-   - COUNT(*) gives total orders considered.
-   - Multiplying by 100.0 produces a percentage result.
-*/
-
+-- Percentage of orders with a non-null customer address
 SELECT
     100.0 * (
-        SUM(CASE WHEN c.address IS NULL THEN 0 ELSE 1 END) 
+        SUM(CASE WHEN c.address IS NOT NULL THEN 1 ELSE 0 END)
         / COUNT(*)
-    ) AS pct_orders_with_address
+    ) AS pct_orders_with_address  -- % of orders that have an address
 FROM
-    orders o
+    orders AS o  -- Orders table
 LEFT JOIN
-    customers c ON o.cust_id = c.id;
+    customers AS c ON o.cust_id = c.id;  -- Join to get customer address
 ```
 <br>
 
