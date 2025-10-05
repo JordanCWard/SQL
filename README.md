@@ -47,18 +47,12 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
-
-
-
-
-
 <!--
 ALWAYS ADD COMMENTS
 -->
 
 
-193. Spam Posts
+192. Spam Posts
 
 ``` sql
 -- Daily percentage of posts containing "spam"
@@ -81,7 +75,7 @@ GROUP BY
 <br>
 
 
-192. Percentage of Shipable Orders
+191. Percentage of Shipable Orders
 
 ``` sql
 -- Percentage of orders with a non-null customer address
@@ -99,47 +93,7 @@ LEFT JOIN
 <br>
 
 
-191. Game Play Analysis
-
-``` sql
-/*
-    Calculates the fraction of players who logged in again the day after their
-    first login. The result is rounded to two decimal places.
-    
-    - Numerator: Number of players who logged in the day after their first login.
-    - Denominator: Total number of distinct players.
-*/
-
-SELECT
-    ROUND(
-        COUNT(DISTINCT player_id) /     -- Numerator: players meeting the condition
-        (SELECT COUNT(DISTINCT player_id) FROM Activity),  -- Denominator: all players
-        2
-    ) AS fraction
-FROM
-    Activity
-WHERE
-    -- Check if (player_id, previous_day) matches (player_id, first_login)
-    (player_id, DATE_SUB(event_date, INTERVAL 1 DAY)) IN (
-        /*
-            Subquery: Finds each player's first login date.
-            - MIN(event_date) ensures only the earliest login per player.
-            - Used to verify if a later login happened exactly one day after.
-        */
-        SELECT
-            player_id,
-            MIN(event_date) AS first_login
-        FROM
-            Activity
-        GROUP BY
-            player_id
-    )
-;
-```
-<br>
-
-
-190. Income By Title and Gender
+190. Game Play Analysis
 
 ``` sql
 -- Fraction of players who logged in again the day after first login
