@@ -85,6 +85,7 @@ GROUP BY
 
 ``` sql
 -- Percentage of orders with a non-null customer address
+
 SELECT
     100.0 * (
         SUM(CASE WHEN c.address IS NOT NULL THEN 1 ELSE 0 END)
@@ -141,33 +142,27 @@ WHERE
 190. Income By Title and Gender
 
 ``` sql
-/*
-    Calculates the average total compensation (salary + bonus) for
-    employees, grouped by their job title and sex.
-    
-    Since employees may have multiple bonus records, we first aggregate 
-    bonuses per worker. This prevents double-counting and ensures accurate 
-    total compensation before averaging.
-*/
+-- Fraction of players who logged in again the day after first login
 
--- Aggregate bonuses per worker before joining to employee data
-WITH bonus_summary AS (
-    SELECT
-        worker_ref_id,
-        SUM(bonus) AS total_bonus
-    FROM sf_bonus
-    GROUP BY worker_ref_id
-)
 SELECT
-    e.employee_title,
-    e.sex,
-    AVG(e.salary + b.total_bonus) AS avg_total_compensation
-FROM bonus_summary b
-JOIN sf_employee e
-    ON b.worker_ref_id = e.id
-GROUP BY
-    e.employee_title,
-    e.sex;
+    ROUND(
+        COUNT(DISTINCT player_id) /  -- Players who logged in the next day
+        (SELECT COUNT(DISTINCT player_id) FROM Activity),  -- All players
+        2
+    ) AS fraction
+FROM
+    Activity
+WHERE
+    (player_id, DATE_SUB(event_date, INTERVAL 1 DAY)) IN (
+        -- Each player's first login date
+        SELECT
+            player_id,
+            MIN(event_date) AS first_login
+        FROM
+            Activity
+        GROUP BY
+            player_id
+    );
 ```
 <br>
 
