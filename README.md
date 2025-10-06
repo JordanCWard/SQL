@@ -49,6 +49,7 @@ ALWAYS ADD COMMENTS
 
 ``` sql
 -- Count of users per language and those using target Apple devices
+
 SELECT
     u.language,  -- User language
     COUNT(DISTINCT e.user_id) AS users_total,  -- Total users per language
