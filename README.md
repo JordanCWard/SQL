@@ -179,6 +179,7 @@ ORDER BY
 
 ``` sql
 -- Pivot occupations: list names by occupation in separate columns
+
 WITH ranked AS (
     SELECT 
         name,
@@ -206,6 +207,7 @@ ORDER BY
 
 ``` sql
 -- 3-day rolling average of tweet counts per user
+
 SELECT
     user_id,
     tweet_date,
@@ -229,6 +231,7 @@ ORDER BY
 
 ``` sql
 -- Top-3 salaries per department (ties included via DENSE_RANK)
+
 WITH one_table AS (
   SELECT
     DENSE_RANK() OVER (PARTITION BY e.departmentId ORDER BY e.salary DESC) AS ranked_salary,
@@ -252,6 +255,7 @@ WHERE ranked_salary <= 3;  -- keep top 3 per department; includes ties at rank 3
 
 ``` sql
 -- Generate a sequence of numbers from 1 to 20 using a recursive CTE
+
 WITH RECURSIVE counter_cte AS (
     SELECT 1 AS n
     UNION ALL
