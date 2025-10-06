@@ -37,7 +37,6 @@ https://datalemur.com/questions?category=SQL
 
 
 
-
 <!--
 ALWAYS ADD COMMENTS
 -->
@@ -45,6 +44,30 @@ ALWAYS ADD COMMENTS
 
 
 
+
+193. Apple Product Counts
+
+``` sql
+-- Count of users per language and those using target Apple devices
+SELECT
+    u.language,  -- User language
+    COUNT(DISTINCT e.user_id) AS users_total,  -- Total users per language
+    COUNT(
+        DISTINCT CASE
+            WHEN LOWER(e.device) IN ('macbook pro', 'iphone 5s', 'ipad air')
+            THEN e.user_id
+        END
+    ) AS users_with_target_device  -- Users with specified Apple devices
+FROM
+    playbook_events AS e
+JOIN
+    playbook_users AS u ON u.user_id = e.user_id  -- Join to get user language
+GROUP BY
+    u.language
+ORDER BY
+    users_total DESC;  -- Show most common languages first
+```
+<br>
 
 
 192. Spam Posts
