@@ -144,6 +144,7 @@ WHERE
 
 ``` sql
 -- Split semicolon-separated categories and sum their total review counts
+
 WITH RECURSIVE numbers AS (
     SELECT 1 AS n
     UNION ALL
