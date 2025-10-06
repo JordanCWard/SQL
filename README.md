@@ -176,27 +176,26 @@ ORDER BY
 188. Occupations
 
 ``` sql
-/* 
-Pivot occupations: each occupation becomes a column, 
-with names aligned row by row in alphabetical order 
-*/
+-- Pivot occupations: list names by occupation in separate columns
 WITH ranked AS (
     SELECT 
         name,
         occupation,
-        -- Assign row numbers within each occupation (alphabetical by name)
-        ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS rn
-    FROM occupations
+        ROW_NUMBER() OVER (PARTITION BY occupation ORDER BY name) AS rn  -- Rank names per occupation
+    FROM
+        occupations
 )
 SELECT
-    -- Conditional aggregation: pivot occupations into columns
     MAX(CASE WHEN occupation = 'Doctor' THEN name END)    AS Doctor,
     MAX(CASE WHEN occupation = 'Professor' THEN name END) AS Professor,
     MAX(CASE WHEN occupation = 'Singer' THEN name END)    AS Singer,
     MAX(CASE WHEN occupation = 'Actor' THEN name END)     AS Actor
-FROM ranked
-GROUP BY rn
-ORDER BY rn;
+FROM
+    ranked
+GROUP BY
+    rn  -- Align rows by rank
+ORDER BY
+    rn;  -- Keep alphabetical order within each occupation
 ```
 <br>
 
