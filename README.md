@@ -203,25 +203,22 @@ ORDER BY
 187. Twitter
 
 ``` sql
-/*
-   Compute a 3-day rolling average of tweet counts per user.
-   - Window defined by user_id partition, ordered by tweet_date.
-   - Frame: 2 preceding rows + current row (non-cumulative moving average).
-   - ROUND for presentation only (2 decimal precision).
-*/
+-- 3-day rolling average of tweet counts per user
 SELECT
     user_id,
     tweet_date,
     ROUND(
         AVG(tweet_count) OVER (
             PARTITION BY user_id
-            ORDER BY tweet_date ASC
-            ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+            ORDER BY tweet_date
+            ROWS BETWEEN 2 PRECEDING AND CURRENT ROW  -- 3-day window
         ), 
         2
-    ) AS rolling_avg_3d
-FROM tweets
-ORDER BY user_id, tweet_date;
+    ) AS rolling_avg_3d  -- Rounded to 2 decimals
+FROM
+    tweets
+ORDER BY
+    user_id, tweet_date;  -- Keep chronological order per user
 ```
 <br>
 
