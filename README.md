@@ -301,32 +301,28 @@ FROM
 184. Top Competitors
 
 ``` sql
--- Retrieve hackers who have achieved full scores on more than one challenge
--- The query joins submissions, challenges, difficulty, and hackers tables
--- to identify hackers who solved multiple challenges at the maximum score.
+-- Hackers with full scores on more than one challenge
 
 SELECT
-    h.hacker_id,  -- Unique identifier for each hacker
-    h.name        -- Hacker's name
+    h.hacker_id,  -- Hacker ID
+    h.name        -- Hacker name
 FROM
-    submissions s
-    LEFT JOIN challenges c 
-        ON s.challenge_id = c.challenge_id
-    LEFT JOIN difficulty d 
-        ON c.difficulty_level = d.difficulty_level
-    LEFT JOIN hackers h 
-        ON s.hacker_id = h.hacker_id
+    submissions AS s
+LEFT JOIN
+    challenges AS c ON s.challenge_id = c.challenge_id
+LEFT JOIN
+    difficulty AS d ON c.difficulty_level = d.difficulty_level
+LEFT JOIN
+    hackers AS h ON s.hacker_id = h.hacker_id
 WHERE
-    s.score = d.score  -- Only consider submissions where the hacker achieved the full score
+    s.score = d.score  -- Full-score submissions only
 GROUP BY
-    h.hacker_id, 
-    h.name            -- Group results by hacker to count solved challenges
+    h.hacker_id, h.name
 HAVING
-    COUNT(*) > 1      -- Only include hackers who solved more than one challenge perfectly
+    COUNT(*) > 1  -- More than one perfect challenge
 ORDER BY
-    COUNT(*) DESC,    -- Rank hackers by number of full-score challenges (highest first)
-    h.hacker_id ASC   -- Tie-breaker: order by hacker ID in ascending order
-;
+    COUNT(*) DESC,  -- Most full scores first
+    h.hacker_id ASC;  -- Tie-break by ID
 ```
 <br>
 
