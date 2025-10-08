@@ -331,52 +331,42 @@ ORDER BY
 183. HackerRank
 
 ``` sql
-/*
-    CTE #1: Compute the total challenges created per hacker.
-    Assign ranks in descending order of challenge count.
-    Hackers with equal counts share the same rank.
-*/
+-- Hackers ranked by total challenges; include top and unique ranks only
 WITH ranked_hackers AS (
     SELECT
         h.hacker_id,
         h.name,
         COUNT(*) AS challenge_count,
-        RANK() OVER (ORDER BY COUNT(*) DESC) AS rnk
-    FROM challenges c
-    LEFT JOIN hackers h ON c.hacker_id = h.hacker_id
-    GROUP BY h.hacker_id, h.name
+        RANK() OVER (ORDER BY COUNT(*) DESC) AS rnk  -- Rank by challenge count
+    FROM
+        challenges AS c
+    LEFT JOIN
+        hackers AS h ON c.hacker_id = h.hacker_id
+    GROUP BY
+        h.hacker_id, h.name
 ),
-
-/*
-    CTE #2: Calculate the frequency of each rank.
-    Used to distinguish between tied and unique ranks.
-*/
 rank_frequencies AS (
     SELECT
         rnk,
-        COUNT(*) AS freq
-    FROM ranked_hackers
-    GROUP BY rnk
+        COUNT(*) AS freq  -- Count how many hackers share each rank
+    FROM
+        ranked_hackers
+    GROUP BY
+        rnk
 )
-
-/*
-    Final result:
-    - Always include all top-ranked hackers (rank = 1).
-    - Include lower-ranked hackers only if their rank is unique (freq = 1).
-    - Exclude tied ranks greater than 1.
-*/
 SELECT
     rh.hacker_id,
     rh.name,
     rh.challenge_count
-FROM ranked_hackers rh
-JOIN rank_frequencies rf ON rh.rnk = rf.rnk
+FROM
+    ranked_hackers AS rh
+JOIN
+    rank_frequencies AS rf ON rh.rnk = rf.rnk
 WHERE
-    rh.rnk = 1
-    OR (rh.rnk > 1 AND rf.freq = 1)
+    rh.rnk = 1 OR (rh.rnk > 1 AND rf.freq = 1)  -- Include top and unique ranks
 ORDER BY
     rh.challenge_count DESC,
-    rh.hacker_id;
+    rh.hacker_id;  -- Sort by challenge count, then ID
 ```
 <br>
 
