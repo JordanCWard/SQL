@@ -45,8 +45,29 @@ ALWAYS ADD COMMENTS
 
 
 
+194. Customers Excluded
 
+``` sql
+-- Customers who placed no orders between Feb 1 and Mar 1, 2019
 
+SELECT
+    first_name
+FROM
+    customers
+WHERE
+    first_name NOT IN (
+        -- Customers with orders in the given date range
+        SELECT
+            c.first_name
+        FROM
+            orders AS o
+        LEFT JOIN
+            customers AS c ON o.cust_id = c.id
+        WHERE
+            order_date BETWEEN '2019-02-01' AND '2019-03-01'
+    );
+```
+<br>
 
 
 193. Apple Product Counts
