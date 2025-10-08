@@ -332,6 +332,7 @@ ORDER BY
 
 ``` sql
 -- Hackers ranked by total challenges; include top and unique ranks only
+
 WITH ranked_hackers AS (
     SELECT
         h.hacker_id,
@@ -374,10 +375,10 @@ ORDER BY
 182. Stripe
 
 ``` sql
--- CTE: Calculate the time difference (in minutes) between consecutive transactions
--- for the same merchant, credit card, and transaction amount.
+-- Count transactions occurring within 10 minutes of the previous one
+
 WITH transaction_comparison AS (
-    SELECT 
+    SELECT
         merchant_id,
         EXTRACT(
             EPOCH FROM transaction_timestamp 
@@ -385,20 +386,16 @@ WITH transaction_comparison AS (
                 PARTITION BY merchant_id, credit_card_id, amount
                 ORDER BY transaction_timestamp
             )
-        ) / 60 AS minute_difference
-    FROM 
+        ) / 60 AS minute_difference  -- Time gap in minutes
+    FROM
         transactions
 )
-
--- Final query: Count how many transactions occurred within 10 minutes
--- of the previous transaction for the same merchant, credit card, and amount.
 SELECT
-    COUNT(minute_difference) AS payment_count
+    COUNT(minute_difference) AS payment_count  -- Transactions within 10 minutes
 FROM
     transaction_comparison
 WHERE
     minute_difference <= 10;
-
 ```
 <br>
 
