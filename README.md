@@ -58,18 +58,18 @@ ALWAYS ADD COMMENTS
 
 SELECT
     h.nationality,  -- Host nationality
-    COUNT(DISTINCT u.unit_id) AS unit_count  -- Number of unique apartments
+    COUNT(DISTINCT u.unit_id) AS unit_count
 FROM
     airbnb_units AS u
 LEFT JOIN
     airbnb_hosts AS h ON h.host_id = u.host_id
 WHERE
-    u.unit_type = 'Apartment'  -- Only apartments
-    AND h.age < 30             -- Hosts under 30
+    u.unit_type = 'Apartment'
+    AND h.age < 30
 GROUP BY
     h.nationality
 ORDER BY
-    unit_count DESC;  -- Most common nationalities first
+    unit_count DESC;
 ```
 <br>
 
