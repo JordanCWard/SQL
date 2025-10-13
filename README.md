@@ -55,7 +55,6 @@ ALWAYS ADD COMMENTS
 
 ``` sql
 -- Count apartments hosted by people under 30, grouped by nationality
-
 SELECT
     h.nationality,  -- Host nationality
     COUNT(DISTINCT u.unit_id) AS unit_count  -- Number of unique apartments
