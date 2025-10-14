@@ -42,6 +42,14 @@ ALWAYS ADD COMMENTS
 -->
 
 
+196. Ranking Most Active Guests
+
+``` sql
+
+```
+<br>
+
+
 195. Number Of Units Per Nationality
 
 ``` sql
