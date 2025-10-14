@@ -45,21 +45,16 @@ ALWAYS ADD COMMENTS
 196. Ranking Most Active Guests
 
 ``` sql
--- Rank guests by total number of messages sent
+-- Rank guests by total messages sent
 
 SELECT
     id_guest,
-    DENSE_RANK() OVER (ORDER BY total_messages DESC) AS guest_rank,  -- Rank by message count
-    total_messages
-FROM (
-    SELECT
-        id_guest,
-        SUM(n_messages) AS total_messages  -- Total messages per guest
-    FROM
-        airbnb_contacts
-    GROUP BY
-        id_guest
-) AS guest_messages;
+    DENSE_RANK() OVER (ORDER BY SUM(n_messages) DESC) AS guest_rank,  -- Rank by total messages
+    SUM(n_messages) AS total_messages  -- Total messages per guest
+FROM
+    airbnb_contacts
+GROUP BY
+    id_guest;
 ```
 <br>
 
